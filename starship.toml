@@ -1,0 +1,74 @@
+[username]
+style_user = 'bold #008cf0'
+style_root = 'bold red'
+format = '[$user]($style)'
+disabled = false
+show_always = true
+
+[sudo]
+style = 'bold red'
+format = '[$symbol]($style)'
+symbol = '🔆'
+disabled = false
+
+[cmd_duration]
+format = '[$duration]($style)'	
+min_time = 0
+show_milliseconds = true
+disabled = false
+style = "#eee600"
+
+[directory]
+style = "bold yellow"
+format = "[:$path $truncation_symbol]($style)[$read_only]($read_only_style)"
+truncation_length = 2
+truncate_to_repo = false
+truncation_symbol = "🔸"
+read_only = "🚧 "
+read_only_style = "bold orange"
+home_symbol = "🏠"
+use_os_path_sep = true
+fish_style_pwd_dir_length = 1
+
+[os.symbols]
+Alpaquita = "🔔 "
+Alpine = "🏔️ "
+Amazon = "🙂 "
+Android = "🤖 "
+Arch = "🎗️ "
+Artix = "🎗️ "
+CentOS = "💠 "
+Debian = "🌀 "
+DragonFly = "🐉 "
+Emscripten = "🔗 "
+EndeavourOS = "🚀 "
+Fedora = "🎩 "
+FreeBSD = "😈 "
+Garuda = "🦅 "
+Gentoo = "🗜️ "
+HardenedBSD = "🛡️ "
+Illumos = "🐦 "
+Linux = "🐧 "
+Mabox = "📦 "
+Macos = "🍎 "
+Manjaro = "🥭 "
+Mariner = "🌊 "
+MidnightBSD = "🌘 "
+Mint = " 🌿"
+NetBSD = "🚩 "
+NixOS = "❄️ "
+OpenBSD = "🐡 "
+OpenCloudOS = "☁️ "
+openEuler = "🦉 "
+openSUSE = "🦎 "
+OracleLinux = "🦴 "
+Pop = "🍭 "
+Raspbian = "🍓 "
+Redhat = "🎩 "
+RedHatEnterprise = "🎩 "
+Redox = "🧪 "
+Solus = "⛵ "
+SUSE = "🦎 "
+Ubuntu = "🎯 "
+Unknown = "❓ "
+Windows = "🪟 "

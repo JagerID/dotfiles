@@ -1,0 +1,43 @@
+import = [
+	"~/.config/alacritty/themes/dracula.toml"
+]
+
+[shell]
+program = "/bin/zsh"
+args = ["-l"]
+
+[colors.cursor]
+cursor = "#ff6666"
+text = "CellBackground"
+
+#change cursor type Beam,Block,Underline
+[cursor]
+style = { shape = "Beam", blinking = "Always" }
+thickness = 0.3
+blink_interval = 400
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 5000
+multiplier = 3
+
+#startup modes:Windowed, Maximized, Fullscreen
+[window]
+dynamic_padding = false
+opacity = 0.8
+title = "Alacritty"
+startup_mode = "Windowed"
+decorations= "None"
+
+[window.padding]
+x = 6
+y = 6
+
+[font]
+normal = { family = "FiraCode" }
+bold = { family = "FiraCode", style = "Bold" }
+italic = { family = "FiraCode", style = "Italic" }
+size = 11
+offset = { x = 0, y = 2 }
