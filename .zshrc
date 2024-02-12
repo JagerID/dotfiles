@@ -99,6 +99,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias l="lsd -l"
+alias la="lsd -a"
+alias lla="lsd -la"
+alias lt="lsd --tree"
+
 # Bun
 BUN_INSTALL="/home/jager/.bun"
 PATH="$BUN_INSTALL/bin:$PATH"
