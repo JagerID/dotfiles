@@ -111,6 +111,9 @@ PATH="$BUN_INSTALL/bin:$PATH"
 # Starship prompt
 eval "$(starship init zsh)"
 
+# Zoxide
+eval "$(zoxide init zsh)"
+
 # NVM
 export NVM_DIR="~/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
