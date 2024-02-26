@@ -2,7 +2,7 @@
 sudo pacman -Syyu
 
 # Install packages
-sudo pacman -S firefox-developer-edition git neovim ttf-firacode-nerd ripgrep zsh
+sudo pacman -S cmake firefox-developer-edition git neovim ttf-firacode-nerd ripgrep zsh alacritty wezterm
 
 # NvChad
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
@@ -17,7 +17,7 @@ sudo pacman -S go
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # Terminal Utilities
-cargo install lsd bat
+cargo install lsd bat onefetch
 sudo pacman -S btop
 
 # Copy configs

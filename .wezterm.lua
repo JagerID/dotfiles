@@ -6,8 +6,7 @@ if wezterm.config_builder then
 end
 
 config.color_scheme = 'Dracula'
-config.enable_tab_bar = false
-config.font = wezterm.font('FiraCode')
+config.font = wezterm.font('IosevkaNerdFont')
 config.font_size = 12
 config.cell_width = 1.0
 config.line_height = 1.1
@@ -17,12 +16,27 @@ config.keys = {
     action = wezterm.action.ToggleFullScreen,
   },
 }
+
+-- Window
+
 config.window_padding = {
-  left = 0,
+  left = 5,
   right = 0,
   top = 0,
   bottom = 0,
 }
+config.window_decorations = "NONE"
+config.window_background_opacity = .8
+config.max_fps = 165
+
+-- Tabs
+
+config.enable_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = true
+
+-- Animation
+
+config.animation_fps = 165
 
 -- Program
 
@@ -36,7 +50,46 @@ config.default_cwd = "/home/jager/dev"
 
 config.default_cursor_style = 'BlinkingBar'
 config.cursor_thickness = 2
-config.cursor_blink_rate = 400
+config.cursor_blink_rate = 700
 config.cursor_blink_ease_in = 'Linear'
+
+-- Hyperlinks
+
+config.hyperlink_rules = {
+      -- Matches: a URL in parens: (URL)
+      {
+         regex = '\\((\\w+://\\S+)\\)',
+         format = '$1',
+         highlight = 1,
+      },
+      -- Matches: a URL in brackets: [URL]
+      {
+         regex = '\\[(\\w+://\\S+)\\]',
+         format = '$1',
+         highlight = 1,
+      },
+      -- Matches: a URL in curly braces: {URL}
+      {
+         regex = '\\{(\\w+://\\S+)\\}',
+         format = '$1',
+         highlight = 1,
+      },
+      -- Matches: a URL in angle brackets: <URL>
+      {
+         regex = '<(\\w+://\\S+)>',
+         format = '$1',
+         highlight = 1,
+      },
+      -- Then handle URLs not wrapped in brackets
+      {
+         regex = '\\b\\w+://\\S+[)/a-zA-Z0-9-]+',
+         format = '$0',
+      },
+      -- implicit mailto link
+      {
+         regex = '\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b',
+         format = 'mailto:$0',
+      },
+   }
 
 return config
