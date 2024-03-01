@@ -5,7 +5,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config.color_scheme = 'Dracula'
+config.color_scheme = 'dracula'
 config.font = wezterm.font('IosevkaNerdFont')
 config.font_size = 12
 config.cell_width = 1.0
@@ -28,11 +28,13 @@ config.window_padding = {
 config.window_decorations = "NONE"
 config.window_background_opacity = .8
 config.max_fps = 165
+config.window_close_confirmation = "NeverPrompt"
 
 -- Tabs
 
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
+config.use_fancy_tab_bar = false
 
 -- Animation
 
