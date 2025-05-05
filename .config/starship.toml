@@ -1,0 +1,29 @@
+[username]
+style_user = 'bold green'
+style_root = 'bold red'
+format = '[$user]($style) '
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = true
+format = 'on [$hostname](bold yellow) '
+disabled = false
+trim_at = '.'
+# ssh_symbol = '...'
+
+[character] # Символы приглашения комадной строки
+success_symbol = '[➜](bold green) '
+error_symbol = '[✗](bold red) '
+
+[directory]
+truncation_length = 7
+truncate_to_repo = true
+style = 'bold cyan'
+read_only = '+r'
+read_only_style = 'lightred'
+
+[cmd_duration]
+min_time = 4_000
+show_milliseconds = true
+
