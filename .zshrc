@@ -47,3 +47,10 @@ eval "$(starship init zsh)"
 # Initialize zoxide
 eval "$(zoxide init zsh)"
 
+
+# bun completions
+[ -s "/home/jager/.bun/_bun" ] && source "/home/jager/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

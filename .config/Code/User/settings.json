@@ -1,0 +1,22 @@
+{
+    "editor.formatOnSave": true,
+    "breadcrumbs.enabled": true,
+    "editor.cursorBlinking": "expand",
+    "editor.cursorStyle": "line",
+    "editor.cursorSmoothCaretAnimation": "explicit",
+    "editor.smoothScrolling": true,
+    "explorer.confirmDelete": false,
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "Iosevka Nerd Font",
+    "terminal.integrated.fontFamily": "Iosevka Nerd Font",
+    "workbench.statusBar.visible": false,
+    "scm.autoReveal": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.fontSize": 14,
+    "editor.tabSize": 2,
+    "editor.wordWrap": "bounded",
+    "workbench.colorTheme": "Bearded Theme Arc",
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+}
