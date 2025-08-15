@@ -1,22 +1,36 @@
 {
-    "editor.formatOnSave": true,
-    "breadcrumbs.enabled": true,
-    "editor.cursorBlinking": "expand",
-    "editor.cursorStyle": "line",
-    "editor.cursorSmoothCaretAnimation": "explicit",
-    "editor.smoothScrolling": true,
-    "explorer.confirmDelete": false,
-    "editor.fontLigatures": true,
-    "editor.fontFamily": "Iosevka Nerd Font",
-    "terminal.integrated.fontFamily": "Iosevka Nerd Font",
-    "workbench.statusBar.visible": false,
-    "scm.autoReveal": true,
-    "files.trimTrailingWhitespace": true,
-    "editor.fontSize": 14,
-    "editor.tabSize": 2,
-    "editor.wordWrap": "bounded",
-    "workbench.colorTheme": "Bearded Theme Arc",
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
+  "editor.formatOnSave": true,
+  "breadcrumbs.enabled": true,
+  "editor.cursorBlinking": "expand",
+  "editor.cursorStyle": "line",
+  "editor.cursorSmoothCaretAnimation": "explicit",
+  "editor.smoothScrolling": true,
+  "explorer.confirmDelete": false,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "Iosevka Nerd Font",
+  "terminal.integrated.fontFamily": "Iosevka Nerd Font",
+  "workbench.statusBar.visible": false,
+  "scm.autoReveal": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "bounded",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorTheme": "Bearded Theme Monokai Black",
+  "terminal.explorerKind": "external",
+  "terminal.external.linuxExec": "wezterm",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "powermode.enabled": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "svelte.enable-ts-plugin": true
 }
