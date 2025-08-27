@@ -96,5 +96,47 @@ return {
     "nvimdev/dashboard-nvim",
     event = "VimEnter",
     opts = {}
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = {
+      disable_netrw = true,
+      hijack_netrw = true,
+      open_on_tab = false,
+      hijack_cursor = true,
+      update_cwd = true,
+      actions = {
+        open_file = {
+          quit_on_open = false
+        }
+      },
+      view = {
+        width = 30,
+        adaptive_size = true,
+      },
+      renderer = {
+        icons = {
+          show = {
+            git = true,
+            folder = true,
+            file = true,
+            folder_arrow = true
+          }
+        }
+      },
+      filters = {
+        dotfiles = true,
+        custom = { ".git", "node_modules", ".cache" }
+      },
+      git = {
+        enable = true,
+        ignore = false,
+        timeout = 500,
+      }
+    },
+    keys = {
+      { "<leader>e",  "<cmd>NvimTreeToggle<cr>",   desc = "Nvim Tree Toggle" },
+      { "<leader>ff", "<cmd>NvimTreeFindFile<cr>", desc = "Nvim Tree Find File" }
+    }
   }
 }

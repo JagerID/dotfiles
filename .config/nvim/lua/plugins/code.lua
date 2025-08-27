@@ -1,5 +1,9 @@
 return {
-  { "mrcjkb/rustaceanvim",     lazy = false, version = "*" },
+  {
+    "mrcjkb/rustaceanvim",
+    ft = { "rust" },
+    version = "*"
+  },
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
@@ -42,16 +46,7 @@ return {
   { "williamboman/mason.nvim", opts = {} },
   {
     "williamboman/mason-lspconfig.nvim",
-    opts = {
-      ensure_installed = {
-        "tsserver",
-        "eslint_d",
-        "prettier_d",
-        "tailwindcss",
-
-        "lua_ls",
-      }
-    }
+    opts = {}
   },
   {
     "folke/lazydev.nvim",
