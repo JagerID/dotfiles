@@ -1,4 +1,4 @@
-local wezterm = require "wezterm" -- Wezterm API
+local wezterm = require("wezterm") -- Wezterm API
 
 local config = wezterm.config_builder() -- Wezterm Config
 
@@ -19,8 +19,8 @@ config.window_padding = {
 	top = 0,
 	bottom = 0,
 }
-config.window_decorations = "NONE"
-config.window_background_opacity = .7
+-- config.window_decorations = "NONE"
+config.window_background_opacity = 0.7
 config.max_fps = 165
 config.window_close_confirmation = "NeverPrompt"
 
@@ -47,45 +47,53 @@ config.default_cwd = "/home/jager/dev"
 config.default_cursor_style = "BlinkingBar"
 config.cursor_thickness = 2
 config.cursor_blink_rate = 700
-config.cursor_blink_ease_in = 'Linear'
+config.cursor_blink_ease_in = "Linear"
 
 -- Hyperlinks
 
 config.hyperlink_rules = {
-      -- Matches: a URL in parens: (URL)
-      {
-         regex = '\\((\\w+://\\S+)\\)',
-         format = '$1',
-         highlight = 1,
-      },
-      -- Matches: a URL in brackets: [URL]
-      {
-         regex = '\\[(\\w+://\\S+)\\]',
-         format = '$1',
-         highlight = 1,
-      },
-      -- Matches: a URL in curly braces: {URL}
-      {
-         regex = '\\{(\\w+://\\S+)\\}',
-         format = '$1',
-         highlight = 1,
-      },
-      -- Matches: a URL in angle brackets: <URL>
-      {
-         regex = '<(\\w+://\\S+)>',
-         format = '$1',
-         highlight = 1,
-      },
-      -- Then handle URLs not wrapped in brackets
-      {
-         regex = '\\b\\w+://\\S+[)/a-zA-Z0-9-]+',
-         format = '$0',
-      },
-      -- implicit mailto link
-      {
-         regex = '\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b',
-         format = 'mailto:$0',
-      },
-   }
+	-- Matches: a URL in parens: (URL)
+	{
+		regex = "\\((\\w+://\\S+)\\)",
+		format = "$1",
+		highlight = 1,
+	},
+	-- Matches: a URL in brackets: [URL]
+	{
+		regex = "\\[(\\w+://\\S+)\\]",
+		format = "$1",
+		highlight = 1,
+	},
+	-- Matches: a URL in curly braces: {URL}
+	{
+		regex = "\\{(\\w+://\\S+)\\}",
+		format = "$1",
+		highlight = 1,
+	},
+	-- Matches: a URL in angle brackets: <URL>
+	{
+		regex = "<(\\w+://\\S+)>",
+		format = "$1",
+		highlight = 1,
+	},
+	-- Then handle URLs not wrapped in brackets
+	{
+		regex = "\\b\\w+://\\S+[)/a-zA-Z0-9-]+",
+		format = "$0",
+	},
+	-- implicit mailto link
+	{
+		regex = "\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b",
+		format = "mailto:$0",
+	},
+}
+
+config.ssh_domains = {
+	{
+		name = "beget.server",
+		remote_address = "5.35.92.149",
+		username = "root",
+	},
+}
 
 return config

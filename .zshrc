@@ -10,6 +10,8 @@ zinit light zsh-users/zsh-completions
 
 # Load completions
 autoload -U compinit && compinit
+autoload -Uz history-search-forward
+autoload -Uz history-search-backward
 
 # History
 HISTSIZE=5000
@@ -24,15 +26,21 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
 # Some other
 setopt autocd # Change directory typing dir-name without `cd`: `cd dev` -> `dev`
 setopt correct # Auto correct mistakes
 setopt interactivecomments # Allow interactive comments
 setopt nonomatch # Hide error message if there is no match for the pattern
 
+bindkey -v
+export KEYTIMEOUT=1
+
 # Environment variables
 
-export EDITOR=nvim visudo
+export EDITOR=nvim
 export SUDO_EDITOR=nvim
 export TERMINAL=wezterm
 export BROWSER=zen-browser
@@ -58,3 +66,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # NVM
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Autostart script
+fastfetch
