@@ -1,0 +1,463 @@
+clear
+ls
+clear
+boba | a.txt
+"boba" | a.txt
+"boba"
+nvim .wezterm.lua
+ls
+ls /
+clear
+ls
+clear
+s
+clear
+c;ear
+clear
+http get https://api.github.com/repos/nushell/nushell
+http get https://api.github.com/repos/nushell/nushell | get default_branch
+http get https://github.com/JagerID/JagerID
+clear
+10 / "bob"
+nu --help
+clear
+nvim ~/.wezterm.lua
+ls
+cd ~/dotfiles/
+ks
+ls
+ls -lah
+ls -a
+ls -a | where name !~ .config
+ls -a | where name ~ .config
+ls -a | where name = .config
+ls -a | where name == .config
+ls -a | where name == .conf
+clear
+mv --help | grep mkdir
+mv --help
+mkdir ~/.config/wezterm
+mv .wezterm.lua ~/.config/wezterm/wezterm.lua
+ls
+ls ~ -a
+rm ~/.wezterm.lua
+ls ~ -a
+stow .
+ls
+clear
+nvim ~/.config/wezterm/wezterm.lua
+ls
+ls /
+ls | sort-by size | reverse
+ls / | sort-by size | reverse
+ps
+ps | sort-by mem
+^ls
+^ls /
+ps | where status == Running
+ps | describe
+ls | describe
+cal 
+timedatectl 
+ls<\n>| sort-by size<\n>| reverse<\n>| first<\n>| get name<\n>| cp $in ~
+ls<\n>| sort-by size<\n>| reverse<\n>| second<\n>| get name<\n>| cp $in ~
+clear
+ls / | sort-by size | reverse | first | get name | cp $in ~
+ls / | sort-by size | reverse | first | get name
+ls
+ls ~
+cd ~
+cd
+ls dotfiles/
+cat packages-list.md
+cat dotfiles/packages-list.md
+cd dotfiles/
+ls
+ls -a
+nvim .stow-local-ignore
+cd ..
+rm packages-list.md
+cd dotfiles/
+stow .
+ls ~
+rm ../packages-list.md
+ls
+ls ~
+ls -a
+nvim .stow-local-ignore
+stow .
+ls ~
+clear
+get $in
+$in
+help operators
+help commands 
+c;ear
+clear 
+^clear
+ls subdir
+ls subdir /
+ls | where name !~ bar
+ls ...(glob **/*.{rs,toml})
+clear
+help commands 
+help commands | explore
+clear
+ls / | explore
+help explore
+clear
+ls **
+ls **.md
+ls /**
+cd /
+ls 
+ls **
+ls *
+clear
+ls **.md
+ls **/*.md
+sudo ls **/*
+clear
+..
+cd 
+..
+clear
+....
+cd
+dotfiles
+clear
+btop
+ps
+ps | where status == Running
+ps
+clear
+ps | where status == Running
+clear
+ps | sort-by start_time
+ps | describe
+^ps | describe
+^ps -ef --sort=start_time
+yay -Ss spacedrive
+yay -S spacedrive
+clear
+sudo pacman -S wl-clipboard
+wl-copy
+clear
+pacman -S yazi
+sudo pacman -S yazi
+ls
+^ls
+^ls /
+^ls / -lah
+clear
+ls
+ls /
+clear
+timedatectl 
+timedatectl set-timezone Europe/Moscow
+clear
+yazi
+clear
+config nu 
+$env.config.buffer_editor = "nvim"
+config nu 
+config nu
+$env.config.buffer_editor = "nvim"
+config nu
+cat $env
+cat $env.config
+cat $env.config.buffer_editor
+$env.config.buffer_editor
+config nu
+rm ~/.config/nushell/ -rf; stow .
+ls ~/.config/nushell
+nvim ~/.config/nushell/env.nu
+help commands end
+help commands env
+help command env
+env
+config env 
+clear
+volta
+nvim ~/.config/nushell/env.nu
+config nu
+$path
+$env.path
+cat ~/.zshrc
+$env.HOME
+config nu
+volta
+$env.VOLTA_HOME
+$env.PATH
+config nu
+volta
+ls
+config nu
+volta
+clear
+$env.PATH
+config nu
+$env.PATH
+volta
+cear
+clear
+config nu --doc | nu-highlight | less -R
+config nu --doc | nu-highlight
+config nu | nu-highlight
+$nu.cache-dir
+$nu.current-exe
+$nu.home-path
+nvim ~/dotfiles/packages-list.md
+yay -Ss spacedrive
+c;ear
+clear
+yay -Q
+yay -Q | nu
+clear
+yay -Q | table
+clear
+config nu
+ls
+config nu
+cd 
+cd bpba
+clear
+config nu
+$env.PROMPT_COMMAND
+$env.PROMPT_COMMAND_RIGHT
+grep
+clear
+aa \
+efibootmgr \
+config nu --doc | nu-highlight | bat
+bat
+sudo pacman -S bat
+nvim ~/dotfiles/packages-list.md
+clear
+config nu --doc | nu-highlight | bat
+config nu
+ls
+ls /
+$env.config.table.mode = "basic_compact"
+ls /
+$env.config.table.mode = "ascii_rounded"
+ls /
+$env.config.table.mode = "dots"
+ls /
+$env.config.table.mode = "reinforced"
+ls /
+$env.config.table.mode = "restructured"
+ls /
+$env.config.table.mode = "rounded"
+ls /
+$env.config.table.mode = "single"
+ls /
+$env.config.table.mode = "thin"
+ls /
+$env.config.table.mode = "with_love"
+ls /
+$env.config.table.mode = "markdown"
+ls /
+$env.config.table.mode = "light"
+ls /
+$env.config.table.mode = "rounded"
+clear
+unzip
+nvim ~/dotfiles/packages-list.md
+clear
+yay -S unzip
+job list
+clear
+$env.NU_LIB_DIRS
+config nu
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+nvim ~/dotfiles/packages-list.md
+cargo
+clear
+cargo
+clear
+cargo nu
+config nu
+clear
+ls
+cd /opt/yay-bin/
+gstat
+config nu
+$env.config
+c;ear
+clear
+$env.HOME
+config nu
+ls ~/.config/nushell
+mkdir ~/.config/nushell/plugins
+plugin list
+plugin add nu_plugin_gstat
+plugin list
+ls ~/.config/nushell/plugins/
+$env.NU_LIB_DIRS
+config nu
+plugin list
+gstat
+plugin use gstat
+gstat
+cd /opt/yay-bin/
+gstat
+git status
+ls
+cd ~
+cd ~/dotfiles/
+gstat
+plugin list
+gstat
+plugin list
+wl-copy | $env.HOME
+clear
+nupm
+clear
+mkdir ~/vpn
+clear
+cd ..
+cd vpn
+ls
+clear
+unzip `~/Downloads/AyuGram Desktop/m_panfilov.zip`
+ls
+mv m_panfilov/config/ ./m_panf
+cd m_panf/
+rm ../m_panfilov/ -rf
+yay -S openvpn
+nvim ~/dotfiles/packages-list.md
+c;ear
+clear
+resolvconf
+clear
+yay -Ss resolvconf
+clear
+ping 192.168.55.179
+sudo openvpn config.ovpn
+yay -S firefox
+nvim /etc/host.conf
+nvim /etc/hosts
+iptables
+iptables 
+iptables -h
+clear
+config nu --default | nu-highlight
+clear
+sudo nvim /etc/hosts
+clear
+reboot --now
+reboot
+clear
+lsblk
+mount /dev/nvme1n1p1 /mnt
+sudo mount /dev/nvme1n1p1 /mnt
+sudo parted
+df -T
+df
+df --all
+lsblk -f
+mkfs.ntfs
+clear
+c;ear
+clkear
+clear
+sudo mount /dev/nvme1n1p2 /mnt
+ls /mnt
+ls /mnt/Boot/
+ls /mnt/bootmgt/
+sudo limine-scna
+sudo limine-scan
+clear
+sudo limine --help
+yay -Ss limine-entry-tool
+yay -S limine-entry-tool
+clear
+yay -Ss limine-scan
+yay -S limine-entry-tool
+limine-entry-tool 
+sudo limine-entry-tool 
+sudo limine-entry-tool --scan
+limine-scan 
+sudo limine-scan 
+clear
+yay -Rsn limine-entry-tools
+yay -Rsn limine-entry-tool
+ls /mnt/bootmgr
+ls /mnt/Windows/Boot/EFI/bootmgfw.efi
+blkid /dev/nvme0n1p2
+nvim /boot/EFI/limine/limine.conf
+sudo nvim /boot/EFI/limine/limine.conf
+clear
+reboot
+blkid /dev/nvme0n1p2
+sudo mount /dev/nvme1n1p2 /mnt
+ls /mnt
+ls /mnt/bootmgr
+ls /mnt
+sudo nvim /boot/EFI/limine/limine.conf
+reboot
+yay -Ss sober
+sudo mount /dev/nvme1n1p2 /mnt
+ls
+ls /mnt
+sudo nvim /boot/EFI/limine/limine.conf
+reboot
+sudo mount /dev/nvme1n1p2 /mnt
+clear
+ls
+cd /mnt
+lws
+ls
+clear
+blkid /dev/nvme0n1p2
+sudo nvim /boot/EFI/limine/limine.conf
+limine-bios /dev/nvme1n1
+limine bios-install /dev/nvme1n1
+sudo limine bios-install /dev/nvme1n1
+sudo limine bios-install /dev/nvme1n1p2
+sudo limine bios-install /dev/nvme1n1p1
+ls /boot/EFI/limine/
+ls
+ls /mnt
+lsblk -fs
+clear
+sudo limine bios-install /dev/nvme1n1p2
+lsblk
+sudo limine bios-install /dev/nvme1n1p1
+sudo limine bios-install /dev/nvme1n1p2
+sudo limine bios-install /dev/nvme1n1p2 --force-mbr
+ls /mnt
+ls /mnt/Boot
+umount /mnt
+umount /mnt -R
+sudo umount /mnt -R
+sudo umount -R /mnt
+sudo umount  /mnt
+sudo umount -R /mnt
+ls
+ls /mnt
+cd ..
+sudo umount -R /mnt
+sudo mount /dev/nvme1n1p2 /mnt
+lsblk
+sudo mount /dev/nvme1n1p2 /mnt
+yay -S ntfs-3g
+sudo mount /dev/nvme1n1p2 /mnt
+sudo mount /dev/nvme1n1p1 /mnt
+sudo mount /dev/nvme1n1 /mnt
+sudo mount /dev/nvme1n1p2 /mnt
+sudo mount -t ntfs-3g /dev/nvme1n1p2 /mnt
+lsblk
+cd ~/dotfiles/
+ls
+git status
+git add .
+ls ~/.config -a
+mv ~/.config/wezterm/wezterm.lua ~/dotfiles/.config/
+mv ~/.config/wezterm/wezterm.lua ~/dotfiles/.config/wezterm
+mv ~/dotfiles/.config/.wezterm.lua ~/dotfiles/.config/wezterm
+mv ~/dotfiles/.config/wezterm.lua ~/dotfiles/.config/wezterm
+rm -rf ~/.config/wezterm/
+stow .
+git status

@@ -1,0 +1,21 @@
+### Arch
+
+- `linux-cachyos-rt-bore` - kernel
+- `limine` - bootloader
+- `btop` - `htop` alternative
+- `nvim` - text editor
+- `zsh` - shell
+- `nushell` - alternative shell
+- `zoxide` - `cd` alternative
+- `telegram-desktop` - messenger
+- `steam` - ...
+- `lsd` - `ls` alternative
+- `volta` - `nvm` alternative
+- `openssh` - ...
+- `yay` - aur helper
+- `yazi` - TUI file manager
+- `wl-clipboard` - copy paste
+- `bat` - cat alternative
+- `unzip` - ...
+- `rust` - ...
+- `openvpn` - ...

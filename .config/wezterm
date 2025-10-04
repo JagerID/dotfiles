@@ -34,9 +34,24 @@ config.use_fancy_tab_bar = false
 
 config.animation_fps = 165
 
+-- Launch Menu
+-- TODO: Сделать keybindings для launch_menu (04.10.2025)
+config.launch_menu = {
+  {
+    args = { "/bin/nu", "-l" },
+    label = "Nushell"
+  },
+  {
+    args = { "/bin/zsh", "-l" },
+    label = "Zsh"
+  }
+}
+
+config.default_prog = { "/bin/nu", "-l" }
+
 -- Shell
 
-config.default_prog = { "/bin/zsh", "-l" }
+-- config.default_prog = { "/bin/nu", "-l" }
 
 -- Default path
 
