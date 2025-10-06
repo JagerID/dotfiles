@@ -20,7 +20,7 @@
   "workbench.colorTheme": "Bearded Theme Monokai Black",
   "terminal.explorerKind": "external",
   "terminal.external.linuxExec": "wezterm",
-  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.linux": "nu",
   "powermode.enabled": true,
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

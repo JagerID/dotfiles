@@ -461,3 +461,461 @@ mv ~/dotfiles/.config/wezterm.lua ~/dotfiles/.config/wezterm
 rm -rf ~/.config/wezterm/
 stow .
 git status
+git add .
+git commit -m "add nushell config, move wezterm config to .config folter, add packages list"
+clear
+git commit -m "add nushell config, move wezterm config to .config folter, add packages list"
+git config --global user.email "tokyo-jager@yandex.ru"
+clear
+git commit -m "add nushell config, move wezterm config to .config folter, add packages list"
+git config --global user.name "JagerID"
+clear
+git push
+git commit -m "add nushell config, move wezterm config to .config folter, add packages list"
+git push
+clear
+ls 
+ls ..
+clear
+lsblk
+ls /mnt
+clear
+lsblk
+sudo mount /dev/sda1 /mnt
+cd /mnt
+ls
+rm `WINDOWSSS (1).iso`
+sudo rm `WINDOWSSS (1).iso`
+sudo rm Win11_Atlas_OS_24h2_v26100_2605_ru.iso
+sudo rm cachyos-desktop-linux-250828.iso
+sudo rm voenka.md
+sudo rm ru-Windows-11-Pro-24h2-26100.4946-RG.iso
+sudo rm 26058.1100.240211-0529.GE_RELEASE_SVC_PROD1_CLIENTMULTI_X64FRE_RU-RU.ISO
+ls
+lsblk --help
+lsblk --help | grep space
+df -h
+ls 
+clear
+yay -S qbittorrent
+nvim ~/dotfiles/packages-list.md
+ls ~/.config/Code
+c;ear
+rm ~/.config/Cursor/User/settings.json
+ls -s ~/.config/Cursor/User/settings.json ~/.config/Code/User/settings.json
+ls -s ~/.config/Code/User/settings.json ~/.config/Cursor/User/settings.json
+cp ~/.config/Code/User/settings.json ~/.config/Cursor/User/
+sudo nvim /etc/mkinitcpio.conf
+sudo nvim /etc/modprobe.d/nvidia.conf
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+clear
+sudo pacman -S spacedisk
+sudo pacman -S spacedrive
+pacman -Ss nvidia
+pacman -Q | grep nvidia
+sudo pacman -S nvidia
+mkinitcpio -p linux-cachyos-rt-bore
+sudo mkinitcpio -p linux-cachyos-rt-bore
+ls /boot/
+whoami
+cat /etc/hostname
+nmcli device wifi connect JagerID password 1737Query
+reboot
+clear
+yay -Ss ansys
+yay -S wireguard-tools
+nvim ~/dotfiles/packages-list.md
+clear
+ls
+ls vpn
+ls ~/vpn
+cd ..
+mv ~/Downloads/Hyprland-Home.conf ~/vpn
+cd vpn/
+clear
+wg-quick --help
+wg-quick up Hyprland-Home.conf
+yay -S resolvconf
+wg-quick up Hyprland-Home.conf
+cat /etc/NetworkManager/conf.d/rc-manager.conf
+sudo nvim /etc/NetworkManager/conf.d/rc-manager.conf
+systemctl restart NetworkManager
+wg-quick up Hyprland-Home.conf
+traceroute archlinux.org
+tracepath  archlinux.org
+tracepath archlinux.org
+clear
+ping 192.168.55.179
+sudo rm /etc/NetworkManager/conf.d/rc-manager.conf
+clear
+resolvconf -U
+wg-quick up Hyprland-Home.conf
+resolvconf -u
+sudo resolvconf -u
+wg-quick up Hyprland-Home.conf
+cd ~/vpn
+wg-quick up Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up Hyprland-Home.conf
+glxinfo
+bash
+nvim ~/.config/hypr/core/variables.conf
+;s 
+ls -f ~/.config/hypr
+ls -f ~/.config/hypr/*
+ls -f ~/.config/hypr/**
+ls -f ~/.config/hypr/**/*
+nvim ~/.config/hypr/core/envs.conf
+hyprctl clients
+hyprctl clients | where xwayland == 1
+wg-quick down Hyprland-Home.conf
+wg-quick down ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+sudo nvim /etc/resolv.conf
+nvim ~/.config/hypr/hyprland.conf
+clear
+hyprctl --help
+pacman -Q | grep nvidia
+sudo nvim /etc/resolv.confclear
+clear
+nvim ~/.config/Code/User/settings.json
+nvim ~/.config/Cursor/User/settings.json
+nushell
+wg-quick up ~/vpn/Hyprland-Home.conf
+chromium --ozone-platform=wayland --enable-features=WaylandWindowDecorations
+chromium --ozone-platform=wayland
+chromium --enable-features=UseOzonePlatform --ozone-platform=wayland
+nushell
+chromium --enable-features=UseOzonePlatform --ozone-platform=wayland
+chromium --help
+chromium --disable-gpu
+yay -Rsn chromium
+yay -S spacedrive
+clear
+bun dev
+clear
+git add .
+git commit -m "fix state"
+clear
+git push
+git log
+clear
+df -T
+df -Th
+yay -S firefox-developer-editiomn
+yay -S firefox-developer-edition
+yay -S hyprshot
+ls
+ls /
+ls / | explore
+clear
+ls / | sort-by size | reverse
+rm /a.txt
+sudo rm /a.txt
+ls / -a | sort-by size | reverse
+ps | describe
+ps
+df -Th
+du
+du /
+nvim ~/.config/hypr/core/variables.conf
+clear
+wg-quick down ~/vpn/Hyprland-Home.conf
+sudo nvim /etc/resolv.confclear
+sudo nvim /etc/resolv.conf
+cat ~/Downloads/Тропа.geojson
+clear
+cat ~/Downloads/AddressType.csv
+~/Downloads/AddressType.csv | from csv
+> ~/Downloads/AddressType.csv | from csv
+open ~/Downloads/AddressType.csv | from csv
+open ~/Downloads/AddressType.csv | from csv --noheaders
+open ~/Downloads/AddressType.csv
+open ~/Downloads/Тропа.geojson
+open ~/Downloads/Тропа.geojson --raw
+open ~/dev/react_scale/package.json
+clear
+open react_scale/bun.lock
+clear
+open react_scale/vite.config.ts
+clear
+open ~/Downloads/AddressType.csv
+open ~/Downloads/AddressType.csv | first 2
+cat ~/Downloads/AddressType.csv
+open ~/Downloads/AddressType.csv | first 2 | where Billing == Home
+open ~/Downloads/AddressType.csv | first 2 | where "Billing" == "Home"
+~/Downloads/AddressType.csv | explore
+~/Downloads/AddressType.csv | describe
+open ~/Downloads/AddressType.csv | describe
+open ~/Downloads/AddressType.csv | first 2 | where "Billing {B84F78B1-4EFE-4A0E-8CB7-70E9F112F886}  2008-04-30 00:00:00" == "Home"
+open ~/Downloads/AddressType.csv | first 2 | where "1 Billing {B84F78B1-4EFE-4A0E-8CB7-70E9F112F886}  2008-04-30 00:00:00" == "Home"
+cat ~/Downloads/AddressType.csv
+clear
+[[title description], [title_1, desc_1], [title_2, desc_2]] | to csv
+[[title description]; [title_1, desc_1]; [title_2, desc_2]] | to csv
+[[title description]; [title_1 desc_1]; [title_2 desc_2]] | to csv
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv | open
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv | open .
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv | describe
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv --separator ";"
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv --separator | boba.csv
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv --separator ";" | boba.csv | ls
+[[title description]; [title_1 desc_1] [title_2 desc_2]] | to csv --separator ";" | boba.csv
+clear
+hyprctl monitors
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+yay -Q | <\n>grep xf86
+yay -Q | xorg
+yay -Q | grep xorg
+yay -Q | grep wayland
+sudo pacman -S nvidia nvidia-utils
+chwd --list-all
+clear
+wg-quick down ~/vpn/Hyprland-Home.conf
+sudo nvim /etc/resolv.conf
+clear
+yay -Rsn linux-cachyos-rt-bore-nvidia nvidia && yay -S linux-cachyos-rt-bore-nvidia-open
+yay -Rsn linux-cachyos-rt-bore-nvidia nvidia; yay -S linux-cachyos-rt-bore-nvidia-open
+yay -Q | grep nvidia
+yay -Syu
+sudo nvim /etc/mkinitcpio.conf
+mkinitcpio -L
+yay -Q | mkinitcpio
+yay -Q | grep mkinitcpio
+sudo pacman -q cachyos-gaming-meta
+sudo pacman -g cachyos-gaming-meta
+sudo pacman -Ss cachyos-gaming-meta
+sudo pacman -Ss cachyos-
+sudo pacman -Ss cachyos-rt
+sudo pacman -Ss cachyos-gaming-meta
+sudo pacman -S cachyos-gaming-meta
+clear
+yay -S lutris
+sudo cat /etc/environment
+sudo nvim /etc/environment
+ls ~
+ls ~/games
+ls -a
+ls -a ~
+sudo resolvconf -u
+clear
+wg-quick up ~/vpn/Hyprland-Home.conf
+clear
+sudo mount /dev/sda1 /mnt
+ls /mnt
+mv ~/Downloads/ru-Windows-11-Pro-24h2-26100.4946-RG.iso /mnt/
+sudo mv ~/Downloads/ru-Windows-11-Pro-24h2-26100.4946-RG.iso /mnt/
+ls /mnt
+ls -l /mnt
+reboot
+shutdown --help
+reboot --help
+sudo nvim ~/.config/hypr/core/variables.conf
+glxinfo | grep "OpenGL renderer"
+inxi -G
+lspci | grep -E "VGA|3D"
+libinput debug-events
+cat /etc/udev/rules.d/50-usb-power-save.rules 
+nvidia-smi
+yay -S vesktop
+pacman -Ss nvidia
+pacman -Ss nvidia-
+pacman -Ss nvidia-5
+pacman -Q | grep nvidia
+yay -Ss nvidia-*-dkms
+yay -S cachyos/nvidia-dkms
+yay -Rsn nvidia*
+yay -Rsn linux-cachyos-rt-bore-nvidia nvidia; yay -S nvidia-dkms
+yay -Q | grep mkinitcpio
+yay -Q | grep nvidia
+yay -S cachyos/nvidia-dkms
+where .lck
+rm /var/lib/pacman/db.lck
+sudo rm /var/lib/pacman/db.lck
+clear
+yay -S cachyos/nvidia-dkms
+yay -Rsn linux-cachyos-rt-bore-nvidia-open nvidia-utils; yay -S nvidia-dkms
+yay -Rsn nvidia-utils; yay -S nvidia-dkms
+yay -S nvidia-dkms
+yay -Q | grep nvidia
+yay -Rsn nvidia-dkms; yay -S nvidia-dkms
+yay -Rsn nvidia-dkms
+yay -Q | grep nvidia
+yay -S nvidia-dkms
+rm -rf /usr/src/nvidia-580.95.05/
+sudo rm -rf /usr/src/nvidia-580.95.05/
+yay -S nvidia-dkms
+rm -rf /usr/share/licenses/nvidia-dkms/
+sudo rm -rf /usr/share/licenses/nvidia-dkms/
+yay -S nvidia-dkms
+yay -S linux-header 
+yay -S linux-headers
+yay -S linux
+ls /boot
+sudo nvim /boot/EFI/limine/limine.conf
+reboot
+yay -S nvidia-dkms
+sudo nvim /etc/mkinitcpio.conf
+yay -S nvidia
+yay -Q | linux-
+yay -Q | grep linux-
+yay -Q | grep cachyos/
+sudo nvim /etc/pacman.conf
+mkinitcpio --verbose -P
+sudo mkinitcpio --verbose -P
+mkinitcpio -P
+sudo mkinitcpio -P
+mount
+mount|grep /boot
+ls /boot
+grep /boot /etc/fstab
+grep /boot
+bash 0x
+sudo nvim /usr/lib/initcpio/functions
+sudo mkinitcpio -P
+sudo nvim /usr/lib/initcpio/functions
+sudo mkinitcpio -P
+sudo nvim /usr/lib/initcpio/functions
+lsinitcpio --early
+lsinitcpio --early -h
+lsinitcpio --early -a
+sudo mkinitcpio -P
+pacman -Qi dwarfs
+yay -Qi dwarfs
+yay -Qi btrfs;
+yay -Qi btrfs
+yay -S flatpack
+yay -S flatpak
+cd /opt/zapret-discord-youtube-linux/
+flatpak run org.vinegarhq.Sober
+cd /opt/zapret-discord-youtube-linux/
+flatpak run org.vinegarhq.Sober
+timedatectl
+hyprctl monitors
+pacman -Q | grep nvidia
+yay -S nvidia
+sudo mkinitcpio -P
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+clear
+yay -Q | grep nvidia
+yay -Rsn nvidia
+yay -S nvidia-dkms
+sudo nvim /etc/mkinitcpio.conf
+yay -Q | grep egl
+yay -S nvidia-utils
+fbdev
+sudo nvim /etc/mkinitcpio.conf
+sudo nvim /etc/modprobe.d/nvidia.conf
+sudo nvim /etc/modprobe.d/nvidia-gps.conf
+wg-quick down ~/vpn/Hyprland-Home.conf
+"nameserver 192.168.0.1" | /etc/resolvconf.conf
+sudo "nameserver 192.168.0.1" | /etc/resolvconf.conf
+sudo "nameserver 192.168.0.1" > /etc/resolvconf.conf
+"nameserver 192.168.0.1" > /etc/resolvconf.conf
+cat /etc/resolvconf.conf
+cat /etc/resolv.conf
+"nameserver 192.168.0.1" > /etc/resol.conf
+cat /etc/resolv.conf
+sudo cat "nameserver 192.168.0.1" > /etc/resol.conf
+sudo nvim /etc/resolv.conf
+yay -S dkms
+yay -Q | grep nvidia
+yay -Rsn linux-firmware-nvidia nvidia-dkms nvidia-utils lib32-nvidia-utils
+yay -Rsn linux-firmware-nvidia nvidia-dkms nvidia-utils lib32-nvidia-utils steam proton-cachyos-slr umu-launcher
+yay -Rsn linux-firmware-nvidia nvidia-dkms nvidia-utils lib32-nvidia-utils steam proton-cachyos-slr umu-launcher steam-native-runtime
+yay -Rsn linux-firmware-nvidia nvidia-dkms nvidia-utils lib32-nvidia-utils steam proton-cachyos-slr umu-launcher steam-native-runtime cachyos-gaming-meta
+yay -Rsn linux-firmware-nvidia nvidia-dkms nvidia-utils lib32-nvidia-utils steam proton-cachyos-slr umu-launcher steam-native-runtime cachyos-gaming-meta linux-firmware
+clear
+yay -S linux-firmware
+reboot
+yay -S steam
+clear
+AyuGram
+yay -Ss libavfilter
+yay -S ffmpeg
+yay -Rsn ffmpeg
+yay -Syu ffmpeg
+yay -Rsn ffmpeg ayugra-desktop-bin
+yay -Rsn ffmpeg ayugram-desktop-bin
+yay -Rsn ffmpeg ayugram-desktop-bin firefox-developer-edition
+yay -S firefox-developer-edition
+clea
+r
+clear
+ls
+clear
+ls /
+clear
+yay -Rsn linux
+ls /boot
+yay -Rsn linux-headers
+yay -S linux-zen linux-zen-headers
+clear
+ls
+sudo nvim /boot/EFI/limine/limine.conf
+yay -Rsn linux-cachyos-rt-bore-nvidia
+yay -Q | grep nvidia
+yay -Rsn linux-firmware-nvidia 
+yay -Q | grep cachyos-
+reboot
+firefox-developer-edition 
+yay -S firefox-developer-edition
+yay -Syu
+yay -Q | grep cursor
+yay -Rsn cursor-bin
+cler
+clear
+yay -Rsn cursor-bin
+yay -Syu
+clear
+ls
+ba
+bat
+bat /boot/EFI/limine/limine.conf
+sudo nvim /boot/EFI/limine/limine.conf
+firefox-developer-edition 
+yay -S firefox-developer-edition
+yay -Rsn firefox-developer-edition
+yay -S firefox-developer-edition
+rm -rf /usr/bin/firefox-developer-edition
+sudo rm -rf /usr/bin/firefox-developer-edition
+sudo rm -rf /usr/bin/firefox
+yay -S firefox-developer-edition
+sudo rm -rf /usr/lib/firefox-developer-edition/
+sudo rm -rf /usr/lib/firefox/
+clear
+yay -Q
+yay -S firefox-developer-edition
+yay -Rsn /usr/share/applications/firefox-developer-edition.desktop
+sudo rm -rf /usr/share/applications/firefox-developer-edition.desktop
+yay -S firefox-developer-edition
+sudo rm -rf /usr/share/gnome-shell/search-providers/firefox-developer-edition.search-provider.ini
+sudo rm -rf /usr/share/gnome-shell/search-providers/firefox.search-provider.ini
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/firefox-developer-edition.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/firefox.png
+sudo rm -rf /usr/share/icons/hicolor/**/firefix-developer-edition.png
+sudo rm -rf /usr/share/icons/hicolor/**/firefox.png
+sudo rm -rf /usr/share/icons/hicolor/**/firefox-developer-edition.png
+yay -S firefox-developer-edition
+rm -rf /usr/share/icons/hicolor/**/firefox-developer-edition.svg
+sudo rm -rf /usr/share/icons/hicolor/**/firefox-developer-edition.svg
+sudo rm -rf /usr/share/icons/hicolor/**/firefox.svg
+sudo rm -rf /usr/share/metainfo/org.mozilla.firefox*
+clear
+yay -S firefox-developer-edition
+rm -rf /usr/share/icons/hicolor/symbolic/apps/firefox-developer-edition-symbolic.svg
+sudo rm -rf /usr/share/icons/hicolor/symbolic/apps/firefox-developer-edition-symbolic.svg
+sudo rm -rf /usr/share/icons/hicolor/symbolic/apps/firefox-symbolic.svg
+yay -S firefox-developer-edition
+firefox-developer-edition 
+firefox-developer-edition &
+firefox-developer-edition&
+reboot
+cd ~/dotfiles/
+git status
