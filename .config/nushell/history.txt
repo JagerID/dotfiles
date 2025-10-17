@@ -919,3 +919,1465 @@ firefox-developer-edition&
 reboot
 cd ~/dotfiles/
 git status
+rm -rf ~/.config/nushell/; stow .
+reboot
+sudo nvim /boot/EFI/limine/limine.conf
+lsblk
+sudo mount /dev/nvme1n1p1
+sudo mount /dev/nvme1n1p1 /mnt
+sudo pacman -S fuzzel
+sudo pacman -Syu fuzzel
+nmcli device wifi connect JagerID password 1737Query
+systemctl enable NetworkManager --now
+clear
+sudo pacman -Syu fuzzel
+sudo limine-scan
+sudo pacman -Ss limine-mkinitcpio
+sudo pacman -Ss limine-
+sudo pacman -Ss limine
+ls /usr/share/limine/
+sudo mount /dev/nvme1n1p2 /mnt
+cd /mnt
+ls
+;s **/*.efi
+ls **/*.efi
+cd Boot
+ls **/*.efi
+cd ..
+ls
+cd Windows/
+ls **/*.efi
+blkid /dev/nvme1n1p2
+sudo nvim /boot/EFI/limine/limine.conf
+reboot
+df -T 
+lsblk
+reboot
+ls /boot
+sudo ls /boot
+sudo ls /boot/EFI
+sudo ls /boot/EFI/Microsoft
+sudo ls /boot/EFI/Microsoft/Boot
+rm /boot/EFI/Microsoft
+sudo rm -rf /boot/EFI/Microsoft
+reboot
+ls /boot/
+sudo ls /boot
+sudo ls /boot/EFI
+sudo ls /boot/EFI/Boot
+sudo ls /boot/EFI/Microsoft
+sudo ls /boot/EFI/Microsoft/Boot
+blkid
+sudo nvim /boot/EFI/limine/limine.conf
+reboot
+git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git<\n>cd zapret-discord-youtube-linux<\n>sudo bash main_script.sh
+git clone https://aur.archlinux.org/yay-bin.git
+sudo mv yay-bin/ /opt
+cd ..
+sudo mv zapret-discord-youtube-linux/ /opt
+sudo chmod /opt/* 777
+sudo chmod 777 -R /opt/*
+ls /opt
+ls /opt -l
+ls / -l
+cd /opt
+ls
+cd yay-bin/
+makepkg -si
+clear
+yay -Syu
+cd ../zapret-discord-youtube-linux/
+./main_script.sh
+yay -S nftables
+pactl
+pacman -Q | grep nvidia
+pacman -Q | grep pipewire
+pacman -Q | grep wire
+clear
+wireplumber
+wireplumber --help
+yay -S ayugram-desktop-bin
+yay -S ayugram-desktop
+clear
+pacman -Q
+pacman -Q | wc -l
+pacman -Rsnu
+sudo pacman -Rsnu
+sudo pacman -u
+sudo pacman -U
+sudo pacman -Qdtq
+yay -S ayugram-desktop
+pacman -Q | grep ninja
+pacman -Q | grep qt6
+clear
+yay -S ayugram-desktop-bin
+AyuGram 
+clear
+cd
+mkdir ~/vpn
+ls
+cd vpm
+cd vpn
+ls
+unzip 
+yay -S unzip
+unzip `~/Downloads/AyuGram Desktop/m_panfilov.zip` .
+unzip `~/Downloads/AyuGram Desktop/m_panfilov.zip` 
+yay -Ss networkmanager-openvpn
+yay -S networkmanager-openvpn
+sudo pacman -S openvpn
+pacman -Qi openvpn
+sudo openvpn --config ~/vpn/m_panfilov/config/config.ovpn
+sudo openvpn --config ~/vpn/m_panfilov/config/config.ovpn --help
+cd ~/vpn/m_panfilov/config/; sudo openvpn config.ovpn
+networkmanager --help
+nmcli connection import type openvpn file config.ovpn --help
+mv config.ovpn miigaik.ovpn
+sudo openvpn miigaik.ovpn
+nmcli connection import type openvpn file miigaik.ovpn
+yay -S btop
+btop
+nmcli connection up miigaik
+tracepath 192.168.55.179
+ping 192.168.55.179
+sudo openvpn miigaik.ovpn
+tracepath 192.168.55.179
+nmcli connection down miigaik
+nmcli connection up miigaik
+mkdir dev
+clear
+cd dev
+clearf
+clear
+nmcli connection down miigaik
+yay -S bat
+clear
+clea
+clear
+claer
+clear
+clea
+cleart
+cleфк
+clear
+bat ~/.ssh/id_ed25519.pub
+bat ~/.ssh/id_ed25519
+rm ~/.ssh/id*
+ls ~/.ssh
+bat ~/.ssh/known_hosts
+c;ear
+clear
+bat /etc/hostname
+sudo nvim /etc/hostname
+reboot
+clear
+whoami
+uname -r
+uname
+ssh-keygen -t ed25519
+clear
+bat ~/.ssh/id_ed25519.pub
+bat ~/.ssh/id_ed25519
+clear
+nmcli connection up miigaik
+git clone git@git.corp.miigaik.ru:lit/entrance/theme-selector/theme-selector-backend.git
+git clone git@git.corp.miigaik.ru:lit/entrance/theme-selector/theme-selector-frontend.git
+clear
+nmcli connection down miigaik
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+curl https://get.volta.sh | bash
+volta install node@latest
+clear
+volta -V
+volta install node@latest
+volta install bun@latest
+volta setup
+yay -S qbittorrent
+firefox-developer-edition&
+firefox-developer-edition
+firefox-developer-edition &
+yay -S chromium
+clear
+cd /opt/zapret-discord-youtube-linux/
+./main_script.sh
+yay -S ffmpeg
+yay -Ss ffmpeg
+yay -Ss ffmpeg | grep -E Installed
+grep --help
+grep --help | grep -E -E
+grep --help | grep -E E
+grep --help | grep -G
+yay -Ss ffmpeg | grep -G Installed
+yay -Ss ffmpeg | grep -R Installed
+yay -Ss ffmpeg | grep -P Installed
+clear
+wpctl
+wpctl status
+wpctl set-default 41
+wpctl set-default 
+pw-top
+pw-top --help
+pw-top -b
+wpctl set-default 55
+wpctl set-default 52
+wpctl set-default 72
+wpctl set-default 53
+wpctl set-default 51
+wpctl set-default 55
+wpctl set-default 52
+wpctl
+wpctl settings
+clear
+yay -Ss lazydocker
+yay -S lazydocker lazygit
+df -T
+df -Th
+yay -Rsn docker-desktop
+chromium --enable-features=UseOzonePlatform --ozone-platform=wayland
+yay -Rsn chromiumd
+yay -Rsn chromium
+yay -S chromium
+chromium --enable-features=UseOzonePlatform --ozone-platform=wayland
+chromium chromium --ozone-platform=wayland
+yay -Ss chromium
+yay -S vesktop-bin
+yay -S ulaa-browser
+clear
+yay -Rsn firefox-developer-edition chromium
+cd /opt/zapret-discord-youtube-linux/
+ls ~/.config -a
+ulaa-browser-stable 
+ldconfig -v
+ldconfig -v | grep wayland
+sudo ldconfig -v | grep wayland
+yay -S steam
+sudo pacman -S steam
+sudo nvim /etc/pacman.conf
+sudo pacman -Syu steam
+yay -Ss betterbird
+yay -S betterbird-ru-bin
+clear
+ls
+nmcli connection up miigaik
+ssh dale@192.168.55.184
+nmcli connection down miigaik
+clear
+wezterm connect beget.server
+clear
+nvim ~/.config/wezterm/wezterm.lua
+nmcli connection up miigaik
+wezterm connect dev.miigaik
+nmcli connection down miigaik
+nvim ~/.config/wezterm/wezterm.lua
+yay -S flatpak
+reboot
+nvim ~/.config/hypr/core/variables.conf
+clear
+cp theme-selector-backend website-builder
+cp theme-selector-backend website-builder -r
+ls
+mv website-builder/ website-builder-backend
+code website-builder-backend/
+yay -S visual-studio-code-backend
+yay -S visual-studio-code-bin
+code website-builder-backend/
+mv ~/Downloads/Hyprland-Home.conf ~/vpn
+wg-quick up ~/vpn/Hyprland-Home.conf
+yay -S wireguard-tools
+wg-quick up ~/vpn/Hyprland-Home.conf
+yay -S resolvconf
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+code .
+code website-builder-backend/
+yay -S docker
+yay -S docker-compose
+clear
+systemctl enable docker
+systemctl enable docker --now
+usermod -aG jager wheel
+usermod -aG docker jager
+sudo usermod -aG docker jager
+exit
+groups
+systemctl restart docker
+code website-builder-backend/
+hyprctl exit
+hyprland exit
+logout
+exit
+exit --help 
+exit 1
+exit 0
+hyprctl dispatch exit 1
+groups
+hyprctl dispatch exit 1
+clear
+groups
+nvim ~/.config/hypr/core/variables.conf
+docker compose -f ./deploy/compose-db.yml up -d
+docker compose -f ./deploy/compose-db.yml up
+nvim ~/.docker/config.json
+wg-show
+clear
+docker compose -f ./deploy/compose-db.yml up
+clear
+docker system prune -a --volumes
+docker compose -f ./deploy/compose-db.yml up
+cd deploy/
+docker compose -f ./compose-db.yml up
+cd ../..
+rm -rf website-builder-backend/
+bunx create vite@latest
+bun create vite
+cd animations/
+code .
+clear
+cd /opt/zapret-discord-youtube-linux/
+yay -S obsidian
+yay -S obsidian syncthing
+clear
+bun i gsap
+cd /opt/zapret-discord-youtube-linux/
+pw-top
+wpctl set-default 52
+ulaa-browser-stable 
+wtctl status
+wpctl status
+wpctl set-default 56
+wpctl status
+wpctl set-default 56
+sudo wpctl set-default 56
+systemctl status pipewire
+pacman -Qs 'wireplumber|pulse|pipewire'
+pacman -Q 'wireplumber|pulse|pipewire'
+pacman -Q | grep pipewire
+ls /etc/pipewire/
+aplay -lL<\n>
+systemctl --user status wireplumber pipewire{,-pulse,-jack}<\n>
+yay -Rsn pipewire
+clear
+wpctl inspect 56
+mkdir -p ~/dotfiles/.config/wireplumber/wireplumber.conf.d/
+mkdir -P ~/dotfiles/.config/wireplumber/wireplumber.conf.d/
+mkdir ~/dotfiles/.config/wireplumber/wireplumber.conf.d/
+nvim ~/dotfiles/.config/wireplumber/wireplumber.conf.d/device-rename.conf
+wpctl status
+wpctl set-default 54
+wpctl status
+wpctl set-default 52
+wpctl inspect 56
+nvim ~/dotfiles/.config/wireplumber/wireplumber.conf.d/device-rename.conf
+wpctl --help
+wpctl clear-default
+wpctl status
+wpctl set-default 56
+wpctl status
+wpctl set-default 52
+wpctl set-default 55
+wpctl status
+wpctl clear-default
+wpctl inspect 52
+pacmd
+wpctl status
+wpctl set-default 52
+cd ~/dotfiles/
+stow .
+wpctl status
+systemctl status wireplumber
+systemctl --user status wireplumber pipewire{,-pulse,-jack}<\n>
+systemctl restart wireplumber pipewire{,-pulse,-jack}<\n>
+clear
+systemctl --user restart wireplumber
+wpctl status
+nvim ~/dotfiles/.config/wireplumber/wireplumber.conf.d/device-rename.conf
+wpctl inspect 49
+nvim ~/dotfiles/.config/wireplumber/wireplumber.conf.d/device-rename.conf
+wpctl status
+systemctl --user restart wireplumber
+wpctl status
+wpctl set-default 52
+wpctl clear-default
+systemctl --user restart wireplumber
+reboot
+cd /opt/zapret-discord-youtube-linux/
+wpctl status
+wpctl 
+systemctl --user restart wireplumber
+wpctl status
+cd /opt/zapret-discord-youtube-linux/
+ls
+code animations/
+wpctl clear-default
+wpctl status
+wpctl set-default 54
+wpctl set-default 55
+pacman -Q | grep wire
+pavucontrol
+yay -S pavucontrol
+pactl set-default-sink
+pactl 
+pactl --help
+pactl list
+pactl stat
+systemctl --user status pipewire
+systemctl --user status pipewire-pulse
+pacman -Q | grep pipewire
+yay -S pipewire-pulse
+systemctl --user status pipewire-pulse
+systemctl --user --now enable pipewire-pulse
+systemctl --user status pipewire-pulse
+pactl list
+wpctl set-default 55
+wpctl list
+wpctl status
+wpctl set-default 54
+wpctl set-default 53
+wpctl set-default 51
+wpctl clear-default
+wpctl set-default 54
+wpctl set-default 55
+wpctl status
+pactl list
+pactl get-
+pactl 
+pactl --help
+pactl list short
+pactl set-default-sink 93
+yay -Rsn pipewire-pulse
+yay -Rsn wireplumber
+yay -Rsn wireplumber pipewire-session-manager pipewire
+yay -Rsn wireplumber pipewire-session-manager pipewire pipewire-jack pipewire-audio
+yay -Rsn wireplumber pipewire-session-manager pipewire pipewire-jack pipewire-audio ffmpeg ayugram-desktop-bin portaudio
+yay -Rsn wireplumber pipewire-session-manager pipewire pipewire-jack pipewire-audio ffmpeg ayugram-desktop-bin portaudio lib32-pipewire
+yay -Rsn wireplumber pipewire-session-manager pipewire pipewire-jack pipewire-audio ffmpeg ayugram-desktop-bin portaudio lib32-pipewire steam
+pacman -Qdt
+pacman -Rsn (pacman -Qdt)
+sudo pacman -Rsn $(sudo pacman -Qdt)
+sudo pacman -Rsn ^$(sudo pacman -Qdt)
+sudo pacman -Rsn \$(sudo pacman -Qdt)
+sudo ^pacman -Rsn $(sudo pacman -Qdt)
+clear
+pacman -Q | grep alsa
+amixer
+alsamixer
+yay -S alsa-firmware
+yay -S alsa-utils
+amixer
+alsamixer
+sudo pacman -S pipewire
+pacman -Q | grep pipe
+sudo pacman -S lib32-pipewire
+yay -S pwvucontrol
+yay -Ss pwvucontrol
+yay -S pwvucontrol
+reboot
+cd /opt/zapret-discord-youtube-linux/
+yay -Rsn pwvucontrol
+yay -S pulseaudio
+yay -S pipewire-pulse
+reboot
+wpctl status
+wpctl set-default 57
+cd /opt/zapret-discord-youtube-linux/
+yay -Rsn ulaa-browser
+yay -S ark-browser
+yay -Ss arc-browser
+yay -Ss ark-browser
+yay -Ss ark
+clear
+yay -S zen-browser
+yay -Ss zen-browser
+yay -Ss zen-browser-bin
+yay -S zen-browser-bin
+ls ~/vpn
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+wpctl status
+wpctl set-default 49
+wpctl set-default 34
+yay -S steam
+lazydocker
+systemctl enable --now docker
+groups
+lazydocker
+nvim ~/.docker/config.json
+lazydocker
+clear
+yay -Ss yandex
+yay -Ss yandex-music
+yay -S yandex-music
+cd /opt
+tar -xvf ~/Downloads/yandex-music-5.63.1-1-any.pkg.tar.zst
+sudo tar -xvf ~/Downloads/yandex-music-5.63.1-1-any.pkg.tar.zst
+;s
+ls
+cd usr
+ls
+cd ..
+mkdir yandex-music
+sudo mkdir yandex-music
+sudo mv usr yandex-music/
+sudo chmod 777 -R /opt/*
+ls -l
+cd yandex-music/usr/bin/
+ls
+./yandex-music
+cd ..
+ls
+ls -l
+ls 
+ls lib
+ls share/
+ls bin
+sh bin/yandex-music
+cd //
+cd /opt/yandex-music/
+cp usr/ /usr
+cp usr/ /usr -r
+sudo cp usr/* /usr -r
+ls /usr
+/usr/bin/yandex-music
+ls /usr/bin
+ls /usr/bin | where modified < 10
+ls /usr/bin | where modified < 10.08.2025
+ls /usr/bin | where modified.0 < 10
+rm -rf /usr/bin/yandex-music
+sudo rm -rf /usr/bin/yandex-music
+ls /usr
+ls 
+ls usr
+ls usr/share
+ls usr/share/applications/
+rm -r **/*yandex
+rm -r **/*yandex*
+rm -r **/yandex
+yay -Ss yandex-music
+yay -S yandex-music-native
+yay -Rsn yandex-music-native
+yay -S gstreamer-meta
+sudo pacman -S gstreamer-meta
+yay -S gstreamer-meta
+bun dev
+yay -S gstreamer-meta
+wpctl set-default 34
+wpctl set-default 49
+wpctl set-default 57
+wpctl set-default 34
+wpctl staus
+wpctl status
+wpctl set-default 34
+cd /opt/yandex-music/
+cd /opt/zapret-discord-youtube-linux/
+./yandex-music
+yay -Rsn gstreamer-meta
+yay -S freetube
+yay -Ss freetube
+yay -S freetube-bin
+clear
+./main_script.sh
+cd 
+wg-quick up ~/vpn/Hyprland-Home.conf
+clear
+bun i gsap
+bun dev
+bun i -D tailwindcss @tailwindcss/vite
+vite --config
+bun vite --config
+yay -S firefox-developer-edition
+yay -Rsn zen-browser
+yay -Rsn zen-browser-bin
+firefox-developer-edition &
+firefox-developer-edition
+yay -Ss ffmpeg
+yay -Sytu
+yay -Q | grep pipe
+yay -Q | grep alsa
+bun dev
+cd ..
+rm -rf portfolio/
+clear
+yay -Syu
+bun create vite
+clear
+cd ..
+rm -rf portfolio/
+cd dev
+rm -rf portfolio/
+bun create vite
+cd portfolio/
+bun i
+bun dev
+bun i -D oxlint
+bun run lint
+bun dev
+yay -S cursor-bin
+yay -Syu
+yay -S cursor-bin
+yay -Ss cursor-bin
+sudo pacman -Ss cursor
+yay -Ss cursor
+yay -Ss cursor-bin
+yay -S cursor-bin
+cd ~/Downloads/
+sudo chmod +x Cursor-1.7.39-x86_64.AppImage
+clear
+yay -Ss ffmpeg
+sudo pacman -Ss ffmpeg
+sudo pacman -S ffmpeg
+sudo pacman -S gstreamer
+sudo pacman -S gstreamer gst-libav
+sudo pacman -S gstreamer-plugins
+sudo pacman -S ffmpeg-fullAUR
+sudo pacman -S ffmpeg-full
+sudo pacman -S gst-plugins-good gst-plugins-bad gst-plugins-ugly
+pacman -Q | grep mp4
+sudo pacman -S ffmpeg4.4
+wpctl status
+wpctl set-default 43
+wpctl set-default 57
+yay -S ayugram-desktop-bin
+cd ~/vpn/m_panfilov/config/; sudo openvpn config.ovpn
+ls ~/vpn
+ls ~/vpn/m_panfilov/
+ls ~/vpn/m_panfilov/config/
+nmcli connection up miigaik
+nmcli connection down miigaik
+yay -S hyprshot
+wpctl status
+wpctl set-default 34
+cd /opt/zapret-discord-youtube-linux/
+yazi
+yay -S yazi
+clear
+yazi
+clear
+echo $HTTP_PROXY
+$HTTP_PROXY
+yay -Ss proxy
+yay -Ss networkmanager
+yay -Ss networkmanager-proxy
+yay -S noto-fonts-cjk
+nvim ~/.config/hypr/core/variables.conf
+nvim
+тьфз
+nmap
+yay -S nmap
+sudo pacman -S nmap
+clear
+sudo nmap 127.0.0.1
+sudo nmap 8.8.8.8
+yay -Ss wireshark
+yay -Ss wireshark-cli
+sudo pacman -S wireshark
+sudo pacman -Ss wireshark
+sudo pacman -S termshark
+termshark
+termshark -f 'tcp'
+termshark -f "tcp"
+termshark -f "udp"
+sudo pacman -Rsn termshark
+sudo pacman -S wireshark-cli
+wireshark
+wireshark-cli
+shark
+sudo pacman -Rsn wireshark-cli
+ls
+clear
+nmap quasar
+nmap app.scale.earth
+nmap -sS app.scale.earth
+sudo nmap -sS app.scale.earth
+sudo nmap -sS 127.0.0.1
+locate
+clear
+bun dev
+npm i --help | grep -E -s
+npm i --help | grep -E s
+npm i --help | grep -E "-s"
+npm i --help
+bun i gsap
+clear
+reboot
+cursor
+wpctl status
+wpctl set-default 57
+reboot
+wg-quick up ~/vpn/Hyprland-Home.conf
+wpctl status
+wpctl set-default 34
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+wg-quick down ~/vpn/Hyprland-Home.conf
+btop
+wg-quick up ~/vpn/Hyprland-Home.conf
+wg-quick down ~/vpn/Hyprland-Home.conf
+wg-quick up ~/vpn/Hyprland-Home.conf
+yay -Ss rubik
+yay -Ss ttf-rubik
+yay -S ttf-rubik
+yay -S ttf-rubik-vf
+ssh dale@192.168.55.184
+nmcli connection down miigaik
+nmcli connection up miigaik
+cat ~/.ssh/id_ed25519.pub
+history
+wpctl status
+wpctl set-default 57
+nmap 192.168.55.184
+git clone git@git.corp.miigaik.ru:lit/entrance/theme-selector/theme-selector-frontend.git
+ls
+cd theme-selector-frontend/
+docker compose -f deploy/compose-db.yml up 
+docker compose -f deploy/compose-nginx.yml up 
+nmcli connection down miigaik
+docker compose -f deploy/compose-nginx.yml up 
+ls
+yay -Rsn docker-desktop
+yay -Rsn docker
+yay -Rsn docker-compose
+ls ~/ -a
+rm -rf ~/.docker
+sudo pacman -S docker docker-compose
+docker compose -f deploy/compose-nginx.yml up 
+nmcli connection up miigaik
+nmcli connection down miigaik
+nmcli connection up miigaik
+nmap 192.168.55.184
+cd theme-selector-backend/
+nvim deploy/compose-prod.yml
+nmcli connection down miigaik
+docker compose -f deploy/compose-nginx.yml up 
+docker compose -f deploy/compose-prod.yml up 
+docker compose --env-file .env -f deploy/compose-prod.yml up 
+cp .env.example .env
+nvim .env
+docker compose --env-file .env -f deploy/compose-prod.yml up 
+nvim .env
+docker compose --env-file .env -f deploy/compose-prod.yml up 
+nvim deploy/compose-prod.yml
+docker compose --env-file .env -f deploy/compose-prod.yml up 
+nvim deploy/compose-prod.yml
+docker compose --env-file ./.env -f deploy/compose-prod.yml up 
+nvim .env
+docker compose --env-file ./.env -f deploy/compose-prod.yml up 
+nvim deploy/compose-prod.yml
+docker compose --env-file ./.env -f deploy/compose-prod.yml up 
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+ssh dale@192.168.55.184
+ssh dale@192.168.55.184
+nvim deploy/compose-prod.yml
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+git status
+git reset --hard
+docker system prune -a --volumes
+docker stop $(docker ps -qa)
+bash docker stop $(docker ps -qa)
+docker stop (docker ps -qa)
+docker stop docker ps -qa
+docker stop -a
+docker stop --all
+docker stop *
+docker stop .
+docker system prune -a --volumes
+cat .env
+cd theme-selector-backend/
+bat .env
+git log
+yay -S less
+git log
+clear
+git log
+clear
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim .env
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+docker system prune -a --volumes
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim .env
+nvim deploy/compose-prod.yml
+:q
+nvim deploy/compose-prod.yml
+docker ps -a
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim .env
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim .env
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim deploy/compose-prod.yml
+nvim .env
+nvim deploy/compose-prod.yml
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim .env
+nvim src/db.rs
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim .env
+docker compose --env-file ./.env -f deploy/compose-prod.yml up --build
+nvim .env
+nvim deploy/compose-prod.yml
+nmcli connection up miigaik
+nmcli connection down miigaik
+nmcli connection up miigaik
+ssh dale@192.168.55.184
+nmcli connection down miigaik
+clear
+nmcli connection up miigaik
+nmcli connection down miigaik
+reboot
+wpctl status
+wpctl set-default 34
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+nmcli connection up miigaik
+nmcli connection down miigaik
+yay -S cursor
+yay -S cursor-bin
+ls /opt
+ls
+history | grep cursor
+history | grep chmod
+history | grep cd
+cd ~/Downloads/
+ls
+ls `AyuGram Desktop/`
+rm -rf ,.*
+rm -rf ./*
+wpctl set-default 34
+wpctl set-default 57
+nmcli connection up miigaik
+ls
+nmcli connection down miigaik
+nu config
+config nu
+nvim ~/.config/nvim/lua/plugins/code.lua
+config nu
+nvim ~/.config/nvim/lua/plugins/code.lua
+config nu
+nvim ~/.config/nushell/config.nu
+nvim ~/.config/nvim/lua/plugins/code.lua
+nvim ~/.config/nvim/lua/plugins/editor.lua
+nvim ~/.config/nvim/lua/plugins/code.lua
+nvim ~/.config/nushell/config.nu
+nvim ~/.config/nvim/lua/plugins/code.lua
+nvim ~/.config/nushell/config.nu
+nvim ~/.config/nvim/lua/plugins/code.lua
+nvim ~/.config/nushell/config.nu
+nvim ~/.config/nvim/lua/plugins/code.lua
+clear
+config nu
+cursor ~/.config/nushell/config.nu
+nvim ~/.config/Code/User/settings.json
+nvim ~/.config/Cursor/User/settings.json
+which cursor
+which cursor-bin
+whicn nu
+which nu
+nvim ~/.config/Code/User/settings.json
+cd ../theme-selector-backend/
+clear
+cargo runb
+docker compose --env-file .env -f deploy/compose-dev.yml
+docker compose --env-file .env -f deploy/compose-dev.yml up
+cd ../theme-selector-backend/
+docker compose --env-file .env -f deploy/compose-dev.yml up
+cargo run
+docker compose --env-file .env -f deploy/compose-db.yml up
+nvim deploy/compose-db.yml
+cargo run
+clear
+bun dev
+bun i
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+bun dev
+bun i gsap
+bun dev
+docker compose --env-file .env -f deploy/compose-db.yml up
+docker compose --env-file .env -f deploy/compose-db.yml up
+cargo run
+docker ps -a
+docker system prune -a --volumes
+docker ps -a
+docker compose --env-file .env -f deploy/compose-db.yml up
+docker compose --env-file .env -f deploy/compose-db.yml up -d
+cagro sqlx migrate run
+cargo sqlx migrate run
+cd ../theme-selector-backend/
+cd ../theme-selector-frontend/
+bun dev
+clear
+git add .
+git commit -m "add custom input, animations"
+git config --global user.name "JagerID"
+git config --global user.email "tokyo-jager@yandex.ru"
+git add .
+nmcli connection up miigaik
+git push
+git commit -m "add custom input, animations"
+git push
+git pull
+git switch dev
+git log
+git diff
+clear
+nmcli connection down miigaik
+nmcli connection up miigaik
+ssh dale@192.168.55.184
+nmcli connection down miigaik
+reboot
+wpctl set-default 34
+wg-quick down ~/vpn/Hyprland-Home.conf
+clear
+cursor animations/
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+clear
+ls /boot
+sudo ls /boot
+clear
+wg-quick down ~/vpn/Hyprland-Home.conf
+wg-quick up ~/vpn/Hyprland-Home.conf
+wpctl set-default 57
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+wg-quick down ~/vpn/Hyprland-Home.conf
+wg-quick up ~/vpn/Hyprland-Home.conf
+clear
+git switch sockets
+git switch -c sockets
+clear
+cargo run
+cargo add axum
+cargo add axum -F ws
+clear
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+git status
+yay -S postman
+cargo run
+cargo add futures-util
+cargo run
+yay -Syu
+cursor
+cursor ./theme-selector-backend/
+cargo rub
+cargo run
+cargo add uuid -F
+cargo add uuid
+cargo add uuid -F v4
+cargo rnu
+cargo run
+AyuGram 
+yay -Syu ayugram-desktop-bin
+AyuGram 
+reboot
+AyuGram 
+yay -Rsn ayugram-desktop-bin
+yay -S ayugram-desktop-bin
+AyuGram 
+yay -S ayugram-desktop
+yay -Rsn ayugram-desktop-bin
+yay -S ayugram-desktop
+yay -S telegram-desktop-bin
+wg-quick up ~/vpn/Hyprland-Home.conf
+sudo resolvconf -u
+wg-quick up ~/vpn/Hyprland-Home.conf
+clear
+git branch
+clear
+git switch -c sockets
+clear
+ls
+clear
+ls
+clear
+cls
+clear
+wpctl set-default 34
+bun dev
+nmcli connection import type openvpn file config.ovpn --help
+ls
+mv ruslan.ovpn ../../vpn
+cd ~/vpn/
+ls
+mv ruslan.ovpn netherlands_m_panf_vpn.ovpn
+nmcli connection import type openvpn file netherlands_m_panf_vpn.ovpn
+nmcli connection up netherlands_m_panf_vpn
+wg-quick down ~/vpn/Hyprland-Home.conf
+clear
+wg-quick show
+cat /etc/resolv.conf
+clear
+nmcli connection down netherlands_m_panf_vpn
+nmcli connection up miigaik
+nmcli connection down miigaik
+nmcli connection down netherlands_m_panf_vpn
+nmcli connection up netherlands_m_panf_vpn
+cd ..
+git clone git@github.com:gis-earth/react_scale.git
+ls
+git clone git@github.com:gis-earth/react_scale.git
+bat ~/.ssh/id_ed25519.pub
+git clone git@github.com:gis-earth/react_scale.git
+cursor react_scale/
+clear
+bun i
+clear
+bun i gsap
+clear
+git reset --har
+docker compose --env-file .env -f deploy/compose-db.yml up -dd
+git reset --hard
+clear
+rm -rf node_modules/
+rm bun.lockb
+git switch fixes
+git branch
+git branch --help
+git switch fixes
+bun i
+bun i gsap
+clear
+yay -Ss figma
+yay -S podman
+podman -V
+podman --version
+yay -S podman-compose
+cd //
+cd 
+git clone git@github.com:winapps-org/winapps.git
+cd winapps/
+podman compose -f ./compose.yaml
+podman compose -f ./compose.yaml up
+bun dev
+bun i @gsap/react
+btop\
+podman-compose -f ./compose.yaml up
+wg-quick up ~/vpn/Hyprland-Home.conf
+nmcli connection up netherlands_m_panf_vpn
+nmcli connection import type --help
+nmcli connection import type wireguard ~/vpn/Hyprland-Home.conf
+nmcli connection import type wireguard file ~/vpn/Hyprland-Home.conf
+nmcli connection down netherlands_m_panf_vpn
+nmcli connection up Hyprland-Home
+clear
+yay -Rsn wireguard-tools
+clear
+ping 8.8.8.8
+tracepath 192.168.55.179
+clear
+wpctl set-default 57
+bun dev
+clear
+cd ..
+ls
+clear
+bun create ba_rs
+bun create vite ba_react_scale
+clear
+clea
+clear
+ls
+cursor ba_react_scale/
+clear
+bun i -D tailwindcss @tailwindcss/vite
+bun i gsap
+clear
+bun i @tanstack/router && bun i -D @tanstack/router-plugin
+bun i @tanstack/router; bun i -D @tanstack/router-plugin
+clear
+bun i @tanstack/react-router
+clear
+bun dev
+bat ~/dev/react_scale/vite.config.ts
+clear
+bun dev
+bun i @deck.gl/core @deck.gl/layers @deck.gl/mapbox maplibre-gl
+bun i react-map-gl
+clear
+bat ~/dev/theme-selector-frontend/.prettierrc.json
+bun i -D oxlint prettier prettier-plugin-organize-imports prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
+oxlint --help
+bun oxlint --help
+bun oxlint --init
+bun prettier --help
+bun prettier --init
+bun prettier --write .
+bun oxlint
+bat ~/dev/theme-selector-frontend/.oxlintrc.json
+cp ~/dev/theme-selector-frontend/.oxlintrc.json ./.oxlintrc.json
+bun oxlint
+cp ~/dev/theme-selector-frontend/.prettierrc.json ./.prettierrc.json
+bun prettier --write .
+bun oxlint
+clear
+bun dev
+bun i nanostores @nanostores/react
+bun dev
+bun i @gsap/react
+clear
+wpctl set-default 34
+wpctl set-default 57
+bat ~/dev/theme-selector-frontend/package.json
+clear
+bun dev
+bun oxlint
+bun dev
+bun i clsx
+bun dev
+bat ~/dev/theme-selector-frontend/package.json | grep tailwind
+bun i tailwind-variants
+bat ~/dev/portfolio/package.json
+wpctl set-default 34
+bun dev
+code ../react_scale/
+cursor .
+bat ~/dev/theme-selector-frontend/src/shared/ui/Button.vue
+bun dev
+git add /
+git add .
+git push 
+git switch -c release/1.11.4
+git push --set-upstream origin release/1.11.4
+git status
+gt add .
+git add .
+git commit -m "finish week tasks"
+clear
+git push
+cd ../winapps/
+bun run build
+git push
+git branch
+cd ../winapps/
+ls
+cat compose.yaml
+bat compose.yaml | grep PASSWORD
+bunx --node vite build
+git add .
+git commit -m "fix build"
+clear
+git push
+git add .
+git commit -m "fix build"
+clear
+git push
+code react_scale/
+git add .
+git commit -m "fix build"
+git push
+git status
+git switch fixes
+git status
+git push
+git log
+clear
+node -v
+bunx --help
+bunx --help | grep node
+bunx
+bunx help
+bunx --help
+bunx run build 
+bunx --node vite build
+clear
+git switch release/1.11.4
+clear
+bunx --node vite build
+git add .
+git commit -m "fix build"
+git push
+npm ls @deck.gl/core @luma.gl/core @loaders.gl/worker-utils<\n>
+bunx --node vite build
+bun
+bun outdated
+rm -rf node_modules/
+rm bun.lock
+bun i
+rm -rf node_modules/
+rm bun.lock
+bun i
+bunx --node vite build
+bun dev
+git add .
+git commit -m "fix build"
+git push
+bun dev
+code ../ba_react_scale/
+bun dev
+bat ~/.config/hypr/scripts/lofreemodfix.sh
+ls -l /sys/module/hid_apple/parameters/ 
+sudo chmod u+w /sys/module/hid_apple/parameters/fnmode
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+clear
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+tee
+sudo tee
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+2 | /sys/module/hid_apple/parameters/fnmode
+ls -l /sys/module/hid_apple/parameters/ 
+sudo chmod ug+w /sys/module/hid_apple/parameters/fnmode
+ls -l /sys/module/hid_apple/parameters/ 
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+sudo chmod a+xwe /sys/module/hid_apple/parameters/fnmode
+sudo chmod a+xwr /sys/module/hid_apple/parameters/fnmode
+ls -l /sys/module/hid_apple/parameters/ 
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+cd /sys/module
+cd hid_apple/
+cd parameters/
+2 | fnmode
+2 | ./fnmode
+2 | a.txt
+2 | save a.txt
+2 | save fnmode
+2 | save fnmode -f
+ls
+cat fnmode
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+wg-quick down ~/vpn/Hyprland-Home.conf
+nmcli connection show
+nmcli connection down Hyprland-Home
+wg-quick
+nvim ~/.config/hypr/core/variables.conf
+nvim ~/.config/hypr/core/rules.conf
+nmcli connection up Hyprland-Home
+nvim ~/.config/hypr/core/rules.conf
+nmcli connection up Hyprland-Home
+nmcli connection down Hyprland-Home
+nmcli connection up Hyprland-Home
+nvim ~/.config/hypr/core/rules.conf
+nmcli connection down Hyprland-Home
+hyprctl clients
+nmcli connection up Hyprland-Home
+hyprctl clients
+clear
+nvim ~/.config/hypr/core/rules.conf
+hyprctl clients
+nvim ~/.config/hypr/core/rules.conf
+hyprtcl reload
+hyprctl reload
+nvim ~/.config/hypr/core/rules.conf
+cd ../dotfiles/
+mkdir .config/btop
+cd .config/btop/
+touch btop.conf
+cd ../..
+stow *
+stow */
+ls
+stow .
+rm ~/.config/btop/btop.conf
+stow .
+btop
+nvim .config/btop/btop.conf
+btop
+nvim .config/btop/btop.conf
+bto
+btop
+yay -S foliate
+c;ear
+nvim ~/dotfiles/packages-list.md
+sww
+swww
+yay -S swww
+swww 
+swww  img ~/Downloads/UltrawideWallpapersDotNet-1341.jpeg
+swww
+swww clear
+swww-daemon
+swww-daemon --help
+swww-daemon -q
+nvim ~/.config/hypr/core/autostart.conf
+swww init
+swww query
+swww img ~/Downloads/UltrawideWallpapersDotNet-1341.jpeg
+yazi
+nvim ~/.config/hypr/core/autostart.conf
+yay -S swaync
+df -Th
+code ../portfolio/
+clear
+bun dev
+clear
+git add .
+git remote add origin git@github.com:JagerID/portfolio.git
+git init
+git status
+git remote add origin git@github.com:JagerID/portfolio.git
+git push
+git push --set-upstream origin master
+git status
+git add .
+git commit -m "add animated welcome screen"
+clear
+git push
+git push --set-upstream origin master
+git switch -c shaders
+clear
+bun i three @threlte/core
+bun i three @threlte/core @threlte/extras
+clear
+bun dev
+clear
+rm src/widgets/3d
+rm src/widgets/3d -rf
+clear
+bun rm @threlte*
+bun rm @threlte/core @threlte/extras
+bun i -D @types/three
+clear
+bun dev
+git branch
+git add .
+git commit -m "add 3d-cursor"
+clear
+git push
+git push --set-upstream origin shaders
+git branch
+git push --set-upstream origin 3d
+git switch -c 3d
+git push --set-upstream origin 3d
+cear
+clear
+nmcli connection down Hyprland-Home
+cursor ../portfolio/
+wpctl set-default 57
+bun dev
+git staus
+git status
+git log
+clear
+git add .
+git commit -m "add pulse-cursor v1"
+clear
+git push
+git switch -c feature/glitch-text
+~/.config/hypr/scripts/lofreemodfix.sh
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+ls -l /sys/module/hid_apple/parameters/ 
+bun dev
+git switch 3d
+git branch
+clear
+bun dev
+clear
+bun i nanostores
+bun dev
+git status
+git reset --hard
+bun dev
+cleaer
+clear
+git status
+git log
+clear
+git ad d.
+clear
+git add .
+git commit -m "add globe cursor"
+clear
+git status
+git push
+bun dv
+bun dev
+clearr
+clear
+bun dev
+clear
+yay -S ayugram-desktop-bin
+bun dev
+bat ~/dev/theme-selector-frontend/package.json
+cat ~/dev/theme-selector-frontend/package.json
+bun i -D prettier-plugin-organize-imports @trivago/prettier-plugin-sort-imports
+bun lint
+bun run lint
+bun dev
+clear
+bun run lint
+clear
+git add .
+git commit -m "add cursor store"
+clear
+git push
+nmcli connection up Hyprland-Home
+bun dev
+reboot
+cd ../Downloads/
+unzip `AyuGram Desktop/Three.js Particle Morphing + GLSL Shaders.zip`
+ls
+cd `Three.js Particle Morphing + GLSL Shaders/`
+ls
+cursor main.js
+wpctl set-default 34
+wpctl set-default 57
+wpctl status
+wpctl set-default 34
+nmcli connection down netherlands_m_panf_vpn
+nmcli connection up netherlands_m_panf_vpn
+nmcli connection down Hyprland-Home
+nmcli connection info
+nmcli connection
+nvim ~/.config/hypr/scripts/lofreemodfix.sh
+sudo sh ~/.config/hypr/scripts/lofreemodfix.sh
+code ../theme-selector-frontend/
+git branch
+git switch sockets
+git switch master
+code ../theme-selector-backend/
+git switch sockets
+bun dev
+clear
+code ../react_scale/
+git status
+clear
+clea
+clear
+bun i
+clear
+bun update
+bun dev
+clear
+bun rm @gsap/react gsap
+clea
+clear
+bun dev
+rm bun.lock
+rm -rf node_modules/
+bun i
+bun dev
+clear
+git add .
+git commit -m "fix performance"
+clear
+git push
+nmcli connection down Hyprland-Home
+nmcli connection down netherlands_m_panf_vpn
+nmcli connection up netherlands_m_panf_vpn
+wpctl status
+wpctl set-default 57
+cd ~/dotfiles/
+ls
+git status

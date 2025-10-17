@@ -105,9 +105,9 @@ config.hyperlink_rules = {
 
 config.ssh_domains = {
 	{
-		name = "beget.server",
-		remote_address = "5.35.92.149",
-		username = "root",
+    name = "dev.miigaik",
+    remote_address = "192.168.55.179",
+    username = "dale"
 	},
 }
 

@@ -91,13 +91,14 @@ return {
 				javascript = { "eslint_d" },
 				typescript = { "eslint_d" },
 				lua = { "luacheck" },
+        nu = { "nu" },
 			}
 
-			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
+			--[[ vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
 				callback = function()
 					lint.try_lint()
 				end,
-			})
+			}) ]]
 		end,
 	},
 	{ "sphamba/smear-cursor.nvim", opts = {} },

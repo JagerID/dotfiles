@@ -20,8 +20,13 @@
   "workbench.colorTheme": "Bearded Theme Monokai Black",
   "terminal.explorerKind": "external",
   "terminal.external.linuxExec": "wezterm",
-  "terminal.integrated.defaultProfile.linux": "nu",
-  "powermode.enabled": true,
+  "terminal.integrated.defaultProfile.linux": "nushell",
+  "terminal.integrated.profiles.linux": {
+    "nushell": {
+      "path": "/usr/bin/nu",
+      "icon": "terminal-bash"
+    }
+  },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -40,5 +45,8 @@
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

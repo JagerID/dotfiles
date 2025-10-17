@@ -1,6 +1,6 @@
 return {
   {
-    "mrcjkb/rustaceanvim",
+     "mrcjkb/rustaceanvim",
     ft = { "rust" },
     version = "*"
   },
@@ -8,7 +8,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     lazy = false,
-    build = ":TSUedate",
+    build = ":TSUpdate",
     opts = {}
   },
   {

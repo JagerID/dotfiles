@@ -12,7 +12,3 @@ path add ($env.VOLTA_HOME | path join "bin")
 # Cargo setup
 $env.CARGO_HOME = ($env.HOME | path join ".cargo")
 path add ($env.CARGO_HOME | path join "bin")
-
-# Plugins
-[ nu_plugin_gstat ] | each { cargo install $in --locked } | ignore
-source $"($nu.home-path)/.cargo/env.nu"

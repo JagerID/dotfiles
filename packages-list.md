@@ -1,5 +1,4 @@
 ### Arch
-
 - `linux-cachyos-rt-bore` - kernel
 - `limine` - bootloader
 - `btop` - `htop` alternative
@@ -21,3 +20,4 @@
 - `openvpn` - ...
 - `qbittorrent` - torrent client
 - `wireguard-tools` - cli for wezterm
+- `foliate` - bookreader
