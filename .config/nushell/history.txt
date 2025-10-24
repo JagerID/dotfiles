@@ -2381,3 +2381,1147 @@ wpctl set-default 57
 cd ~/dotfiles/
 ls
 git status
+git add .
+git log
+git commit -m "update dotfiles"
+clear
+git push
+wpctl set-default 34
+clear
+cursor boba.json
+ipa
+ip animations/
+ipo
+ip
+ip addr
+cat ~/.ssh/id_ed25519.pub
+clear
+ls
+clear
+ls
+clear
+ssh dale@192.168.55.184
+mkdir hakaton
+cd hakaton/
+touch wg1
+nvim wg1
+scp root@217.26.25.176:/root/wg0-client-ruslan.conf /home/jager/dev/hakaton
+scp root@217.26.25.176:/root/wg0-client-miKsha.conf /home/jager/dev/hakaton
+scp root@217.26.25.176:/root/wg0-client-i1.conf /home/jager/dev/hakaton
+scp root@217.26.25.176:/root/wg0-client-vlas.conf /home/jager/dev/hakaton
+scp root@217.26.25.176:/root/wg0-client-artem.conf /home/jager/dev/hakaton
+nmcli connection import type wireguard ~/dev/hakaton/wg0-client-ruslan.conf
+nmcli connection import type wireguard file ~/dev/hakaton/wg0-client-ruslan.conf
+nvim wg0-client-ruslan.conf
+nmcli connection import type wireguard file ~/dev/hakaton/wg0-client-ruslan.conf
+cp wg0-client-ruslan.conf
+cp wg0-client-ruslan.conf wg12
+nmcli connection import type wireguard file ~/dev/hakaton/wg12
+ls
+mv wg12 wg12.conf
+nmcli connection import type wireguard file ~/dev/hakaton/wg12
+nmcli connection show
+ls /etc
+ls /etc/wiregurad
+ls /etc/wireguard
+sudo ls /etc/wireguard
+nmcli connection import type wireguard file ~/dev/hakaton/wg0-client-ruslan.conf
+cp /home/jager/dev/hakaton/wg0-client-ruslan.conf /home/jager/dev/hakaton/wg0clientruslan.conf
+nmcli connection import type wireguard file ~/dev/hakaton/wg0clientruslan.conf
+nmcli connection show
+ping 172.17.0.1
+nmcli connection down wg0clientruslan.conf
+nmcli connection down wg0clientruslan
+yay -S google-chrome
+yay -S ulaa-browser
+nvim ~/.config/hypr/core/variables.conf
+ulaa-browser
+bat ~/.ssh/id_ed25519.pub
+git clone https://gitlab.com/team-is-not-defined/tables-frontend.git
+nmcli connection show
+nmcli connection down Hyprland-Home
+nmcli connection up Hyprland-Home
+vesktop
+ls
+cd dev
+ls
+clear
+git clone git@gitlab.com:team-is-not-defined/tables-frontend.git
+cursor tables-frontend/
+clear
+bun rm @testing-library/react @testing-library/jest-dom @vitest/coverage-v8 @vitest/ui vitest
+clear
+bun i
+bun decv
+yay -Rsn ulaa-browser
+nvim ~/.config/hypr/core/variables.conf
+clear
+yay -Rsn google-chrome
+bun dev
+clear
+bun i nanostores @nanostores/react
+clear
+bun i @nanostores/persistent
+clear
+bun i react-hook-form zod @hookform/resolvers
+clear
+bun dev
+bun i clsx
+clear
+bun i @radix-ui/react-slot
+bun i class-variance-authority
+clear
+bun dev
+git pull
+git stash save
+git pull
+got stash --help
+git stash --help
+git stash apply
+clear
+ls
+clear
+ls
+clear
+git status
+bun dev
+clear
+bun i
+bun dev
+rm -rf node_modules/
+bun i
+clear
+bun dev
+bun i zod
+bun dev
+bun i react-hook-form zod @hookform/resolvers
+clear
+bun dev
+clear
+git add .
+git status
+bun i sonner
+clear
+bun dev
+bun i next-themes
+clear
+bun dev
+bun rm sonner 
+un rm next-themes
+bun rm next-themes
+bun i react-hot-toast
+clear
+bun dev
+bun i gsap
+clear
+bun dev
+bun i @gsap/react
+bun dev
+bun rm gsap @gsap/react
+clear
+cear
+clar
+clear
+git add .
+git commit -m "add auth"
+clear
+git status
+git add .
+git commit -m "fix bugs"
+git sttaus
+git status
+git push
+bun dev
+git add .
+git commit -m "fix bugs"
+git push
+git add .
+git commit -m "fix bugs"
+git push
+bun dev
+git add .
+git commit -m "fix bugs"
+git push
+clear
+code ../theme-selector-frontend/
+bun i @radix-ui/react-dialog
+bun i @radix-ui/react-tabs
+bun run build
+git reset --hard
+clear
+git status
+git switch -c depsless
+clear
+rm -rf node_modules/
+rm bun.lock
+bun i
+clear
+bun i @tanstack/react-query
+bun i clsx
+clear
+git status
+clear
+bun dev
+bun i -D tailwindcss @tailwindcss/vite
+clear
+bun dev
+bun i axios
+clear
+bun dev
+игт вум
+bun dev
+bun i valibot @hootform/resolvers react-hook-form
+clear
+bun i valibot @hootform/resolvers react-hook-form
+bun i valibot @hookform/resolvers react-hook-form
+clear
+bun dev
+bun i nanostores @nanostores/react @nanostores/persistent
+clear
+bun dev
+rm -rf node_modules/
+rm bun.lock
+bun i
+bat ~/dev/theme-selector-frontend/src/entities/regions/schema.ts
+bat ~/dev/theme-selector-frontend/src/entities/users/schema.ts
+bat ~/dev/react_scale/src/entities/
+bat ~/dev/react_scale/src/entities/auth/model/schemas.ts
+clear
+bun dev
+clear
+git add .
+clear
+git commit -m "change libraries"
+clear
+git commit -m "change libraries"
+clear
+сдуфк
+clear
+bun dev
+git add .
+clear
+git commit -m "fix errors"
+clear
+git push
+git push --set-upstream origin depsless
+bun dev
+bun i gsap @gsap/react
+clear
+bun dev
+bun i class-variance-authority
+clear
+bun dev
+bun i -D unplugin-icons
+bun dev
+bun i -D @svgr/core
+bun dev
+bat ~/dev/react_scale/package.json
+bun i -D @svgr/core @svgr/plugin-jsx
+clear
+bun dev
+bun run build
+ls ~/dev/react_scale/src/shared/lib/
+cat ~/dev/react_scale/src/shared/lib/router.ts
+bat ~/dev/react_scale/vite.config.ts
+bat ~/dev/react_scale/tsconfig.app.json
+bun dev
+bat ~/dev/theme-selector-frontend/src/shared/ui/Modal.vue
+bun dev
+bun update
+bun dev
+clear
+git add .
+git commit -m "add modal"
+clear
+git commit -m "add modal"
+bun rm @eslint/js
+bun i -D oxlint prettier prettier-plugin-organize-imports prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
+cp ~/dev/theme-selector-frontend/.prettierrc.json ./.prettierrc.json
+cp ~/dev/theme-selector-frontend/.oxlintrc.json ./.oxlintrc.json
+cleaer
+clear
+bun run lint
+clear
+bun run lint
+bat ~/dev/theme-selector-frontend/vite.config.ts
+bun run lint
+clear
+git add .
+git commit -m "fix configuration"
+bun oxlint
+bun oxlint --help
+git add .
+git commit -m "fix configuration"
+git add .
+clear
+bun rm class-variance-authority
+bun i tailwind-variants
+cat ~/dev/ba_react_scale/src/shared/ui/Button.tsx
+clear
+bun dev
+clear
+git add .
+git commit -m "add button"
+clear
+git status
+clear
+bat ~/dev/theme-selector-frontend/src/shared/ui/Input.vue
+bun dev
+clear
+git add .
+git commit -m "add input"
+clear
+git push
+clear
+bun dev
+bun dev
+git add .
+git commit -m "add ui components to login and registration pages<\n>"
+clear
+git push
+bun dev
+clear
+git add .
+git commit -m "add colors, logo"
+clear
+git push
+bat ~/dev/react_scale/src/shared/ui/Skeleton.tsx
+cat ~/dev/react_scale/src/shared/ui/Skeleton.tsx
+bun dev
+reboot
+nmcli connection show
+nmcli connection down wg0clientruslan
+bun run build
+bun dev
+clear
+git add .
+git commit -m "add dialog to new table creation, update inputs in login / registration forms"
+cleatr
+c;ear
+clear
+git push
+clear
+bun dev
+rm -rf node_modules/
+npm i
+npm run dev
+rm -rf node_modules/
+bun i
+bun dev
+clear
+git add .
+git commit -m "add filecard"
+clear
+ssh root@217.26.25.176
+clear
+nmcli connection show
+bun dev
+git add .
+git commit -m "update filecard"
+clear
+git push
+git merge master
+git pull
+git merge master
+git log
+git diff master
+clear
+git pull
+git switch master
+git reset --hard
+git switch master
+git log
+git pull
+git switch depsless
+git merge master
+git reset --hard
+clear
+git log
+git branch
+git status
+git merge master 
+git reset --hard
+git config --help
+git config 
+ls
+code .
+ahuel
+yes
+clear
+yes
+c;ear
+clear
+git merge master
+bun run lint
+rm -rf node_modules/
+rm -rf package-lock.json
+rm -rf bun.lock
+clear
+bun i
+clear
+bun run build
+clea
+clear
+bun run lint
+bun run build
+clear
+git add .
+git commit -m "fix merge conflicts"
+clear
+git push
+clear
+bun dev
+bun dev
+clear
+git add -D three
+nmcli connection show
+nmcli connection down wg0clientruslan
+git status
+git add .
+git commit -m 
+git commit -m "checkpoint"
+git status
+git push
+npm run dev
+сдуфк
+git status
+qgit add .
+git add .
+git commit -m "checkpoint +1"
+clear
+git push
+git log
+git status
+cd ~/dotfiles/
+git status
+git push
+nvim ~/.config/hypr/core/rules.conf
+nmcli connection show
+nmcli connection down wg0clientruslan --help
+clear
+cd tables-frontend/
+git pull
+git reset --hard
+git pull
+clear
+git log
+git pull
+code dev/tables-frontend/
+yay -Syu
+bun i
+clear
+rm -rf node_modules/
+rm bun.lock
+bun i
+clear
+npm run dev
+ls
+ls /
+clear
+npm run dev
+bun run dev
+npm i
+npm run dev
+bun i
+bun dev
+npm i -P @rollup/rollup-linux-x64-gnu
+bun dev
+npm run dev
+bun run dev
+npm i
+npm run dev
+npm i -P @rollup/rollup-linux-x64-gnu
+npm run dev
+rm -rf node_modules/
+rm -rf bun.lock
+rm package-lock.json
+clear
+ls
+clear
+bun i
+clear
+bun run lint
+clear
+bun dev
+bun run dev
+docker compose up
+git add .
+git commit -m "checkpoint +1"
+git push
+git log
+git commit -m -a "checkpoint +1"
+git push
+git status
+git status
+git log
+git status
+git push
+git branch
+bun i lodash.debounce
+cleaer
+clear
+bun rm lodash.debounce
+git pull
+bun dev
+npm i socket.io-client
+git clone git@gitlab.com:team-is-not-defined/tables-backend.git
+cursor tables-backend/
+git log
+clear
+git add .
+git commit -m "checkpoint +2"
+clear
+git push
+git switch master
+git merge depsless
+bun dev
+git status
+git push
+git pull
+git config pull.rebase true
+git pull
+git log
+git status
+bun dev
+git push
+bun run lint
+bun run lint --help
+bun run lint --quiet
+docker compose -f ./compose.dev.yml up
+clear
+docker compose -f ./compose.dev.yml up
+npm run dev
+docker compose -f ./compose.dev.yml up
+bun run format
+bun run lint
+bun run lint --quiet
+ч
+bun run lint
+bun run format
+bunx prettier --write .
+bunx prettier --write . --fix
+clear
+git add .
+git status
+git commit -m "checkpoint +3"
+clear
+git push
+nmcli connection down wg0clientruslan --help
+yay -S google-chrome
+yay -S ulaa-browser
+yay -S chromium
+yay -Rsn google-chrome
+wpctl set-default 57
+wpctl set-default 34
+wpctl status
+wpctl set-default 34
+wpctl set-default 57
+wpctl status
+wpctl set-default 34
+wpctl set-default 45
+wpctl set-default 50
+wpctl set-default 57
+nmcli connection down wg0clientruslan --help
+yay -Syu
+wpct
+wpctl status
+wpctl set-default 34
+yay -Q | grep nvidia
+yay -S nvidia-dkms
+hyprctl monitors
+mkinitcpio -P
+sudo mkinitcpio -P
+reboot
+hyprctl monitors
+nmcli connection down wg0clientruslan --help
+cat /sys/module/nvidia_drm/parameters/modeset
+nvim /etc/modprobe.d/nvidia.conf
+sudo nvim /etc/modprobe.d/nvidia.conf
+clear
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+cat /sys/module/nvidia_drm/parameters/modeset
+reboot
+hyprctl monitors
+nmcli connection down wg0clientruslan --help
+hyprctl monitors all
+yay -S nvidia-dkms
+uname -r
+uname
+ls /boot
+sudo ls /boot
+yay -Rsn nvidia-dkms
+reboot
+nmcli connection down wg0clientruslan --help
+yay -S nvidia
+nmcli connection delete id wg0clientruslan
+nmcli connection show
+yay -S nvidia
+yay -Q | grep nvidia
+sudo mkinitcpio -P
+nvim /etc/modprobe.d/nvidia.conf
+cat /sys/module/nvidia_drm/parameters/modeset
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+clear
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+yay -Rsn nvidia
+yay -S nvidia-dkms
+reboot
+hyprctl monitors all
+wpctl set-default 34
+wpctl status
+wpctl clear-default
+wpctl set-default 57
+wpctl status
+wpctl set-defautl 43
+wpctl set-default 43
+wpctl set-default 57
+yay -Q | grep alsa
+yay -Q | grep wireplumber
+yay -Q | grep pipewire
+yay -Syu
+alsa
+sh ~/.config/hypr/scripts/lofreemodfix.sh
+alsamixer
+:q
+cleart
+lspci -P | grep "Audio"
+lspci -k | grep "Audio"
+yay -S sof-firmware
+yay -Q | grep linux
+yay -S linux-zen linux-zen-headers
+dt -T
+dt -T /
+df -T
+ls /boot
+sudo ls /boot -h
+sudo ls /boot 
+sudo ls /boot -l
+sudo ls /boot -lh
+yay -Rsn linux linux-headers
+sudo ls /boot -lh
+yay -S linux-zen linux-zen-headers
+mkinitcpio --verbose -P
+sudo mkinitcpio --verbose -P
+reboot
+sudo nvim /boot/EFI/limine/limine.conf
+wpctl status
+yay -Rsn chromium
+yay -Q | grep avahi
+yay -Rsn avahi
+wpctl set-default 57
+wpctl set-default 43
+wpctl set-default 34
+wpctl se-default 57
+wpctl set-default 57
+wpctl status
+yay -Q | grep pipewire
+yay -Rsn pipewire-jack
+ls ~/.config/wireplumber
+bat ~/.config/wireplumber
+bat ~/.config/wireplumber/wireplumber.conf.d/
+bat ~/.config/wireplumber/wireplumber.conf.d/device-rename.conf
+pactl
+wpctl status
+wpctl set-default 57
+yay -S chromium
+yay -Q | grep ffmpeg
+yay -S ffmpeg
+wpctl status --name
+wpctl status --ick
+wpctl status --nick
+wpctl inspect 57
+pw-cli
+pw-top
+pw-cli info 57
+wpctl set-default 57
+wpctl set-default 34
+wpctl status
+wpctl set-default 57
+wpctl status
+wpctl restart
+systemctl restart wireplumber pipewire{,-pulse,-jack}<\n>
+systemctl restart wireplumber --user pipewire{,-pulse,-jack}<\n>
+wpctl status
+wpctl set-default 46
+wpctl set-default 65
+wpctl set-default 49
+wpctl status
+wpctl set-default 46
+wpctl status
+wpctl set-default 65
+wpctl status
+wpctl set-default 46
+wpctl set-default 49
+wpctl s
+wpctl set-volumne 
+wpctl set-volumne 65 100%
+wpctl set-volume 65 100%
+wpctl set-mute 65 0
+wpctl set-mute 65 1
+wpctl set-mute 65 2
+wpctl set-default 46
+сдуфк
+clear
+bun dev
+clear
+cd ..
+bunx create vite@latest
+bun create vite@latest
+clear
+cursor portfolio-jager/
+clear
+bun run build
+bun i -D @sveltejs/adapter-static; bun rm @sveltejs/adapter-auto
+clear
+bun run build
+yay -Rsn chromium
+clear
+bun run build
+clear
+bun run build
+bun i -D oxlint 
+bun i -D oxlint prettier prettier-plugin-organize-imports prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
+bat ~/dev/theme-selector-frontend/.oxlintrc.json
+bun oxlint --help
+bun oxlint --init
+bat ~/dev/theme-selector-frontend/.prettierrc.json
+bat ~/dev/portfolio/src/app/
+ls ~/dev/portfolio/src/app/
+bat ~/dev/portfolio/.prettierrc
+bat ~/dev/tables-frontend/vite.config.ts
+clear
+bun dev
+bun i -D rollup-plugin-visualizer
+bun run build
+clear
+bun dev
+clerar
+clear
+bun i gsap
+bun dev
+clear
+git add .
+nmcli connection down Hyprland-Home
+git init
+git init
+git add .
+git commit -m "add welcome screen"
+clear
+git remote add origin git@github.com:JagerID/portfolio.git
+git branch
+git push
+git push --set-upstream origin master
+cd ~/dotfiles/
+git status
+nmcli connection down Hyprland-Home
+nmcli connection show
+bun i three
+bun dev
+bun i -D @types/three
+clear
+nmcli connection up Hyprland-Home
+bun dev
+clear
+git add .
+git commit -m "feat: add cursor"
+clear
+git push
+clear
+bun dev
+clear
+code .
+git reset --hard
+code ../react_scale/
+bun dev
+zsh docker stop $(docker ps -qa)
+zsh
+clear
+bun dev
+bun run build
+clear
+bun i -D babel-plugin-react-compiler@latest
+clear
+bun run build
+bun run preview
+bun run dev
+rm -rf bun.lock
+rm -rf node_modules/
+bun i
+bun dev
+run run dev
+bun dev
+npm install -D vite-plugin-babel
+bun install -D vite-plugin-babel
+clear
+bun dev
+bun rm vite-plugin-babel
+bun rm babel-plugin-react-compiler
+clear
+bun dev
+clear
+cursor ../portfolio-jager/
+bun dev
+bun run build
+bun run previes
+bun run preview
+bun dev
+bun run build
+bun run preview
+clear
+bun dev
+bun run dev
+bun run build
+bun run preview
+clear
+bun dev
+cursor `../../Downloads/Three.js Particle Morphing + GLSL Shaders/`\
+cursor `../../Downloads/Three.js Particle Morphing + GLSL Shaders/`
+wpctl status
+wpctl set-default 57
+wpctl status
+wpctl set-default 43
+wpctl animations/
+wpctl set-mute 43 0
+wpctl status
+clear
+pactl
+aplay
+aplay -l
+wpctl status
+wpctl set-default 57
+wpctl set-profile 57 hdmi-stereo
+pw-play /usr/share/sounds/alsa/Front_Center.wav
+sudo pacman -Syu pipewire pipewire-pulse wireplumber pipewire-alsa pipewire-jack alsa-card-profiles<\n>
+systemctl --user restart pipewire pipewire-pulse wireplumber<\n>
+pw-play /usr/share/sounds/alsa/Front_Center.wav
+wpctl inspect 57
+wpctl status | grep -A5 "57"
+wpctl inspect 57 | grep -i profile -A5
+wpctl set-profile 57 pro-audio
+wpctl set-profile 57 hdmi-surround
+yay -Q | grep ffmped
+yay -Q | grep ffmpeg
+yay -Q | grep alsa
+zsh
+clear
+reboot
+wpctl
+yay -S chromium
+yay -Ss chromium
+yay -Ss chromium | grep wayland
+yay -Ss wayland-chromium
+yay -S wayland-chromium
+clear
+yay -S chromium
+echo "--disable-features=WaylandWpColorManagerV1" >> ~/.config/chromium-flags.conf<\n>
+ls ~/.config  | grep chromium
+clear
+yay -S pipewire lib32-pipewire
+yay -S coppwr
+yay -S coppwr-bin
+yay -Rsn coppwr-bin
+yay -S pipewire-alsa
+sudo systemctl enable --now pipewire<\n>
+sudo systemctl enable --now pipewire-media-session<\n>
+yay -S wireplumber
+sudo systemctl enable --now wireplumber<\n>
+sudo systemctl enable --now wireplumber
+wireplumber
+wpctl list devices
+wpctl status
+reboot
+sudo systemctl --user enable pipewire-pulse<\n>
+sudo systemctl --user enable pipewire<\n>
+sudo systemctl --user enable pipewire-alsa<\n>
+wpctl
+wpctl status
+sudo systemctl --user enable --now pipewire.service<\n>
+Failed to connect to user scope bus via local transport: $DBUS_SESSION_BUS_ADDRESS and $XDG_RUNTIME_DIR not defined (consider using --machine=<user>@.host --user to connect to bus of other user)sudo systemctl start dbus<\n>
+sudo systemctl start dbus<\n>
+sudo systemctl --user enable --now pipewire.service<\n>
+yay -Syu
+yay -S nvidia-dkms
+clear
+wpctl status
+wpctl set-default 51
+wpctl set-default 54
+sudo systemctl --user enable --now pipewire.service<\n>
+clear
+systemctl --user mask pulseaudio<\n><\n>
+yay -S pipewire-pulseaudio pipewire-jack pipewire-aptx
+systemctl --user enable --now pipewire.socket<\n><\n>
+systemctl --user enable --now pipewire-pulse.socket<\n><\n>
+systemctl --user enable --now wireplumber.service<\n><\n>
+wpctl set-default 51
+wpctl status
+wpctl set-default 52
+wpctl status
+wpctl set-default 51
+wpctl set-default 41
+wpctl set-default 51
+wpctl
+wpctl inspect 51
+reboot
+ls
+wpct
+wpctl status
+yay -S lib32-pipewire-jack
+yay -Q | grep pipew
+yay -Rsn pipewire-session-manager
+reboot
+pw-play /usr/share/sounds/alsa/Front_Center.wav
+pw-playu
+pw-play
+yay -S jack2
+yay -S jack
+yay -S jack2
+yay -S udev
+yay -S alsa-firmware
+yay -Ss pipewire-utils
+yay -Ss pipewire
+yay -Ss huawei
+yay -Ss huawei-audio
+yay -Ss huawei-amd-audio
+yay -S linux-huawei-amd-audio-headers
+clear
+ls
+rm boba.json
+clear
+cd /
+cd 
+ls
+rm *hyprshot*
+ls
+yay -Q | grep alsa
+yay -Rsn alsa-firmware alsa-utils
+yay -S alsa-utils
+yay -Rsn (yay -Qq | grep alsa)
+yay -Rsn (yay -Qq | grep alsa | str join " ")
+yay -Qq | grep alsa | str join " "
+echo (yay -Qq) | grep alsa | str join " "
+echo (yay -Qq) | grep alsa | str join "\n"
+echo (yay -Qq) | grep alsa | str join "s"
+clea
+yay -Qq | grep alsa
+yay -S amd-ucode
+alsamixer
+amixert
+amixer
+pw
+pw-clt
+pw-ctl
+pwctl
+wpctl status
+wpctl set-default 33
+yay -S cursor-bin
+clear
+ls ~/Downloads/
+cd ~/dev/react_scale/public/
+unzip `~/Downloads/Scale Web App. Edit. (1).zip`
+ls
+unzip `~/Downloads/Scale Web App. Edit. (2).zip`
+unzip `~/Downloads/Scale Web App. Edit. (3).zip`
+bun dev
+git status
+git restore public
+unzip `~/Downloads/Scale Web App. Edit. (1).zip`
+unzip `~/Downloads/Scale Web App. Edit. (4).zip`
+bun dev
+clear
+git add .
+git commit -m "finish week tasks"
+clear
+git branch
+git switch -c release/1.11.5
+git push --set-upstream origin release/1.11.5
+clear
+cursor ../portfolio-jager/
+bun dev
+bun i -D @types/node
+clear
+bun de
+bun dev
+cursor `../../Downloads/Three.js Particle Morphing + GLSL Shaders/`
+bun dev
+cursor ../react_scale/
+clear
+bun dev
+cursor ../react_scale/
+bun dev
+git add .
+git commit -m "fix input drag"
+clea
+clear
+git push
+bun update @deck
+bun update
+bun upgradable
+bun updatable
+bun
+bun outdated
+bun i @deck.gl/extensions @deck.gl/geo-layers @deck.gl/mesh-layers @deck.gl/react
+bun i @deck.gl/extensions @deck.gl/geo-layers @deck.gl/mesh-layers @deck.gl/react @deck.gl/core
+git clone git@github.com:gis-earth/react_scale.git rs
+code rs
+cursor rs
+git switch release/1.11.3
+git checkout release/1.11.3
+git checkout master
+git status
+git log
+git branch
+git switch fixes
+git log
+clear
+bun dev
+bun i
+bun dev
+git branch
+bun decv
+bun dev
+git status
+bun dev
+bun i -D babel-plugin-react-compiler@latest
+bun outdated
+clear
+bun dev
+git status
+git add .
+git commit -m "fix build"
+git push
+clear
+bun dev
+git add .
+git commit -m "fix build"
+git add .
+git commit -m "fix build"
+git status
+git commit -m "fix build"
+git add .
+git commit -m "fix build"
+bun rm babel-plugin-react-compiler@latest
+git add .
+bun dev
+git push
+bu dev
+bun dev
+rm -rf node_modules/
+bun i
+nmcli connection down Hyprland-Home
+nmcli connection show
+bun dev
+cledar
+clear
+cursor ../portfolio-jager/
+nmcli connection up Hyprland-Home
+bun dev
+clear
+cd ..
+clea
+clear
+clea
+clear
+clea
+clear
+bun create vite
+cursor positivus-landing/
+bat ~/dev/portfolio-jager/src/app.css
+cat ~/dev/portfolio-jager/src/app.css
+yay -S steam
+yay -S ags-hyprpanel-git<\n>
+yay -S obsidia
+yay -S obsidian
+syncthing
+yay -S syncthing
+systemctl enable --now syncthing
+yay -S nvidia-dkms
+reboot
+hyprctl monitors all
+yay -Rsn nvidia-dkms
+reboot
+sudo nvim /etc/mkinitcpio.conf
+yay -S nvidia-dkms
+sudo mkinitcpio --verbose -P
+reboot
+yay -S niri
+yay -S anyrun
+yay -S anyrun-bin
+clear
+sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com<\n>sudo pacman-key --lsign-key 3056513887B78AEB
+sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'<\n>sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+sudo nvim /etc/pacman.conf
+wpctl status
+wpctl set-default 51
+yay -Syu
+clear
+yay -Syu
+sudo mkinitcpio --verbose -P
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio --verbose -P
+sudo nvim /etc/mkinitcpio.conf
+sudo mkinitcpio --verbose -P
+yay -S niri
+yay -Q | grep xdg-portal
+yay -S niri
+niri
+niri-session
+niri
+systemctl --user enable --now xwayland-satellite
+yay -Ss xwayland-satellite
+yay -S xwayland-satellite
+niri
+clear
+cd ~/dotfiles/
+cd .config
+mkdir niri
+cd niri
+nvim config.kdl
+ls ~/.config/niri/
+bat ~/.config/niri/config.kdl
+mv ~/.config/niri/config.kdl .
+bat config.kdl
+clear
+stow .
+ls ~/.config -l
+ls ~/.config/niri
+rm -r ~/.config/niri/
+cd ../..
+ls
+stow .
+ls ~/.config
+ls .conf
+ls .config/
+nvim .config/niri/config.kdl
+niri
+nvim .config/niri/config.kdl
+niri
+systemctl status xwayland-sattelite
+systemctl --user enable --now xwayland-satellite
+yay -S xwayland-satellite
+systemctl --user enable --now xwayland-satellite
+journalctl --user -xeu xwayland-sattelite.service
+:q
+journalctl --user -xeu xwayland-sattelite
+cler
+clear
+ls
+clea
+clear
+nvim .config/niri/config.kdl
+chromium
+niri
+git status
+git add .
+ls ~/.config
+ls 
+ls .config
+rm .config/config.kdl
+ls 
+git status
