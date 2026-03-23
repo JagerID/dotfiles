@@ -1,0 +1,48 @@
+layout {
+  gaps 10
+  background-color "transparent"
+  center-focused-column "never"
+
+  struts {
+    left 10
+    right 10
+    top 10
+    bottom 10
+  }
+
+  default-column-width { proportion 0.333333; }
+
+  preset-column-widths {
+    proportion 0.3333333
+    proportion 0.5
+    proportion 0.6666666
+    proportion 1.0
+  }
+
+  focus-ring {
+    width 2
+    active-color "#cba6f7"
+    inactive-color "#45475A"
+  }
+
+  border {
+    off
+  }
+
+  tab-indicator {
+    width 6
+    gap 6
+    length total-proportion=0.5
+    position "bottom"
+    gaps-between-tabs 10
+    corner-radius 10
+    place-within-column
+    hide-when-single-tab
+    active-color "#78ebb9ff"
+    inactive-color "#939393ff"
+    urgent-color "blue"
+    // active-gradient from="#80c8ff" to="#bbddff" angle=45
+    // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+    // urgent-gradient from="#800" to="#a33" angle=45
+  }
+}

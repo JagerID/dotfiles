@@ -3525,3 +3525,2079 @@ ls .config
 rm .config/config.kdl
 ls 
 git status
+rm -rf ~/*
+;s
+ls ~
+trash
+clear
+ls ~
+ls ~/dev
+ls -a ~
+cd ~/dotfiles
+cd ..
+git clone git@github.com:JagerID/dotfiles.git
+cd dotfiles/
+stow .
+ls
+ls -a ~/
+ls -a ~/.config
+cd ~/dev
+mkdir feed-new
+cd feed-new/
+ls
+cd feed-new/
+unzip `~/Downloads/Telegram Desktop/feed-processor (1).zip`
+cursor .
+bun i
+bun dev
+cd ..
+ls
+mkdir b2basket
+mv feed-new/ b2basket/feed-processor
+cd b2basket/
+ls
+git clone ssh://git@gitlab.b2basket.ru:822/backend-team/tools.infra.git
+cd tools.infra/
+ls
+cursor .
+ls
+clear
+cd ..
+rm -rf tools.infra/
+git clone ssh://git@gitlab.b2basket.ru:822/backend-team/tools.infra.git --recurse-submodules
+clear
+make build
+make backend-up
+make
+cd tools.infra/
+make build
+git submodule
+git submodule --help
+git submodule update
+git submodule update --remote
+git branch
+git pull
+git submodule
+git submodule branch
+git submodule code/tools.tunit 
+git submodule -q foreach git pull
+git submodule -q foreach git pull -q origin master
+make build
+св юю
+cd ..
+rm -rf tools.infra/
+git clone ssh://git@gitlab.b2basket.ru:822/backend-team/tools.infra.git --recurse-submodules
+clear
+cd /home/fullquest/code/tools.infra/code/smart.b2basket && git checkout master<\n>cd /home/fullquest/code/tools.infra/code/feed_checker_client && git checkout master<\n>cd /home/fullquest/code/tools.infra/code/tools.client && git checkout master<\n>cd /home/fullquest/code/tools.infra/code/tools.tunit && git checkout master<\n>
+tools.infra/
+cd code/smart.b2basket/
+git checkout master
+git pull
+cd ../feed_checker_client/
+git checkout master
+cd ../tools.client/
+git checkout master
+cd ../tools.tunit/
+git checkout master
+clear
+nvim ~/dev/b2basket/tools.infra/code/tools.client/docker/dev.dockerfile
+cd ../..
+make build
+docker ps -a
+ls ~
+ls ~ -a
+yay -S zoom
+wpctl status
+wpctl set-default 53
+yay -Syu zoom
+zoom
+btop
+nmcli connection up miigaik
+reboot
+cursor ../../ba_react_scale/
+wpctl set-default 51
+wpctl status
+wpctl set-default 52
+reboot
+exit
+hyprctl help
+hyprctl --help
+hyprctl cursorpos
+hyprctl dispatch exit 
+niri
+ls ~
+ls ~/Documents
+mkdir ~/Sync
+ls ~/Sync
+ls ~
+rm ~/Sync
+clear
+bun dev
+clear
+bun i @deck.gl-community/editable-layers
+clear
+bun dev
+git status
+clear
+reboot
+clear
+clar
+clear
+bun dev
+bun rm @deck.gl-community/editable-layers
+clear
+rm -rf node_modules/
+rm bun.lock
+bun i
+bun dev
+bun i @deck.gl-community/editable-layers
+clear
+code ../theme-selector-frontend/
+cursor ../theme-selector-frontend/
+иещз
+bun dev
+rm -rf valtio
+bun rm valtio
+bun i nanostores @nanostores/react @nanostores/persistent
+clear
+bun dev
+bun run oxlint --fix
+bun run lint --fix
+clear
+bun run lint --fix
+clear
+bun run lint --fix
+clear
+bun dev
+clear
+bun dev
+bun i @deck.gl/extensions@9.1.14
+clear
+bun dev
+bun outdated
+git pull
+clear
+git log
+git status
+clear
+git reset --hard
+clear
+git merge release/1.11.6-onboarding
+git branch 
+git branch -a
+git merge origin release/1.11.6-onboarding
+git switch release/1.11.6
+git switch release/1.11.6-onboarding
+git switch release/1.11.6
+git merge release/1.11.6-onboarding
+clear
+bun defv
+bun dev
+git add .
+git commit -m "finish week tasks"
+clear
+git push
+bun dev
+git switch -c release/1.11.7
+clear
+git push --set-upstream origin release/1.11.7
+git add .
+git commit -m "change version"
+clear
+git push
+git push --set-upstream origin release/1.11.7
+git status
+cursor ../ba_react_scale/
+cursor ../b2basket/tools.infra/
+git pull
+cd ~/dev/b2basket/
+cd feed-processor/
+cd ~/dev/b2basket/tools.infra
+git submodule update --init --recursive --remote --merge
+clear
+make tunit-up
+make clean
+make tunit-up
+make clean
+make tunit-up
+make clean
+make build
+make tunit-up
+rm code/tools.tunit/.vite
+rm code/tools.tunit/.vite -rf
+clear
+sudo rm code/tools.tunit/.vite -rf
+clear
+cd code
+cd tools.tunit/
+bun i
+bun dev
+cd ../../..
+ckear
+clear
+make clean
+cd tools.infra/
+make clean
+make build
+make tunit-up
+cd ~/dev/b2basket/tools.infra/
+cursor code/tools.tunit/
+docker build 
+docker build  docker/dev.dockerfile
+clear
+docker ps -a
+docker logs toolsinfra-tunit-client
+make tunit-up
+clear
+make clean
+make build
+npm i --legacy-peer-deps 
+make build
+cd ../..
+cd ..
+git clone ssh://git@gitlab.b2basket.ru:822/backend-team/tools.infra.git --recurse-submodules tls
+cursor tls
+clear
+cd code
+cd feed_checker_client/
+git switch master
+cd ../smart.b2basket/
+git switch master
+cd ../tools.client/
+git switch master
+cd ../tools.tunit/
+git switch master
+clear
+cd ../..
+ls
+make build
+make tunit-up
+make tunit-up
+cd code/tools.tunit/
+bun i
+cd code/smart.b2basket/
+git switch refactor_b2basket_docs_migration_to_spectacular
+clear
+cd ../..
+make clean
+make build
+bun dev
+yay -S visual-studio-code-bin
+code b2basket/tools.infra/
+make tunit-up
+make client-upo
+make client-up
+make tunit-up
+wpctl set-default 53
+cd ~/dev/ba_react_scale/
+bun decv
+cursor .
+bun dev
+cursor ../react_scale/
+wpctl set-default 52
+nvim ~/.config/hypr/core/input.conf
+ls /usr/local/share
+mkdir /usr/local/share/keymaps
+sudo mkdir /usr/local/share/keymaps
+clear
+cd ~/dotfiles/
+ls
+cd .config/
+;s
+ls
+mkdir xkb
+cd xkb
+xrandr
+clear
+ls /usr/share/X11/xkb
+mkdir symbolds
+cd symbolds/
+nvim birman
+cd ~/dotfiles/
+stow .
+ls ~/.config/xkb
+nvim ~/.config/hypr/core/input.conf
+nvim .config/xkb/symbolds/birman
+nvim ~/.config/hypr/core/input.conf
+nvim .config/xkb/symbolds/birman
+rm ~/.config/xkb -rf
+mv .config/xkb/symbolds/ .config/xkb/symbols
+cd .config/xkb/symbols/
+ls
+nvim ~/.config/hypr/core/input.conf
+cd ~/dotfiles/
+stow .
+ls ~/.config
+reboot
+nvim ~/.config/xkb/symbols/en_birman
+mv ~/.config/xkb/symbols/birman ~/.config/xkb/symbols/ru_birman
+nvim ~/.config/xkb/symbols/ru_birman
+:q
+clear
+nvim ~/.config/hypr/core/input.conf
+reboot
+l
+ls
+nvim ~/.config/xkb/symbols/ru_birman
+nvim ~/.config/xkb/symbols/en_birman
+nvim ~/.config/hypr
+nvim ~/.config/hypr/core/input.conf
+reboot
+nvim ~/.config/hypr/core/input.conf
+bat ~/.config/xkb/symbols/ru_birman
+bat ~/.config/xkb/symbols/en_birman
+nvim ~/.config/xkb/symbols/
+ls ~/dotfiles/.config/
+ls ~/dotfiles/.config/xkb/
+ls ~/dotfiles/.config/xkb
+ls ~/dotfiles/.config/xkb/symbols/
+cd ~/dotfiles/.config/xkb/
+cd symbols/
+nvim ~/.config/hypr/core/input.conf
+reboot
+ls ~/dotfiles/.config/xkb/symbols/
+bat ~/.config/xkb/symbols/ru_birman
+nvim ~/.config/xkb/symbols/ru_birman
+cd ~/dotfiles/
+stow .
+bat ~/.config/xkb/symbols/ru_birman
+bat ~/.config/xkb/symbols/ru-birman
+bat ~/.config/hypr/core/input.conf
+hyprtcl reload
+hyprctl reload
+reboot
+bun dev
+cursor ../ba_react_scale/
+bun dev
+bun i -D @deck.gl/widgets
+bun dev
+bun rm @deck.gl/widgets
+clear
+bun dev
+bun i @turf/point @turf/great-circle
+bun i @turf/helpers @turf/great-circle
+clear
+bun dev
+bun i @luma.gl/engine@9.1.14
+bun i @luma.gl/engine@9.1.10
+clear
+bun dev
+bun i @deck.gl/experimental
+bun rm @luma.gl/engine
+bun run build
+bun dev
+bun run build
+cd ../react_scale/
+bun run build
+c;ear
+clear
+reboot
+bun dev
+bun i @tanstack/react-table
+clear
+bun dev
+bun i @tanstack/react-virtual
+сдуфк
+clear
+bun dev
+bun i nanoid
+clear
+nmcli 
+nmcli connection show
+nmcli con 
+nmcli con --help
+nmcli con --help delete miigik
+nmcli con delete miigik
+nmcli con delete miigaik
+clear
+nmcli con show
+nmcli con delete netherlands_m_panf_vpn
+clear
+cd ..
+ls
+cd sync
+ls
+ls obsidian/
+ls obsidian/jager/
+ls -lh
+ls -h
+ls -l
+clear
+ls --help
+ls -t 2
+ls -t
+ls subdir
+clear
+mkdir vpn
+mv `~/Downloads/Telegram Desktop/ruslan.ovpn` miigaik.ovpn
+ls
+rm miigaik.ovpn
+mv `~/Downloads/Telegram Desktop/ruslan.ovpn` vpn/miigaik.ovpn
+cd vpn
+nmcli con --help
+nmcli con import type --help
+nmcli con import type openvpn miigaik.ovpn
+nmcli con show
+nmcli con down Hyprland-Home
+nmcli con up miigaik
+nmcli con import type openvpn file miigaik.ovpn
+nmcli con up miigaik
+nmcli con show
+mv `~/Downloads/Telegram Desktop/config.zip` .
+unzip config.zip mpanf
+ls
+mkdir mpanf
+unzip config.zip mpanf
+unzip config.zip ./mpanf
+unzip config.zip -o mpanf
+unzip config.zip
+ls
+mv config/* mpanf/
+ls mpanf/
+rm config*
+ls
+cd mpanf/
+ls
+mv config.ovpn miigaik.ovpn
+nmcli con rm miigaik
+nmcli con delete miigaik
+nmcli con import type openvpn file miigaik.ovpn
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+yay -S rustdesk
+nmcli con up miigaik
+nmcli con up Hyprland-Home
+ping 192.168.58.49
+nmcli con down miigaik
+cd ..
+ls
+Thunar 
+nvim ~/.config/hypr/core/variables.conf
+clear
+сдуфк
+clear
+nmcli con up miigaik
+mkdir miigaik
+cd miigaik/
+mkdir portal
+cd portal/
+git clone git@git.corp.miigaik.ru:lit/external/external-interaction-portal/external-interaction-portal-frontend.git frontend
+nmcli con down miigaik
+nmcli con up miigaik
+git clone git@git.corp.miigaik.ru:lit/external/external-interaction-portal/external-interaction-portal-backend.git backend
+git clone git@git.corp.miigaik.ru:lit/external/external-interaction-portal/backend.git backend
+cd backend/
+git submodule update --init --recursive
+clear
+cd ../frontend/
+git switch dev
+clear
+cd ../backend/
+git switch dev
+nmcli con down miigaik
+nmcli con up miigaik
+cd auth-service/
+ls
+git log
+git branch
+cear
+clear
+cd ..
+bat README.md
+clear
+bat react_scale/
+cd bac
+cd backend
+z back
+z
+clear
+cd miigaik/portal/backend/
+clear
+ls -l
+ls -la
+mv api-gateway-service/.env.example api-gateway-service/.env
+mv auth-service/.env.example auth-service/.env
+clear
+docker compose -f ./compose.dev.yml up
+ls
+docker compose -f ./compose-dev.yml up
+mv .env.example .env
+docker compose -f ./compose-dev.yml up
+nmcli con down miigaik
+docker compose -f ./compose-dev.yml up
+git branch
+bat README.md
+nmcli con up miigaik
+docker compose -f ./compose-dev.yml up
+clear
+cd ..
+rm -rf backend/
+sudo rm -rf backend/
+git clone git@git.corp.miigaik.ru:lit/external/external-interaction-portal/backend.git backend
+cd backend/
+git switch dev
+git submodule update --init --recursive
+ls
+ls src
+bat README.md
+mv .env.example .env
+ls
+ls src
+ls src/auth/ -a
+clear
+cd miigaik/portal/backend/
+ls
+bat .env
+clear
+nmcli con down miigaik
+docker compose -f ./compose-dev.yml up
+docker system prune -a --volumes
+clear
+docker compose -f ./compose-dev.yml up
+ls
+ls -a
+bat .env
+cursor miigaik/portal/frontend/
+cursor .
+bun i
+bun run dev
+bun run start
+sudo bun run statr
+sudo bun run start
+bun run start
+ls -a ..
+ls -al ..
+cd ..
+chmod o+w backend/
+chmod o+w backend/ -r
+chmod o+w backend/ -R
+chmod o+w -R backend/
+sudo chmod o+w -R backend/
+ls -al ..
+ls -al
+cd backend/
+ls 
+clear
+cd ..
+chmod 766 backend/
+sudo chmod 766 -R backend/
+ls
+ls -a
+la -al
+ls -al
+sudo chmod 767 -R backend/
+ls -al
+cd backend/
+bun run start
+cd ..
+rm -rf backend/
+git clone git@git.corp.miigaik.ru:lit/external/external-interaction-portal/backend.git backend
+clear
+nmcli con up miigaik
+git clone git@git.corp.miigaik.ru:lit/external/external-interaction-portal/backend.git backend
+cd backend
+ls
+clear
+mv .env.example .env
+clear
+nmcli con down miigaik
+docker compose -f ./compose-dev.yml up
+ls
+git switch dev
+cleaar
+mv .env.example .env
+clear
+docker compose -f ./compose-dev.yml up
+yay -Ss big-blue
+yay -Ss bigblue
+yay -Ss ttf-bigblueterminal-nerd
+yay -S ttf-bigblueterminal-nerd
+clear
+nvim ~/.config/wezterm/wezterm.lua
+clear
+docker compose -f ./compose-dev.yml up
+cd miigaik/portal/backend/
+docker system prune -a --volumes
+yay -Ss monocraft
+yay -S ttf-miracode
+nvim ~/.config/wezterm/wezterm.lua
+miracode
+font
+cd miigaik/portal/frontend/
+bat README.md
+clear
+ls
+ckear
+clear
+ls
+docker compose -f ./compose-dev.yml up
+ls -a
+mv .env.example .env
+docker compose -f ./compose-dev.yml up
+clear
+bun i
+rm -rf node_modules/
+bun i 
+clear
+bun run start
+cursor ../frontend/
+bun run dev
+clear
+cursor ~/dev/ba_react_scale/
+docker compose -f ./compose-dev.yml up
+bun dev
+yay -S obs-studio
+git log
+reboot
+clear
+git status
+git pull
+git merge release/1.11.7-styles
+git merge origin release/1.11.7-styles
+git status
+git log
+сдуфк
+cleart
+clear
+bun dev
+git log
+git status
+git restore src/pages/_root-layout/_auth
+bun dev
+git stauts
+git status
+git reset src/pages/_root-layout/_auth.tsx
+git restore src/pages/_root-layout/_auth.tsx
+clear
+bun dev
+git reset --hard
+clear
+игт вум
+wpctl set-default 53
+wpctl status
+wpctl set-default 52
+bun dev
+cursor ../ba_react_scale/
+bun dev
+bun i react-tooltip
+bun update
+clear
+bun dev
+clear
+bun dev
+code .
+bun dev
+bun i @uiw/react-color\
+bun i @uiw/react-color
+clear
+bun rm @uiw/react-color
+bun i @uiv/react-color-compact
+clear
+bun i @uiv/react-color-compact
+bun i @uiw/react-color-compact
+clear
+bun dev
+git init
+clear
+git branch
+git log
+git add .
+git commit -m "feat(app): add many components"
+clear
+git branch
+clear
+bun update
+bun outdated
+bun update --help
+bun update --latest
+bun run dev
+git reset --hard
+clear
+bun outdated
+clear
+wpctl set-default 53
+nmcli con down Hyprland-Home
+nmcli con show
+reboot
+code .
+yay -Rsn cursor-bin
+nvim ~/.config/hypr/core/variables.conf
+clear
+code ../b2basket/
+code tools.infra/
+make tunit-up
+docker system prune -a --volumes
+make clean
+c;ear
+clear
+yay -S ayugram-desktop-bin
+wpctl set-default 52
+make build
+clear
+nmcli 
+clear
+nmcli con show
+tracepath 192.168.55.179
+tracepath github.com
+make tunit-up
+clear
+code code/tools.tunit/
+ls
+mv theme-selector-backend/ theme-selector
+ls
+mv theme-selector theme-selector-backend
+mkdir miigaik/theme-selector
+mv theme-selector-backend/ miigaik/theme-selector/backend
+mv theme-selector-frontend/ miigaik/theme-selector/frontend
+cd miigaik/theme-selector/
+code frontend
+nmcli con up miigaik
+git pull
+git stauts
+git status
+code frontend
+cd backend/
+code .
+cargo run
+docker compose -f ./compose-dev.yml up
+clear
+docker compose -f ./deploy/compose-db.yml
+docker compose -f ./deploy/compose-db.yml up
+ls -l
+ls -la
+bat .env
+clear
+git pull
+clear
+nmcli con down miigaik
+bun i && bun dev
+cd miigaik/theme-selector/
+ca backend/
+cd backend/
+clear
+cargo run
+docker compose -f ./deploy/compose-db.yml up
+docker compose -f ./deploy/compose-db.yml up --build
+clear
+bat ./deploy/compose-db.yml
+docker compose -f ./deploy/compose-prod.yml up db
+docker compose -f deploy/compose-db.yml -f deploy/compose-app.yml --env-file ./.env up -d
+docker compose -f ./deploy/compose-db.yml --env-file ./.env up -d
+ls
+clear
+nvim Makefile
+make db-up
+make clean
+clear
+make db-up
+docker ps -a
+docker system prune -a --volumes
+ckear
+clear
+make db-up
+cargo run
+code .
+cargo run
+docker ps -a
+docker stop $(docker ps -qa)
+docker stop *
+zsh
+clear
+make db-up
+clear
+make db-up
+clear
+cargo run
+cargo run --help
+cargo run --release
+clear
+cargo run
+cargo update
+cargo upgrade
+cargo update --help
+cargo --help
+cargo update --help
+cargo update --config
+cargo help --list
+cargo --help --list
+cargo list
+cargo --list
+cargo install-update --all
+cargo upgrade -i --dry-run
+cargo update --breaking
+clear
+cargo run
+git branch
+git switch dev
+git switch master
+git log
+nmcli con up miigaik
+clear
+cd ..
+rm -rf backend/
+sudo rm -rf backend/
+git clone git@git.corp.miigaik.ru:lit/external/theme-selector/theme-selector-backend.git backend
+rm -rf frontend
+clear
+git clone git@git.corp.miigaik.ru:lit/external/theme-selector/theme-selector-frontend.git frontend
+sudo rm -rf frontend
+git clone git@git.corp.miigaik.ru:lit/external/theme-selector/theme-selector-frontend.git frontend
+clear
+nmcli con down miigaik
+clear
+make db-up
+cd backend/
+clear
+make
+make db-up
+clear
+cargo run
+cleart
+clear
+make db-up
+make db-restart
+make db-clean
+clear
+make clean
+make db-clean
+clear
+make db-up
+clkear
+clear
+cargo run
+code dev/miigaik/theme-selector/backend/
+clear
+cargo run
+clear
+cargo run
+git add .
+git commit -m "feat(deploy): add makefile, add host to dotenv, fix compose db"
+clear
+bun i; bun dev
+clear
+code .
+clear
+cargo run
+ckea
+clear
+bun i
+cargo run
+make db-down
+make db-up
+clear
+cargo run
+clear
+make backend-up
+clear
+cargo -v
+rustc -v
+rustc -V
+clear
+make backend-up
+clear
+make backend-down
+cargo backend-up
+make backend-up
+cargo run
+clear
+docker ps - a
+docker ps -a
+make backend-down
+make backend-up
+docker ps -a
+docker system prune -a --volumes
+clear
+make backend-up
+cargo add openssl --no-default-features -F vendored
+make backend-up
+make backend-down
+make backend-up
+make backend-down
+make backend-up
+make backend-down
+make backend-up
+clear
+docker ps -a
+docker exec -it theme-selector-backend-prod sh
+make backend-up
+clear
+docker compose -f ./deploy/compose-prod.yml up
+docker compose -f ./deploy/compose-prod.yml up --env-file ./.env
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up
+clear
+docker system prune -a --volumes
+clear
+make backend-up
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+rm -rf ./deploy/pgdata/
+sudo rm -rf ./deploy/pgdata/
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+clear
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+openssl version -d
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+clear
+cargo add openssl --no-default-features -F vendored
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+cargo add openssl --no-default-features -F vendored
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+clear
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+cargo rm openssl
+ckear
+cargo rm openssl
+clear
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+clear
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+docker system prune -a --volumes
+clear
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+clear
+whereis sqlx
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+clear
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+docker ps -a
+docker compose -f ./deploy/compose-prod.yml --env-file ./.env up --build
+cargo run
+make dev-up
+clear
+docker system prune -a --volumes
+clear
+make prod-up
+docker stop theme-selector-backend-prod
+make prod-up
+make dev-up
+make prod-down
+make dev-up
+make dev-down
+make dev-up
+make prepare
+make dev-up
+clear
+git status
+git add .
+git status
+git add .
+clear
+make dev-down
+ckear
+clda
+clear
+make prod-down
+make prod-up
+docker system prune -a --volumes
+make dev-up
+docker system prune -a --volumes
+docker ps -a
+clear
+docker system prune -a --volumes
+clear
+make dev-up
+make dev-down
+make prod-up
+code dev/miigaik/theme-selector/frontend/
+bun dev
+clear
+bun update
+clear
+bun dev
+clear
+git add .
+git status
+git commit -m "fix(deploy): fix dockerfile, makefile"
+clear
+git add .
+git commit -m "fix(make): add targets to .PHONY"
+clear
+git add .
+git commit -m "fix(make): add targets to .PHONY"
+clear
+make dev-up
+docker ps -a
+make dev-up
+make dev-down
+clear
+make dev-up
+docker system prune -a --volumes
+docker ps -a
+docker stop theme-selector-frontend-dev
+clear
+make dev-up
+docker stop theme-selector-frontend-dev
+docker system prune -a --volumes
+clear
+make dev-up
+make dev-up
+make dev-down
+make dev-down
+make prod-up
+make prod-up
+make prod-down
+make prod-up
+docker ps -a
+make prod-up
+make clean
+ckear
+clear
+make prod-clean
+make prod-up
+docker ps -qa
+make prod-down
+clear
+docker stop theme-selector-frontend-dev
+docker system prune -a --volumes
+clear
+clear
+make prod-up
+cd ../backend/
+make prod-up
+clear
+git add .
+make prod-down
+cd ../frontend/
+make prod-down
+make dev-up
+make dev-down
+clear
+git add .
+git commit -m "feat(deploy): add makefile, fix composes"
+clear
+git stauats
+git status
+cd ../frontend/
+git add .
+git commit -m "feat(deploy): add makefile, fix composes"
+clear
+nmcli con up miigaik
+git push
+cd ../backend/
+git push
+clear
+nmcli con down miigaik
+ssh dale@192.168.55.184
+nmcli con up miigaik
+ssh dale@192.168.55.184
+nmcli con down miigaik
+nmcli con up miigaik
+ssh dale@192.168.55.184
+nmcli con down miigaik
+nmcli con up miigaik
+ssh dale@192.168.55.184
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+ssh dale@192.168.55.184
+nmcli con up miigaik
+cd miigaik/theme-selector/
+cd backend/
+ls
+cat .en
+cat .env
+cat .env.example
+code ../backend/
+git status
+cat .env.example
+git add .
+git commit -m "fix(.env): update database_url in .env.example"
+clear
+git push
+git add .
+git commit -m "fix(Makefile): fix docker compose name"
+cd ../frontend/
+nvim Makefile
+make prod-clean
+make prod-up
+make prod-clean
+clear
+git status
+git add .
+cat Makefile
+git commit -m "fix(Makefile): fix docker compose name, add clean targets"
+clear
+git push
+cd ../backend/
+git push
+nmcli con up miigaik
+clear
+ssh dale@192.168.55.184
+nmcli con down miigaik
+code ~/dev/react_scale/
+bun dev
+clear
+git add .
+git commit -m "finish week tasks"
+clear
+git push
+bun dev
+git switch release/1.11.8 -c
+git switch -c release/1.11.8
+clear
+git push --set-upstream origin release/1.11.8
+wpctl set-default 53
+bun dev
+git status
+git reset --hard
+clear
+bun dev
+git status
+clear
+git switch release/1.11.7-styles
+git log
+git switch release/1.11.7
+git log
+git merge release/1.11.7-styles
+git status
+git add .
+bun dev
+git commit -m "merge styles"
+clear
+git status
+git push
+git switch release/1.11.8
+git merge release/1.11.7
+git log
+git status
+git push
+clear
+code ../ba_react_scale/
+nmcli con down Hyprland-Home
+yay -S firefox-developer-edition
+bun dev
+git status
+git log
+clear
+rm -rf node_modules/
+clear
+bun i
+bun dev
+c;ear
+clear
+nmcli con up Hyprland-Home
+yay -S cursor-bin
+clear
+cursor ../miigaik/portal/frontend/
+cd `~/Downloads/Telegram Desktop/`
+ls
+unzip drive-download-20251107T131511Z-1-001.zip
+ls
+clear
+ls
+ls | grep zip
+clear
+ls | grep drive
+clear
+cd ~/dev/miigaik/portal/
+ls
+mkdir data
+cd data
+unzip `~/Downloads/Telegram Desktop/drive-*`
+ls
+unzip `~/Downloads/Telegram Desktop/drive-*`/
+unzip `~/Downloads/Telegram Desktop/drive-download-20251107T131332Z-1-001.zip`
+ls
+mkdir 1
+mv *.png 1
+mkdir 2
+mkdir 3
+mkdir 4
+unzip `~/Downloads/Telegram Desktop/drive-download-20251107T131404Z-1-001.zip` 2
+unzip `~/Downloads/Telegram Desktop/drive-download-20251107T131404Z-1-001.zip` ./2
+cd 2
+unzip `~/Downloads/Telegram Desktop/drive-download-20251107T131404Z-1-001.zip`
+cd ../3
+unzip `~/Downloads/Telegram Desktop/drive-download-20251107T131511Z-1-001.zip`
+cd ../4
+unzip `~/Downloads/Telegram Desktop/drive-download-20251107T131224Z-1-001.zip`
+cd ../3/
+ls
+cd ..
+ls -a
+cat 8.jpeg
+yay -Ss gvfs
+yay -S gvfs
+yay -S libreoffice-fresh
+cd miigaik/portal/backend/
+clear
+bat README.md
+cp .env.example .env
+ls
+ls -a
+bat .env
+clear
+yay -Syu
+yay -Rsn gtk4-layer-shell
+yay -Qdm
+cursor ../backend/
+bun i
+cd miigaik/portal/backend/
+ls
+cat README.md
+git pull
+cleardocker compose -f ./compose-dev.yml exec -it backend sh -c "npm run create-superuser"
+docker compose -f ./compose-dev.yml exec -it backend sh -c "npm run create-superuser"
+cd miigaik/portal/backend/
+cat .env
+bun dev
+code .
+docker compose -f ./compose-dev.yml up
+wpctl set-default 52
+clear
+cd miigaik/portal/backend/
+docker compose -f ./compose-dev.yml up -d
+bun dev
+clear
+docker compose -f ./compose-dev.yml up -d
+docker ps -a
+bat ~/dev/miigaik/portal/backend/.env
+cd  ~/dev/miigaik/portal/backend/
+docker compose -f ./compose-dev.yml exec -it backend sh -c "npm run create-superuser"
+cd  ~/dev/miigaik/portal/frontend/
+clear
+docker compose -f ./compose-dev.yml down -v
+clear
+docker ps -a
+wpctl set-default 53
+docker ps -a
+docker system prune -a --volumes
+clear
+cd miigaik/portal/backend/
+bun dev
+bun dev
+clear
+docker compose -f ./compose-dev.yml up
+cd miigaik/portal/backend/
+cursor .
+telegram
+nmcli con up miigaik/
+cd miigaik/portal/backend/
+cd ../frontq
+cd ../frontend/
+nmcli con up miigaik
+git pull
+git diff origin/release/1.0.3
+git branch
+git merge origin/release/1.0.3
+bun dev
+clear
+git add .
+git commit -m "fix children rendering"
+clear
+git push
+clear
+git status
+git commit -m "fix children rendering"
+git add .
+git commit -m "fix lint errors"
+clear
+git merge origin/release/1.0.3
+nmcli con down miigaik
+git status
+clear
+git add .
+git commit -m "fix merge conflicts"
+clear
+git status
+echo "sosal?" >> ./.lol.txt && vim ./.lol.txt
+ls 
+ls .lol.txt
+cat .lol.txt
+clear
+echo "sosal?" >> ./.lol.txt;vim ./.lol.txt
+ls .lol.txt
+cat .lol.txt
+ls .lol.txt
+echo "sosal?" > ./.lol.txt;vim ./.lol.txt
+echo "sosal?" > .lol.txt; vim ./.lol.txt
+ls
+npm run dev
+bun dev
+bun dev --host
+cd ../backend/
+cat ./prisma/schema.prisma
+cat ./src/entities/blocks/blocks.service.ts
+clear
+cat ./src/entities/blocks/blocks.service.ts
+bun dev
+bun i node-html-parser
+clear
+clear
+cd miigaik/portal/backend/
+docker compose -f ./compose-dev.yml down 0v
+docker compose -f ./compose-dev.yml down 
+code .
+cd ../frontend/
+bun i class-variance-authority
+clear
+cursor ~/dev/ba_react_scale/
+wpctl set-default 52
+nmcli con down miigaik
+nmcli con down Hyprland-Home
+bun dev
+bun i sonner
+clear
+nmcli con up Hyprland-Home
+cler
+clear
+bun dev
+clear
+cursor ~/dev/ba_react_scale/
+bun devb
+bun dev
+git status
+cd miigaik/portal/backend/
+git status
+git branch
+nmcli con up miigaik
+cd ../frontend/
+git branch
+git push
+git status
+git add .
+git commit -m "add new blocks"
+git status
+cursor .
+git add .
+git commit -m "add new blocks"
+clear
+cd miigaik/portal/backend/
+git push
+git status
+git add .
+bat .env.example
+git status
+git restore --staged .env
+git restore --staged .env.example
+git status
+cursor ../backend/
+git commit -m "fix errors"
+clear
+git status\
+git branch
+git push
+git pull
+git config pull.rebase false
+git pull
+git status
+git log
+cleart
+clear
+git status
+git commit -m "fix merge conflicts"
+clear
+git status
+git push
+nmcli con down miigaik
+wpctl set-default 53
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+cursor ~/dev/ba_react_scale/
+wpctl set-default 52
+yay -S xdg-desktop-portal
+yay -Ss xdg-desktop-portal
+yay -S xdg-desktop-portal-hyprland 
+yay -S xdg-desktop-portal
+export
+env
+env | grep XDG_SESS
+env XDG_SESSION_DESKTOP=hyprland
+env | grep XDG_SESS
+env XDG_SESSION_DESKTOP=hyprland
+env --help
+$env.XDG_SESSION_DESKTOP=hyprland
+$env.XDG_SESSION_DESKTOP = hyprland
+$env.XDG_SESSION_DESKTOP = 'hyprland'
+env | grep XDG_SESS
+env | grep XDG_CURRE
+systemctl --user status xdg-desktop-portal<\n>
+yay -Qdm | grep wire
+yay -S wireplumber
+cursor ~/dev/b2basket/tools.infra/
+cd ..
+git clone ssh://git@gitlab.b2basket.ru:822/backend-team/tools.infra.git tlsinf
+cursor tlsinf/
+git submodule update --init --recursive
+make tunit-up
+make clean
+make build
+clear
+git pull
+cd code
+cd smart.b2basket/
+git pull
+git status
+git pull
+git branch
+git switch master
+git pull
+clear
+cd ../tools.tunit/
+git pull
+cd ..
+make build
+clear
+docker ps -a
+docker exec -it toolsinfra-mysql-db-1 psql
+cd b2basket/tools.infra/
+ls
+cd code/smart.b2basket/
+make tunit-up
+make build
+docker ps -a
+make tunit-up
+make clean
+make build
+make tunit-up
+make build
+make tunit-up
+yay -Qdm | grep xorg
+yay -Qdm | grep xrandr
+yay -Qdm | grep wayland
+yay -Q | grep xra
+yay -Q | grep xorg
+yay -Q | grep xdg
+yay -Rsn xdg-desktop-portal-gtk
+xdg=desktop=portal-hyprland
+xdg-desktop-portal-hyprland
+dbus-update-activation-environment --systemd --all<\n>systemctl --user import-environment QT_QPA_PLATFORMTHEME
+yay -Syu
+yay -Q | grep gtk4
+yay -Rsn gtk4-layer-shell
+dbus-update-activation-environment --systemd --all<\n>systemctl --user import-environment QT_QPA_PLATFORMTHEME
+yay -Syu
+yay -Rsn thunar
+yay -Syu
+yay -Q
+yay -Rsn webgitgtk
+yay -Rsn webkitgtk
+yay -Rsn rustdesk
+rustdesk
+yay -Rsn rustdesk
+yay -Rsn git
+clear
+yay -Q
+yay -Qm
+yay -Rsn qt5*
+yay -Rsn qt5-remoteobjects
+yay -Rsn qt5-remoteobjects zoom
+clear
+yay -Syu
+yay -Rsn pavucontrol
+yay -Rsn pavu
+wpctl set-default 53
+wpctl set-default 52
+wpctl status
+wpctl set-default 54
+wpctl set-default 53
+cursor ~/dev/ba_react_scale/
+wpctl set-default 54
+yay -S firefox
+bun run lint
+bun run lint --fix
+wpctl set-default 53
+bun run lint --fix
+сдуфк
+clear
+git add .
+git commit -m "add many abilities"
+clear
+bun i -D vitest
+clear
+bun run test
+clear
+git add .
+git commit -m "add tests"
+clear
+bun i three; bun i -D @types/three
+clear
+bun i @loaders.gl/obj
+bun rm @loaders.gl/obj
+bun i @luma.gl/engine@9.1.10
+nmcli con down Hyprland-Home
+wpctl set-default 54
+bun dev
+bun rm @luma.gl/engine@9.1.10
+bun rm @luma.gl/engine
+clear
+bun i @luma.gl/engine@9.1.10
+nmcli con up Hyprland-Home
+nmcli con down Hyprland-Home
+cd ~/sync/vpn
+l
+ls
+nmcli con import type openvpn file ruslan.ovpn
+nmcli con up ruslan
+nmcli con status
+nmcli con 
+cat ruslan.ovpn
+nmcli con up ruslan
+journalctl -xe NM_CONNECTION=5457300d-29f1-40e9-9cbe-a7fa79017593 + NM_DEVICE=wlp13s0
+nmcli con 
+nmcli con --help
+nmcli con delete ruslan
+clear
+mv `~/Downloads/Telegram Desktop/ruslan.ovpn`
+mv `~/Downloads/Telegram Desktop/ruslan.ovpn` .
+ls
+nmcli con import type openvpn file ruslan.ovpn
+nmcli con up ruslan
+journalctl -xe NM_CONNECTION=f11ce4ab-53e3-470f-a0ad-dd7b10188f42 + NM_DEVICE=wlp13s0
+nmcli con up ruslan
+nmcli con import type openvpn file ruslan.ovpn
+nmcli con up ruslan
+nmcli con 
+nmcli con delete ruslan
+nmcli con up ruslan
+nmcli con 
+nmcli con up ruslan
+yay -Q | grep network
+yay -Ss networkmanager-openvpn
+yay -Ss networkmanager-vpn
+yay -Syu
+networkmanager-openvpn
+openvpn
+clear
+yay -Rsn networkmanager-openvpn
+yay -S openvpn
+nmcli con up ruslan
+mv `~/Downloads/Telegram Desktop/ruslandiy.ovpn` .
+nmcli con import type openvpn file ruslandiy.ovpn
+yay -S networkmanager-openvpn
+nmcli con up ruslandiy
+nmcli con up miigaik
+reboot
+yay -Q | grep nvidia
+yay -Rsn nvidia-open-dkms
+yay -S nvidia-open-dkms
+sudo mkinitcpio --verbose -P
+reboot
+hyprctl monitors all
+historuy
+history
+history | grep nvidia
+history
+yay -Q | grep nvidia
+yay -Rsn nvidia-open-dkms
+yay -S nvidia-dkms
+reboot
+cursor ~/dev/ba_react_scale/
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up ruslandiy
+bun dev
+bun i @luma.gl/engine@9.1.10
+clear
+bun dev
+bun rm @luma.gl/engine
+clear
+bun dev
+bun i @luma.gl/webgpu
+clear
+bun dev
+bun rm @luma.gl/webgpu
+clear
+bun dev
+bun i @luma.gl/engine@9.1.10
+clear
+bun dev
+bun rm @luma.gl/engine
+сдуфк
+clear
+bun i @luma.gl/engine@9.1.10
+wpctl set-default 53
+wpctl status
+wpctl set-default 42
+wpctl set-default 52
+clear
+bun dev
+git pull
+bun devb
+cd miigaik/portal/backend/
+ls
+clear
+docker ps -a
+clear
+docker ps -a
+docker compose -f ./compose-dev.yml down 
+code dev/miigaik/portal/backend/
+docker compose -f ./compose-dev.yml up
+git pull
+nmcli con up miigaik
+git pull
+git reset --hard
+git pull
+docker compose -f ./compose-dev.yml down -v
+clear
+docker ps -a
+docker compose -f ./compose-dev.yml up
+bun dev
+cursor .
+nmcli con down miigaik
+pg_dump
+yay -Ss pg_dump
+nvim ~/sync/vpn/miigaik.ovpn
+clear
+nmcli con delete ruslan
+nmcli con delete miigaik
+nmcli con import type openvpn file miigaik/
+nmcli con import type openvpn file ~/sync/vpn/miigaik.ovpn
+nmcli con up miigaik
+nvim ~/sync/vpn/miigaik.ovpn
+nmcli con delete miigaik
+nmcli con import type openvpn file ~/sync/vpn/miigaik.ovpn
+nmcli con up miigaik
+nmcli con delete miigaik
+nvim ~/sync/vpn/miigaik.ovpn
+nmcli con delete miigaik
+nmcli con import type openvpn file ~/sync/vpn/miigaik.ovpn
+nmcli con delete miigaik
+nmcli con import type openvpn file ~/sync/vpn/miigaik.ovpn
+nmcli con up miigaik
+nmcli con up Hyprland-Home
+nmcli con down Hyprland-Home
+nmcli con
+nmcli con up miigaik
+ssh dale@192.168.55.184
+nmcli con delete miigaik
+nmcli con 
+nvim ~/sync/vpn/miigaik.ovpn
+nmcli con import type openvpn file ~/sync/vpn/miigaik.ovpn
+nmcli con up miigaik
+nmcli con down miigaik
+cd ~/sync/vpn
+nmcli con up miigaik
+nmcli con delete miigaik
+nmcli con import type openvpn file miigaik.ovpn
+nmcli con up
+nmcli con up miigaik.ovpn
+ssh dale@192.168.55.184
+nmcli con up miigaik
+nmcli con up ruslandiy
+nmcli con down ruslandiy
+nvim ~/sync/vpn/miigaik.ovpn
+clear
+cd ~/sync
+cd vpn
+ls
+rm miigaik.ovpn
+cd mpanf/
+ls
+nvim miigaik.ovpn
+nmcli con import type openvpn file miigaik.ovpn
+nmcli con up miigaik
+nmcli con
+nmcli con delete miigaik
+nmcli con import type openvpn file miigaik.ovpn
+nmcli con up miigaik
+nmcli con delete miigaik
+nvim miigaik.ovpn
+nmcli con import type openvpn file miigaik.ovpn
+nmcli con up miigaik
+ssh dale@192.168.55.184
+scp dale@192.168.55.184:/home/dale/a.bak .
+ls
+docker ps -a
+docker cp a.bak external-interaction-portal-db
+docker cp a.bak external-interaction-portal-db:/a.bak
+cat miigaik/portal/backend/.env
+clear
+cd miigaik/portal/backend/
+docker compose -f ./compose-dev.yml up
+docker compose -f ./compose-dev.yml up
+clear
+cd miigaik/portal/backend/
+docker ps -a
+bat README.md
+docker compose -f ./compose-dev.yml exec -it backend sh -c "npm run create-superuser"
+nmcli com
+nmcli con
+nmcli con down miigaik
+bun dev
+cursor ~/dev/ba_react_scale/
+cursor ~/dev/react_scale/
+nmcli con up Hyprland-Home
+clear
+cd miigaik/portal/backend/
+docker compose -f ./compose-dev.yml up
+docker compose -f ./compose-dev.yml down
+cursor ~/dev/miigaik/portal/frontend/
+git status
+git commit -m "add optimizations"
+git add .
+git commit -m "add optimizations"
+git switch -c optimized
+clear
+nmcli con up miigiak
+nmcli con up miigaik
+clear
+nmcli con up miigaik
+git push --set-upstream origin optimized
+ssh dale@192.168.55.184
+git branch
+git pull
+git branch
+git status
+git merge origin/release/1.0.3
+git status
+git add .
+git rm bun.lock
+git restore --staged bun.lock
+git status
+git branch
+git log
+git commit -m "fix merge conflicts"
+clear
+git statsu
+git push
+git switch -c release/1.0.4
+clear
+npm version patch
+bat /home/jager/.npm/_logs/2025-11-16T14_12_09_197Z-debug-0.log
+git status
+git reset --hard
+git status
+clear
+npm version patch
+git status
+git reset --hard
+npm version patch
+git reset --hard
+npm version patch
+clear
+git status
+git log
+git push
+git push --set-upstream origin release/1.0.4
+clear
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+yzi
+yay -S 7z
+nmcli con down miigaik
+yay -S 7z
+yay -S 7zip
+nmcli con up miigaik
+nmcli con down miigaik
+yay -S remina
+yay -Ss remina
+yay -Ss remmina
+yay -S remmina
+nmcli con up miigaik
+ssh dale@192.168.55.184
+nmcli con down miigaik
+bun dev
+clearr
+git status
+git log
+git revert df7c3020333fbf50a94fcf4181661a6b0ef4a75d
+git reset --hard
+git revert df7c3020333fbf50a94fcf4181661a6b0ef4a75d
+git revert --hard df7c3020333fbf50a94fcf4181661a6b0ef4a75d
+git reset --hard df7c3020333fbf50a94fcf4181661a6b0ef4a75d
+clear
+git log
+bun dev
+git pull
+docker ps -a
+docker exec -it external-interaction-portal-db psql -U postgres -d postgres
+cd miigaik/portal/backend/.env
+cat miigaik/portal/backend/.env
+clear
+bun dev
+git branch
+git switch dev
+git log
+git reset --hard 46c4309fe92525fff483a31d6c9782021a88503e
+git log
+clear
+bun dev
+git diff origin/release/1.0.4
+cd miigaik/portal/frontend/
+git diff origin/release/1.0.4
+clear
+git log
+nmcli con up miigaik
+clear
+bat package.json
+git status
+rm -rf node_modules/
+bun i
+clear
+bun dev
+nmcli con down miigaik
+clear
+git add .
+git commit -m "add optimizations"
+git status
+git push
+nmcli con up miigaik
+git push
+nmcli con down miigaik
+git push --force
+nmcli con up miigaik
+git push --force
+git status
+git switch release/1.0.4
+git merge dev
+git merge dev --force
+git status
+git commit -m "fix merge conflicts"
+git push
+git push --force
+git log
+clear
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+cursor ../frontend/
+bun dev
+git branch
+git log
+clear
+bun dev
+nmcli con up miigaik
+cd `~/Downloads/Telegram Desktop/`
+ls
+ls | grep 3
+ls | grep 3.
+ls | grep 3.1
+nmcli con down miigaik
+ls ~/dev/miigaik/portal/data/
+cd ~/dev/miigaik/portal/data/
+ls
+nmcli con up miigaik
+ssh dale@192.168.55.184
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con 
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+ssh dale@192.168.55.184
+nmcli con down miigaik
+nmcli con up miigaik
+cd ~/dev/miigaik/portal/data/
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+cd miigaik/portal/frontend/
+git status
+git pull
+cursor .
+git status
+git add .
+git commit -m "remove persist"
+git add .
+git commit -m "remove persist"
+git push
+nmcli con down miigaik
+clear
+cursor ~/dev/ba_react_scale/
+bun dev
+clea
+clear
+git status
+git add .
+git commit -m "add ability to edit model layer data"
+clear
+git status
+git add src/deck.d.ts
+git add src/entities/map-layers
+git status
+git add src/features/map
+git status
+git add src/widgets/map/ui/Editable
+git add src/widgets/map/ui/Editable*
+git status
+git add src/widgets/map/ui/Table.tsx
+git log
+clear
+git status
+git commit -m "add editable header etc"
+clear
+git status
+git reset --hard
+clear
+bun dev
+clear
+git add .
+git commit -m "fix logout"
+cleart
+clear
+bun dev
+bun dev
+nmcli con up miigaik
+cursor ../frontend/
+clear
+cd miigaik/portal/backend/
+docker compose -f ./compose-dev.yml up
+docker compose -f ./compose-dev.yml down
+cursor ../frontend/
+cd miigaik/portal/backend/
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+cd miigaik/portal/backend/
+cd ../data
+ls
+ls 4
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+docker compose -f ./compose-dev.yml up
+nmcli con down miigaik
+nmcli con
+nmcli con down Hyprland-Home
+nmcli con up miigaik
+nmcli con down miigaik
+nmcli con up miigaik
+nmcli con down miigaik
+bun dev
+cursor ../../../b2basket/tools.infra/
+nmcli con up miigaik
+cursor ~/dev/ba_react_scale/
+bun dev
+cursor ~/dev/ba_react_scale/
+bun dev
+git commit -m "refactor: restructure layer settings by geometry types and add copy to clipboard in table cells"
+clear
+git status
+git log
+git add .
+git commit -m "refactor: restructure layer settings by geometry types and add copy to clipboard in table cells"
+clear
+bun dev
+clear
+git add .
+git commit -m "feat: add ctrl + z to add / remove feature actions"
+clear
+wpctl set-default 54
+wpctl status
+wpctl set-default 53
+nmcli con down miigaik
+nmcli con status
+nmcli con 
+clear
+reboot
+cursor ~/dev/ba_react_scale/
+cursor ../react_scale/
+bun dev
+git status
+git pull
+clear
+bun dev
+git add .
+git commit -m "finish week tasks"
+clear
+git push
+git merge release/1.11.8-styles
+git pull
+git pull origin release/1.11.8-styles
+git config pull.rebase false
+git pull origin release/1.11.8-styles
+bun dev
+git pull origin release/1.11.8-styles
+bun dev
+git status
+git commit -m "fix merge conflicts"
+clear
+git push
+git status
+git log
+bun dev
+cursor ../ba_react_scale/
+bun dev
+сдуфк
+clear
+сдуфк
+bun dev
+git status
+cursor ../react_scale/
+bun 
+bun dev
+cursor ../ba_react_scale/
+cursor dev/ba_react_scale/
+clear
+bun dev
+git add .
+git status
+git restore --staged src/entities/map-layers/editable/draw
+git restore --staged src/entities/map-layers/editable/deck/modes/draw/
+git status
+git commit -m "feat: add hotkeys"
+clear
+cursor ~/dev/react_scale/
+bun dev
+git status --short
+clear
+git status
+clear
+git status --short
+git status
+git add .
+git commit -m "feat: enhance drawing modes"
+clear
+git push
+игт вум
+reboot
+cursor ~/dev/ba_react_scale/
+bun dev
+clear
+bun run build
+wpctl set-default 54
+wpctl set-default 52
+cursor ~/dev/ba_react_scale/
+bun dev
+clear
+git add .
+git commit -m "feat: add processing"
+clear
+bun dev
+nmcli con down miigaik
+nmcli con down Hyprland-Home
+nmcli con up Hyprland-Home
+bun run build
+bun dev
+bun run build
+wpctl set-default 54
+wpctl set-default 53
+wpctl set-default 54
+wpctl set-default 52
+bat ~/.config/hypr/core/input.conf
+pacman -Qe
+pacman -Qeq
+pacman -Qeq > some.txt
+pacman -Qeq | some.txt
+pacman -Qeq | open some.txt
+touch some.txt; pacman -Qeq | open some.txt
+nvim some.txt
+touch some.txt; pacman -Qeq | some.txt
+yay -Qdt
+zsh
+yay -S zsh
+clear
+yay -Qdt
+yay -Rsn clang chrpath copper
+yay -Rsn clang chrpath copper-bin-debug

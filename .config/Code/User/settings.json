@@ -2,7 +2,7 @@
   "editor.formatOnSave": true,
   "breadcrumbs.enabled": true,
   "editor.cursorBlinking": "expand",
-  "editor.cursorStyle": "line",
+  "editor.cursorStyle": "line-thin",
   "editor.cursorSmoothCaretAnimation": "explicit",
   "editor.smoothScrolling": true,
   "explorer.confirmDelete": false,
@@ -15,7 +15,7 @@
   "editor.fontSize": 14,
   "editor.tabSize": 2,
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "workbench.colorTheme": "Bearded Theme Monokai Black",
   "terminal.explorerKind": "external",
@@ -24,29 +24,33 @@
   "terminal.integrated.profiles.linux": {
     "nushell": {
       "path": "/usr/bin/nu",
-      "icon": "terminal-bash"
-    }
+      "icon": "terminal-bash",
+    },
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "svelte.enable-ts-plugin": true,
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
   },
   "[svelte]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "zig.zls.enabled": "on",
+  "[c]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+  },
 }

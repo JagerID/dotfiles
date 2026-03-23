@@ -44,6 +44,8 @@ export EDITOR=nvim
 export SUDO_EDITOR=nvim
 export TERMINAL=wezterm
 export BROWSER=zen-browser
+export XCURSOR_THEME="nier"
+export XCURSOR_SIZE=32
 
 # Aliases
 alias ls="lsd -lhg"

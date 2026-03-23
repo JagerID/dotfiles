@@ -1,0 +1,14 @@
+input {
+  disable-power-key-handling
+  warp-mouse-to-focus
+
+  keyboard {
+    xkb {
+      layout "en-birman, ru-birman"
+      options "grp:caps_toggle, compose:ralt, ctrl:nocaps, lv3:ralt_switch"
+    }
+
+    // Enable numlock on startup
+    numlock
+  }
+}

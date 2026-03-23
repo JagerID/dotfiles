@@ -1,4 +1,5 @@
 ### Arch
+
 - `linux-cachyos-rt-bore` - kernel
 - `limine` - bootloader
 - `btop` - `htop` alternative
