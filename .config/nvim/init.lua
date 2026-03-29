@@ -1,5 +1,5 @@
-require("core.editor")
-require("core.lazy")
-require("core.keybindings")
-
-vim.cmd.colorscheme("cyberdream")
+require ( "config" );
+require ( "plugins" );
+require ( "autocmd" );
+require ( "lsp" );
+require ( "keymaps" );

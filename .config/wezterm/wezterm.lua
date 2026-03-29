@@ -6,8 +6,8 @@ config.enable_wayland = false
 
 -- Font
 
-config.font = wezterm.font("BigBlueTerminal")
-config.font_size = 12
+config.font = wezterm.font("Iosevka Nerd Font")
+config.font_size = 14
 config_cell_widht = 1.0
 config.line_height = 1.1
 
@@ -37,14 +37,14 @@ config.animation_fps = 165
 -- Launch Menu
 -- TODO: Сделать keybindings для launch_menu (04.10.2025)
 config.launch_menu = {
-  -- {
-  --   args = { "/bin/nu", "-l" },
-  --   label = "Nushell"
-  -- },
-  {
-    args = { "/bin/zsh", "-l" },
-    label = "Zsh"
-  }
+	-- {
+	--   args = { "/bin/nu", "-l" },
+	--   label = "Nushell"
+	-- },
+	{
+		args = { "/bin/zsh", "-l" },
+		label = "Zsh",
+	},
 }
 
 config.default_prog = { "/bin/zsh", "-l" }
@@ -105,9 +105,9 @@ config.hyperlink_rules = {
 
 config.ssh_domains = {
 	{
-    name = "dev.miigaik",
-    remote_address = "192.168.55.179",
-    username = "dale"
+		name = "dev.miigaik",
+		remote_address = "192.168.55.179",
+		username = "dale",
 	},
 }
 
