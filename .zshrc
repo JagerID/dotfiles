@@ -50,6 +50,7 @@ export XCURSOR_SIZE=32
 # Aliases
 alias ls="lsd -lhg"
 alias cd="z"
+alias lst="lsd -lhg --tree"
 
 # Initialize starship prompt
 eval "$(starship init zsh)"

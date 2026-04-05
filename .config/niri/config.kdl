@@ -6,10 +6,12 @@ include "layout.kdl"
 include "monitors.kdl"
 include "animations.kdl"
 include "window-rules.kdl"
+include "layer-rules.kdl"
 include "keybinds.kdl"
 include "autostart.kdl"
 include "workspaces.kdl"
 include "events.kdl"
+include "blur.kdl"
 
 screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
 

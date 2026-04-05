@@ -1,0 +1,23 @@
+(include "./widgets/datetime/datetime.yuck")
+(include "./widgets/language/language.yuck")
+
+(defwindow datetime
+	:monitor 0
+	:geometry (geometry	:x "0%"
+		:y "0%"
+		:width "464px"
+		:height "190px"
+		:anchor "center center")
+	:stacking "bg"
+	(datetime))
+
+(defwindow language
+	:monitor 0
+	:geometry (geometry :x "20px"
+		:y "20px"
+		:width "40px"
+		:height "0px"
+		:anchor "bottom right")
+	:stacking "fg"
+	:wm-ignore true
+	(language))

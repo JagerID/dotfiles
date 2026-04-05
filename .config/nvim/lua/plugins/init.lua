@@ -1,0 +1,6 @@
+require("plugins.lsp")
+require("plugins.theme")
+require("plugins.fzf")
+require("plugins.dashboard")
+require("plugins.format")
+require("plugins.navigation")

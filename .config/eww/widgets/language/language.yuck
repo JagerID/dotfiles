@@ -1,0 +1,11 @@
+(defvar lang_visible true)
+
+(deflisten lang :initial ""
+	"scripts/get-lang.sh --watch")
+
+(defwidget language []
+	(box :class "glass-container language-container"
+		:space-evenly false
+		:halign "center"
+		:visible lang_visible
+		(label :text lang)))

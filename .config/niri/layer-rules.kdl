@@ -1,0 +1,9 @@
+layer-rule {
+	match namespace="gtk-layer-shell"
+	geometry-corner-radius 6
+
+	background-effect {
+		blur true
+		noise 0.01
+	}
+}

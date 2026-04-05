@@ -1,28 +1,25 @@
-local g = vim.g
+vim.opt.number = true -- номера строк
+vim.opt.relativenumber = true -- относительные номера
 
--- stylua: ignore start
+vim.opt.tabstop = 4 -- длина таба (в пробелах
+vim.opt.shiftwidth = 4 -- .. не знаю в чем отличие
+vim.opt.expandtab = false -- заменять ли таб на пробелы
 
-g.mapleader		=	" "		-- установка leader кнопки
-g.netrw_banner		=	false		-- отображать ли баннер в netrw
+vim.opt.splitbelow = true -- новые h-windows открываются снизу
+vim.opt.splitright = true -- новые v-windows открываются снизу
+vim.opt.ignorecase = true -- игнорировать регистр при поиске vim.opt.smartcase	= true	-- .. но учитывать его, если в запросе есть заглавная буква
 
-local opt = vim.opt
+vim.opt.cursorline = true -- подсвечивать строку, на которой стоит курсор
+vim.opt.termguicolors = true -- поддержка 24битных цветов
 
-opt.guicursor		=	"i:block"		-- в режиме i (insert) курсор блочный
-opt.number 		=	true			-- нумерация строк
-opt.relativenumber 	=	true			-- относительные строки
-opt.tabstop 		=	8			-- ширина таба
-opt.shiftwidth		=	8			-- всегда такая же, как и tabstop
-opt.expandtab		=	false			-- табы в пробелы
-opt.colorcolumn		=	"80"			-- подсвечивает 80ю колонку
-opt.winborder		=	"rounded"		-- окна с border radius
-opt.listchars		=	"tab:> ,multispace:|,eol:↵"
-opt.clipboard		=	"unnamedplus"		-- общий буфер обмена с ОС
-opt.ignorecase		=	true			-- игнорировать casesensitivity в поиске
-opt.swapfile		=	false			-- отключить swap-файлы
-opt.list		=	true			-- показывать символы переносов и т.п.
-opt.inccommand		=	"nosplit"		-- показывать результат команды в буфере
-opt.hlsearch		=	false			-- отключить подсветку после поиска
+vim.opt.list = true -- включить отображение невидимых символов
+vim.opt.listchars = {
+	tab = "> ", -- табы
+	trail = ".", -- пробелы в конце строки
+	nbsp = "␣", -- неразрывный пробел
+	extends = "→", -- строка уходит за край экрана справа
+	precedes = "←", -- .. слева
+	eol = "↲", -- конец строки
+}
 
--- stylua: ignore end
-
-vim.cmd.filetype("plugin indent on")
+vim.opt.clipboard = "unnamedplus"
