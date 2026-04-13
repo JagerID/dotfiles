@@ -12,12 +12,40 @@ if status then
 	conform.formatters["clang-format"] = {
 		prepend_args = {
 			"--style={\
-				BasedOnStyle: LLVM,\
-				TabWidth: 8,\
 				IndentWidth: 8,\
+				TabWidth: 8,\
 				UseTab: Always,\
 				\
-				BreakBeforeBraces: Linux,\
+				MaxEmptyLinesToKeep: 1,\
+				IncludeBlocks: Regroup,\
+				SeparateDefinitionBlocks: Always,\
+				\
+				AlignAfterOpenBracket: true,\
+				AlignArrayOfStructures: Right,\
+				AlignConsecutiveAssignments: {\
+					Enabled: true,\
+					AcrossEmptyLines: false,\
+					AcrossComments: true,\
+				},\
+				\
+				AllowShortBlocksOnASingleLine: Empty,\
+				AllowShortFunctionsOnASingleLine: Empty,\
+				AllowShortIfStatementsOnASingleLine: false,\
+				\
+				BreakBeforeBraces: Custom,\
+				BraceWrapping: {\
+					AfterEnum: false,\
+					AfterStruct: false,\
+					AfterUnion: false,\
+					AfterFunction: true,\
+				},\
+				\
+				SpacesInParens: Custom,\
+				SpacesInParensOptions: {\
+					InConditionalStatements: true,\
+					ExceptDoubleParentheses: false,\
+					Other: true,\
+				}\
 			}",
 		},
 	}

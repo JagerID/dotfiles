@@ -29,7 +29,7 @@ require("blink.cmp").setup({
 
 		menu = {
 			auto_show = true,
-			auto_show_delay_ms = 300,
+			auto_show_delay_ms = 150,
 			border = "rounded",
 
 			draw = {

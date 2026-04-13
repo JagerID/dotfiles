@@ -9,4 +9,4 @@ vim.pack.add({
 
 require("onedark").setup({ style = "deep" })
 
-vim.cmd("colorscheme NeoCyberVim")
+vim.cmd("colorscheme cyberdream")
