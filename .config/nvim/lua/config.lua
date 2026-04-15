@@ -26,15 +26,27 @@ vim.opt.listchars = {
 }
 
 vim.opt.clipboard = "unnamedplus"
+vim.opt.wrap = false -- отключить визуальный перенос строк при превышении длины экрана
+vim.opt.sidescroll = 1
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
 
 vim.diagnostic.config({
 	virtual_text = {
-		prefix = "§",
 		spacing = 4,
+		prefix = "×",
+		severity = nil,
 	},
 
 	signs = true,
 	underline = true,
-	update_in_insert = false,
 	severity_sort = true,
+	update_in_insert = false,
+
+	float = {
+		focusable = false,
+		border = "rounded",
+	},
 })

@@ -4,9 +4,9 @@ window-rule {
   draw-border-with-background false
   opacity 1.0
 
-  background-effect {
-	blur true
-  }
+	//  background-effect {
+	// blur true
+	//  }
 }
 
 window-rule {

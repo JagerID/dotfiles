@@ -1,3 +1,7 @@
+HISTFILE=~/.zsh-history
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
+
 setopt EXTENDED_HISTORY       # Добавить время выполнения команды в историю
 setopt HIST_EXPIRE_DUPS_FIRST # Удалить старые дубликаты из истории, когда лимит достигнут
 setopt HIST_IGNORE_DUPS       # Игнорировать дубликат предыдущей команды

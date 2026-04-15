@@ -1,5 +1,7 @@
-bindkey -v
-export KEYTIMEOUT=1
+bindkey -e
 
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^[OA" history-beginning-search-backward-end
+bindkey "^[OB" history-beginning-search-forward-end

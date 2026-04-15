@@ -1,3 +1,5 @@
+zmodload zsh/zprof
+
 ZSH_CONFIGS_HOME="$HOME/.zsh/"
 
 # Auto load config files from $ZSH_CONFIGS folder

@@ -7,7 +7,6 @@ vim.opt_local.commentstring = "/* %s */"
 local status, conform = pcall(require, "conform")
 
 if status then
-	print("clansds")
 	conform.formatters_by_ft.c = { "clang-format" }
 	conform.formatters["clang-format"] = {
 		prepend_args = {
@@ -15,6 +14,8 @@ if status then
 				IndentWidth: 8,\
 				TabWidth: 8,\
 				UseTab: Always,\
+				IndentCaseBlocks: true,\
+				ColumnLimit: 0,\
 				\
 				MaxEmptyLinesToKeep: 1,\
 				IncludeBlocks: Regroup,\
@@ -22,22 +23,34 @@ if status then
 				\
 				AlignAfterOpenBracket: true,\
 				AlignArrayOfStructures: Right,\
+				\
+				BreakBeforeBraces: Custom,\
+				BraceWrapping: {\
+					AfterFunction: true,\
+					AfterStruct: false,\
+					AfterUnion: false,\
+					AfterEnum: false,\
+					AfterClass: false,\
+					AfterExternBlock: false,\
+					\
+					AfterCaseLabel: false,\
+					AfterControlStatement: Never,\
+					BeforeElse: false,\
+					\
+					IndentBraces: false,\
+				},\
+				\
+				AllowShortFunctionsOnASingleLine: Empty,\
+				AllowShortIfStatementsOnASingleLine: Never,\
+				AllowShortLoopsOnASingleLine: false,\
+				AllowShortLambdasOnASingleLine: All,\
+				AllowShortBlocksOnASingleLine: Empty,\
+				AllowShortCaseLabelsOnASingleLine: true,\
+				\
 				AlignConsecutiveAssignments: {\
 					Enabled: true,\
 					AcrossEmptyLines: false,\
 					AcrossComments: true,\
-				},\
-				\
-				AllowShortBlocksOnASingleLine: Empty,\
-				AllowShortFunctionsOnASingleLine: Empty,\
-				AllowShortIfStatementsOnASingleLine: false,\
-				\
-				BreakBeforeBraces: Custom,\
-				BraceWrapping: {\
-					AfterEnum: false,\
-					AfterStruct: false,\
-					AfterUnion: false,\
-					AfterFunction: true,\
 				},\
 				\
 				SpacesInParens: Custom,\
@@ -45,6 +58,25 @@ if status then
 					InConditionalStatements: true,\
 					ExceptDoubleParentheses: false,\
 					Other: true,\
+				},\
+				\
+				AlignConsecutiveDeclarations: {\
+					Enabled: true,\
+					AcrossEmptyLines: false,\
+					AcrossComments: true,\
+				},\
+				\
+				AlignTrailingComments: true,\
+				\
+				SortIncludes: CaseSensitive,\
+				\
+				PointerAlignment: Right,\
+				KeepEmptyLinesAtTheStartOfBlocks: false,\
+				\
+				SpaceBeforeParens: Custom,\
+				SpaceBeforeParensOptions: {\
+					AfterControlStatements: true,\
+					AfterFunctionDefinitionName: true,\
 				}\
 			}",
 		},

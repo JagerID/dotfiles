@@ -9,3 +9,20 @@ output "Samsung Electric Company C24F390 HLENA00162" {
 	mode "1920x1080@71.910"
 	position x=3440 y=0
 }
+
+output "Samsung Display Corp. 0x41B7 Unknown" {
+	mode "2048x1280@120.001"
+	position x=0 y=0
+}
+
+output "HDMI-A-1" {
+	mode "2560x1440@119.998"
+	position x=2048 y=0
+	scale 1.0
+}
+
+output "Samsung Electric Company Odyssey G65B H1AK500000" {
+	mode "2560x1440@119.998"
+	position x=4608 y=0
+	scale 1.0
+}

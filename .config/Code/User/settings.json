@@ -53,4 +53,5 @@
   "[c]": {
     "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
   },
+  "workbench.iconTheme": "vscode-great-icons",
 }

@@ -7,18 +7,20 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
-autoload -Uz compinit && compinit -u
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m-1) ]]; then
+  compinit -C
+else
+  compinit
+fi
 
 zinit light Aloxaf/fzf-tab
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-zinit ice wait'0' lucid
 zinit light zsh-users/zsh-autosuggestions
-
-zinit ice wait'0' lucid
-zinit light zsh-users/zsh-history-substring-search
 
 zinit ice wait lucid atinit"zpcompinit; zpcdreplay"
 zinit light zdharma-continuum/fast-syntax-highlighting
