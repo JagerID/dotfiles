@@ -13,6 +13,8 @@ require("conform").setup({
 		sh = { "shfmt" },
 		bash = { "shfmt" },
 		zsh = { "shfmt" },
+		c = { "clang-format" },
+		h = { "clang-format" },
 	},
 
 	formatters = {

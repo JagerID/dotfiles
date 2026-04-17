@@ -8,6 +8,7 @@ local status, conform = pcall(require, "conform")
 
 if status then
 	conform.formatters_by_ft.c = { "clang-format" }
+	conform.formatters_by_ft.h = { "clang-format" }
 	conform.formatters["clang-format"] = {
 		prepend_args = {
 			"--style={\
@@ -16,6 +17,7 @@ if status then
 				UseTab: Always,\
 				IndentCaseBlocks: true,\
 				ColumnLimit: 0,\
+				IndentPPDirectives: BeforeHash,\
 				\
 				MaxEmptyLinesToKeep: 1,\
 				IncludeBlocks: Regroup,\
@@ -53,12 +55,19 @@ if status then
 					AcrossComments: true,\
 				},\
 				\
+				SpacesInCStyleCastParentheses: true,\
+				SpaceAfterCStyleCast: true,\
+				\
 				SpacesInParens: Custom,\
 				SpacesInParensOptions: {\
 					InConditionalStatements: true,\
 					ExceptDoubleParentheses: false,\
+					InCStyleCasts: true,\
 					Other: true,\
 				},\
+				SpacesInContainerLiterals: true,\
+				SpaceBeforeSquareBrackets: true,\
+				SpacesInSquareBrackets: true,\
 				\
 				AlignConsecutiveDeclarations: {\
 					Enabled: true,\
@@ -77,6 +86,8 @@ if status then
 				SpaceBeforeParensOptions: {\
 					AfterControlStatements: true,\
 					AfterFunctionDefinitionName: true,\
+					AfterFunctionDeclarationName: true,\
+					BeforeNonEmptyParentheses: true,\
 				}\
 			}",
 		},
