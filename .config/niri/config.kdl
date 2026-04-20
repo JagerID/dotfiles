@@ -11,7 +11,7 @@ include "keybinds.kdl"
 include "autostart.kdl"
 include "workspaces.kdl"
 include "events.kdl"
-// include "blur.kdl"
+include "blur.kdl"
 
 screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
 
