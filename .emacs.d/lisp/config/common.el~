@@ -1,0 +1,19 @@
+(setq inhibit-startup-message t)
+(scroll-bar-mode -1)
+(menu-bar-mode nil)
+(tool-bar-mode nil)
+(tab-bar-mode t)
+(global-display-line-numbers-mode t)
+(recentf-mode t)
+(electric-pair-mode t)
+
+(set-face-attribute 'default nil
+		    :family "Iosevka Nerd Font"
+		    :height 110
+		    :weight 'regular)
+
+(custom-set-variables
+ '(package-selected-packages '(company consult lsp lsp-mode lsp-ui use-package vertico)))
+(custom-set-faces)
+
+(provide 'common)
