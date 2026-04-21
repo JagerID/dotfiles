@@ -1,30 +1,10 @@
-
-(setq inhibit-startup-message t)
-(setq make-backup-files nil)
-(setq-default cursor-type 'bar)
-(setq visible-bell t)
-(setq-default indent-tabs-mode t)
-
-(delete-selection-mode 1)
-(set-language-environment "UTF-8")
-(set-default-coding-systems 'utf-8)
-(global-hl-line-mode t)
-(show-paren-mode 1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(tab-bar-mode 1)
+(setq inhibit-startup-screen t)
+(setq initial-scrathc-message nil)
+(setq sentent-end-double-space nil)
+(setq ring-bell-function 'ignore)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(column-number-mode t)
 (global-display-line-numbers-mode t)
-(recentf-mode t)
-(electric-pair-mode t)
-
-(set-face-attribute 'default nil
-		    :family "Iosevka Nerd Font"
-		    :height 110
-		    :weight 'regular)
-
-(custom-set-variables
- '(package-selected-packages '(company consult lsp lsp-mode lsp-ui use-package vertico)))
-(custom-set-faces)
 
 (provide 'common)

@@ -51,6 +51,7 @@ binds {
   Mod+T repeat=false { spawn "wezterm"; }
   Mod+D repeat=false { spawn "fuzzel"; }
   Shift+Alt+L repeat=false { spawn "swaylock"; }
+  Mod+Backspace repeat=false { spawn "emacsclient" "-c" "-a" ""; }
 
   // Screenshots
   Print repeat=false { screenshot; }
