@@ -1,2 +1,10 @@
 .config/Code/*
 !.config/Code/User/settings.json
+.emacs.d/elpa
+.emacs.d/eln-cache
+.emacs.d/auto-save-list
+.emacs.d/\#init.el\#
+.emacs.d/history
+.emacs.d/recentf
+.emacs.d/tutorial
+.emacs.d/games
