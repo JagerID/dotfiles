@@ -92,3 +92,90 @@
 2026/04/21 (16:05:03) | INFO: Running on /dev/pts/0
 2026/04/21 (16:05:03) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
 2026/04/21 (16:05:03) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (08:05:48) | ===> btop++ v.1.3.0
+2026/04/22 (08:05:48) | INFO: Logger set to INFO
+2026/04/22 (08:05:48) | INFO: Running on /dev/pts/0
+2026/04/22 (08:05:48) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (08:05:48) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (08:21:34) | ===> btop++ v.1.3.0
+2026/04/22 (08:21:34) | INFO: Logger set to INFO
+2026/04/22 (08:21:34) | INFO: Running on /dev/pts/0
+2026/04/22 (08:21:34) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (08:21:34) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (08:22:19) | ===> btop++ v.1.3.0
+2026/04/22 (08:22:19) | INFO: Logger set to INFO
+2026/04/22 (08:22:19) | INFO: Running on /dev/pts/0
+2026/04/22 (08:22:19) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (08:22:19) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (08:22:39) | ===> btop++ v.1.3.0
+2026/04/22 (08:22:39) | INFO: Logger set to INFO
+2026/04/22 (08:22:39) | INFO: Running on /dev/pts/0
+2026/04/22 (08:22:39) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (08:22:39) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (08:29:21) | ===> btop++ v.1.3.0
+2026/04/22 (08:29:21) | INFO: Logger set to INFO
+2026/04/22 (08:29:21) | INFO: Running on /dev/pts/0
+2026/04/22 (08:29:21) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (08:29:21) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (09:02:50) | ===> btop++ v.1.3.0
+2026/04/22 (09:02:50) | INFO: Logger set to INFO
+2026/04/22 (09:02:50) | INFO: Running on /dev/pts/1
+2026/04/22 (09:02:50) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:02:50) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+2026/04/22 (09:02:56) | INFO: Quitting! Runtime: 00:00:06
+
+2026/04/22 (09:07:15) | ===> btop++ v.1.3.0
+2026/04/22 (09:07:15) | INFO: Logger set to INFO
+2026/04/22 (09:07:15) | INFO: Running on /dev/pts/1
+2026/04/22 (09:07:15) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:07:15) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (09:08:37) | ===> btop++ v.1.3.0
+2026/04/22 (09:08:37) | INFO: Logger set to INFO
+2026/04/22 (09:08:37) | INFO: Running on /dev/pts/1
+2026/04/22 (09:08:37) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:08:37) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+2026/04/22 (09:09:01) | INFO: Quitting! Runtime: 00:00:24
+
+2026/04/22 (09:09:41) | ===> btop++ v.1.3.0
+2026/04/22 (09:09:41) | INFO: Logger set to INFO
+2026/04/22 (09:09:41) | INFO: Running on /dev/pts/2
+2026/04/22 (09:09:41) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:09:41) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (09:15:34) | ===> btop++ v.1.3.0
+2026/04/22 (09:15:34) | INFO: Logger set to INFO
+2026/04/22 (09:15:34) | INFO: Running on /dev/pts/2
+2026/04/22 (09:15:34) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:15:34) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (09:16:03) | ===> btop++ v.1.3.0
+2026/04/22 (09:16:03) | INFO: Logger set to INFO
+2026/04/22 (09:16:03) | INFO: Running on /dev/pts/2
+2026/04/22 (09:16:03) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:16:03) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (09:16:32) | ===> btop++ v.1.3.0
+2026/04/22 (09:16:32) | INFO: Logger set to INFO
+2026/04/22 (09:16:32) | INFO: Running on /dev/pts/1
+2026/04/22 (09:16:32) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:16:32) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (09:17:05) | ===> btop++ v.1.3.0
+2026/04/22 (09:17:05) | INFO: Logger set to INFO
+2026/04/22 (09:17:05) | INFO: Running on /dev/pts/2
+2026/04/22 (09:17:05) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:17:05) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+
+2026/04/22 (09:17:31) | ===> btop++ v.1.3.0
+2026/04/22 (09:17:31) | INFO: Logger set to INFO
+2026/04/22 (09:17:31) | INFO: Running on /dev/pts/1
+2026/04/22 (09:17:31) | INFO: Failed to load libnvidia-ml.so, NVIDIA GPUs will not be detected: libnvidia-ml.so.1: cannot open shared object file: No such file or directory
+2026/04/22 (09:17:31) | INFO: Failed to load librocm_smi64.so, AMD GPUs will not be detected: librocm_smi64.so.1.0: cannot open shared object file: No such file or directory
+2026/04/22 (09:17:39) | INFO: Quitting! Runtime: 00:00:08

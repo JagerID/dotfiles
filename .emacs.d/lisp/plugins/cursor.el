@@ -12,3 +12,5 @@
   (setq pulsar-face 'pulsar-green)
   (setq pulsar-region-face 'pulsar-magenta)
   (setq pulsar-highlight-face 'pulsar-cyan))
+
+(provide 'cursor)

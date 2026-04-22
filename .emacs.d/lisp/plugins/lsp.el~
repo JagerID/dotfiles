@@ -1,0 +1,83 @@
+(use-package apheleia
+  :ensure t
+  :config
+
+  (defvar clang-format-style
+    (concat "{"
+            "IndentWidth: 8, "
+            "TabWidth: 8, "
+            "UseTab: ForIndentation, "
+            "IndentCaseBlocks: true, "
+            "ColumnLimit: 0, "
+            "IndentPPDirectives: BeforeHash, "
+            "MaxEmptyLinesToKeep: 1, "
+            "IncludeBlocks: Regroup, "
+            "SeparateDefinitionBlocks: Always, "
+            "AlignAfterOpenBracket: Align, "
+            "AlignArrayOfStructures: Right, "
+            "BreakBeforeBraces: Custom, "
+            "BraceWrapping: {"
+            "AfterFunction: true, AfterStruct: false, AfterUnion: false, "
+            "AfterEnum: false, AfterClass: false, AfterExternBlock: false, "
+            "AfterCaseLabel: false, AfterControlStatement: Never, "
+            "BeforeElse: false, IndentBraces: false"
+            "}, "
+            "AllowShortFunctionsOnASingleLine: Empty, "
+            "AllowShortIfStatementsOnASingleLine: Never, "
+            "AllowShortLoopsOnASingleLine: false, "
+            "AllowShortLambdasOnASingleLine: All, "
+            "AllowShortBlocksOnASingleLine: Empty, "
+            "AllowShortCaseLabelsOnASingleLine: true, "
+            "AlignConsecutiveAssignments: {Enabled: true, AcrossEmptyLines: false, AcrossComments: true}, "
+            "AlignConsecutiveDeclarations: {Enabled: true, AcrossEmptyLines: false, AcrossComments: true}, "
+            "SpacesInCStyleCastParentheses: true, "
+            "SpaceAfterCStyleCast: true, "
+            ;; Исправленная структура для Clang-Format 18:
+            "SpacesInParens: Custom, "
+            "SpacesInParensOptions: {"
+            "InConditionalStatements: true, "
+            "InCStyleCasts: true, "
+            "InEmptyParentheses: false, "
+            "Other: true"
+            "}, "
+            "SpacesInContainerLiterals: true, "
+            "SpaceBeforeSquareBrackets: true, "
+            "SpacesInSquareBrackets: true, "
+            "AlignTrailingComments: true, "
+            "SortIncludes: CaseSensitive, "
+            "PointerAlignment: Right, "
+            "KeepEmptyLinesAtTheStartOfBlocks: false, "
+            "SpaceBeforeParens: Custom, "
+            "SpaceBeforeParensOptions: {"
+            "AfterControlStatements: true, "
+            "AfterFunctionDefinitionName: true, "
+            "AfterFunctionDeclarationName: true, "
+            "BeforeNonEmptyParentheses: true"
+            "}"
+            "}"))
+
+  (setf (alist-get 'c-mode apheleia-mode-alist) 'clang-format)
+  (setf (alist-get 'c++-mode apheleia-mode-alist) 'clang-format)
+
+  (setq lsp-enable-indentation nil)
+  (setq lsp-enable-on-type-formatting nil)
+
+  (setf (alist-get 'clang-format apheleia-formatters)
+        `("clang-format" "-assume-filename" filepath ,(concat "-style=" clang-format-style)))
+
+  (apheleia-global-mode +1))
+
+(use-package cc-mode
+  :ensure nil
+  :config
+  (defun c-mode-setup ()
+	(setq tab-width 8)
+	(setq c-basic-offset 8)
+	(setq indent-tabs-mode t)
+	(setq comment-start "/* "
+		  comment-end " */"))
+
+  :hook ((c-mode . c-mode-setup)
+		 (c++-mode . c-mode-setup)))
+
+(provide 'lsp)
