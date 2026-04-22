@@ -1,0 +1,12 @@
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  ;; Настраиваем футер (нижнюю часть)
+  (setq dashboard-set-footer t)
+  (setq dashboard-footer-messages
+        (list (format "%d пакетов загружено за %s"
+                      (length package-activated-list)
+                      (emacs-init-time))))
+  ;; Можно добавить иконку
+  (setq dashboard-footer-icon (nerd-icons-faicon "nf-fa-rocket" :height 1.1 :v-adjust -0.05 :face 'font-lock-keyword-face)))

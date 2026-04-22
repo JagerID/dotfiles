@@ -1,0 +1,6 @@
+(use-package mood-line
+  :config
+  (mood-line-mode)
+
+  :custom
+  (mood-line-glyph-alist mood-line-glyphs-fira-code))

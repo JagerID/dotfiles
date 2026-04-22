@@ -9,15 +9,18 @@
    ([backtab] . corfu-previous))
   :custom
   ((corfu-auto t)
-   (corfu-auto-delay 0.14)
+   (corfu-auto-delay 0.1)
    (corfu-auto-prefix 2)
    (corfu-cycle t)
    (corfu-preselect 'prompt)
    (corfu-quit-at-boundary 'separator)
    (corfu-quit-no-match t)
    (corfu-preview-current 'insert))
+  :config
+  (setq corfu-popupinfo-delay 0.2)
   :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+  (corfu-popupinfo-mode))
 
 (use-package kind-icon
   :ensure t
@@ -34,5 +37,8 @@
   (text-mode-ispell-word-completion nil)
   (read-extended-command-predicate #'command-completion-default-include-p))
 
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'prog-mode-hook 'eglot-ensure)
 
 (provide 'completions)

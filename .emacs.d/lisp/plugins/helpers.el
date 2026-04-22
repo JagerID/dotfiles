@@ -35,4 +35,12 @@
          ("M-s b" . consult-buffer)
          ("M-y" . consult-yank-pop)))
 
+(use-package no-littering
+  :ensure t)
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
 (provide 'helpers)

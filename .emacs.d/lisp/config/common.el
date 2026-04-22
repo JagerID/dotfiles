@@ -1,4 +1,4 @@
-(setq inhibit-startup-screen t
+(setq inhibit-startup-screen nil
 	  initial-scratch-message nil
 	  sentence-end-double-space nil
 	  ring-bell-function 'ignore

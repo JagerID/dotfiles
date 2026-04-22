@@ -11,4 +11,7 @@
   (set-face-attribute 'fringe nil
 					  :background 'unspecified))
 
+(use-package nerd-icons
+  :ensure t)
+
 (provide 'theme)

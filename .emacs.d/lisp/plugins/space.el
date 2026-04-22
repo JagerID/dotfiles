@@ -1,0 +1,24 @@
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode 1)
+  :bind-keymap ("C-c p" . projectile-command-map))
+
+(use-package centaur-tabs
+  :ensure t
+  :demand t
+  :config
+  (centaur-tabs-mode 1)
+  (setq centaur-tabs-style "wave")
+  (setq centaur-tabs-height 32)
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-icon-type 'nerd-icons)
+  (setq centaur-tabs-plain-icons t)
+  (setq centaur-tabs-gray-out-icons 'buffer)
+  (setq centaur-tabs-set-bar 'under)
+  (centaur-tabs-change-fonts "Iosevka Nerd Font" 120)
+  :bind
+  ("C-<tab>" . centaur-tabs-forward)
+  ("C-<iso-lefttab>" . centaur-tabs-backward))
+
+(provide 'space)
