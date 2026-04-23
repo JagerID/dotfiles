@@ -1,0 +1,100 @@
+(setq-default indent-tabs-mode t)
+(setq-default tab-always-indent nil)
+(setq-default tab-width 4)
+
+(setq recentf-max-saved-items 10)
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups" user-emacs-directory))))
+(setq next-line-add-newlines nil)
+(setq line-spacing 0)
+(setq show-paren-delay 0)
+(setq read-file-name-completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t
+(setq backward-delete-char-untabify nil)
+
+(show-paren-mode 1)
+(electric-pair-mode 1)
+(savehist-mode 1)
+(save-place-mode 1)
+(global-auto-revert-mode 1)
+(delete-selection-mode 1)
+(recentf-mode 1)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(add-hook 'prog-mode-hook (lambda () (setq indent-tabs-mode t)))
+
+;; Пакеты
+
+(use-package corfu ;; Автодополнения в буфере
+  :init ;; До загрузки пакета
+  (global-corfu-mode 1) ;; Включаем сразу, т.к. это ui элемент
+
+  :custom ;; Для setq с проверкой (customize-set-variable)
+  (corfu-auto 1)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix) ;; Минимальное кол-во символов для автоматического открытия corfu
+  (corfu-cycle 1) ;; Возврат в начало после конца списка
+  (corfu-quit-at-boundary -1)
+  (corfu-quit-no-match 'separator)
+  (corfu-preselect 'prompt)
+  (corfu-on-exact-match 'insert)
+  (corfu-count 10)
+  
+  :config
+  (corfu-popupinfo-mode 1))
+
+(use-package emacs
+  :custom
+  (tab-always-indent nil)
+  (text-mode-ispell-word-completion nil)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+
+  (context-menu-mode 1)
+  (enable-recursive-minibuffers 1)
+  (minibuffer-prompt-properties
+   '(read-only 1 cursor-intangible 1 face minibuffer-prompt)))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic)) ;; basic - fallback (запасной вариант)
+  (completion-category-defautls -1)
+  (completion-pcm-leading-wildcard 1)
+  (orderless-matching-styles '(orderless-literal
+                               orderless-regexp
+                               orderless-initialism))
+  (completion-category-overrides '((file (styles partial-completion))))) ;; Для поиска по файлам иной стиль дополнений
+
+(use-package vertico ;; Автодополнения в minibuffer
+  :init
+  (vertico-mode 1)
+  :custom
+  (vertico-count 10)
+  (vertico-cycle 1)
+  (vertico-resize -1))
+
+(use-package savehist :init (savehist-mode 1))
+
+(use-package marginalia :init (marginalia-mode 1))
+
+(use-package consult
+  :bind (
+         ("C-x b" . consult-buffer)
+         ("C-s" . consult-line)
+         ("M-y" . consult-yank-pop)
+         ("M-g t" . consult-imenu)))
+
+(use-package magit
+  :bind ("C-x g" . magit-status)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
+
+(use-package projectile
+  :init
+  (projectile-mode 1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :custom
+  (projectile-indexing-methid 'hybrid))
+
+(provide 'editing)

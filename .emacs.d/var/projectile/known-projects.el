@@ -1,1 +1,0 @@
-("~/dotfiles/" "~/dev/scale/react_scale/" "~/dev/c-lang/")

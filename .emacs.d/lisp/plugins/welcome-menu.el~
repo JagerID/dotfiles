@@ -1,7 +1,0 @@
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (add-hook 'server-after-make-frame-hook 'dashboard-open))
-
-(provide 'dashboard)

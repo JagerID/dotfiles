@@ -5,5 +5,5 @@
 (setq buffer-name-history '("completions.el" "main.c"))
 (setq magit-revision-history '("master"))
 (setq extended-command-history '("eglot" "apheleia-format-buffer" "list-packages" "dired" "magit-status" "list-packages"))
-(setq file-name-history '("~/.emacs.d/lisp/config/common.el" "~/.emacs.d/lisp/plugins/welcome.el" "~/.emacs.d/lisp/plugins/space.el" "~/dotfiles/.emacs.d/init.el" "~/dotfiles/.emacs.d/lisp/plugins/project.el" "~/dotfiles/.emacs.d/lisp/plugins/helpers.el" "~/.emacs.d/lisp/plugins/completions.el" "~/dev/c-lang/main.c" "~/dotfiles/.emacs.d/lisp/plugins/completions.el" "~/dotfiles/.emacs.d/lisp/plugins/helpers.el" "~/.emacs.d/lisp/plugins/completions.el" "~/dev/c-lang/main.c" "~/.emacs.d/lisp/config/modeline.el" "~/dev/scale/react_scale/"))
+(setq file-name-history '("~/.emacs.d/lisp/plugins/helpers.el" "~/dotfiles/.emacs.d/init.el" "~/dotfiles/.emacs.d/lisp/plugins/project.el" "~/dotfiles/.emacs.d/lisp/plugins/helpers.el" "~/.emacs.d/lisp/plugins/completions.el" "~/dev/c-lang/main.c" "~/dotfiles/.emacs.d/lisp/plugins/completions.el" "~/dotfiles/.emacs.d/lisp/plugins/helpers.el" "~/.emacs.d/lisp/plugins/completions.el" "~/dev/c-lang/main.c" "~/.emacs.d/lisp/config/modeline.el" "~/dev/scale/react_scale/"))
 (setq projectile-project-command-history '#s(hash-table test equal))

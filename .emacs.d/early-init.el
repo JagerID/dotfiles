@@ -1,15 +1,16 @@
+;; Отключение очистки памяти с помощью GC до старта
 (setq gc-cons-threshold most-positive-fixnum)
-(defvar default-file-name-handler-alist file-name-handler-alist)
+
+;; Отключение проверки magic numbers
 (setq file-name-handler-alist nil)
 
+;; Отключение лишних UI элементов
+(setq-default tool-bar-mode nil)
+(setq-default menu-bar-mode nil)
+(setq-default scroll-bar-mode nil)
+
+;; Отключение расчета размера окна при запуске
 (setq frame-inhibit-implied-resize t)
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(vertical-scroll-bars . nil) default-frame-alist)
 
-(setq-default inhibit-redisplay t)
-
-(add-hook 'window-setup-hook
-          (lambda ()
-            (setq-default inhibit-redisplay nil)
-            (redisplay)))
+;; Отключение чтения .Xresources
+(setq inhibit-x-resources t)
