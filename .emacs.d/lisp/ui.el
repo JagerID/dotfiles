@@ -12,24 +12,40 @@
 (blink-cursor-mode -1)
 (global-hl-line-mode 1)
 (pixel-scroll-precision-mode 1)
+(global-set-key (kbd "TAB") #'tab-to-tab-stop)
 
 (set-face-attribute 'default nil
-		    :height 110
-		    :font "Iosevka Nerd Font")
+					:height 110
+					:font "Iosevka Nerd Font")
 
 (set-window-fringes nil 0 0)
 
 ;; Пакеты
 (use-package nerd-icons)
 
+(use-package nerd-icons-completion
+  :config
+  (nerd-icons-completion-mode))
+
+(use-package kind-icon
+  :after corfu
+  :custom
+  (kind-icon-use-cache 1)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+  (setq kind-icon-force-faded-background t)
+  (setq svg-lib-icons-dir (expand-file-name "svg-lib" user-emacs-directory))
+  (setq svg-lib-remote-icons nil))
+
 (use-package doom-themes
   :config
   (load-theme 'doom-molokai t))
 
 (use-package pulsar
-  :bind (:map global-map
-              ("C-x l" . pulsar-pulse-line)
-              ("C-x L" . pulsar-highlight-permanently-dwim))
+  :bind
+  ( :map global-map
+    ("C-x l" . pulsar-pulse-line)
+    ("C-x L" . pulsar-highlight-temporarily-dwim))
   :init
   (pulsar-global-mode 1)
   :config

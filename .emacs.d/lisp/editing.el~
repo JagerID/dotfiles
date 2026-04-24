@@ -1,7 +1,0 @@
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-
-(electric-pair-mode 1)
-(savehist-mode 1)
-(save-place-mode 1)
-(global-auto-revert-mode 1)

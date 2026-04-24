@@ -11,24 +11,25 @@
 
 ;; Подключение MELPA
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-(unless (file-exists-p (expand-file-name "elpa" user-emacs-directory))
+(unless package-archive-contents
   (package-refresh-contents))
 
+(require 'use-package)
 (setq use-package-always-ensure t)
 
 (require 'ui)
 (require 'editing)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(consult corfu doom-themes magit marginalia nerd-icons orderless
-             projectile pulsar vertico)))
+   '(apheleia kind-icon nerd-icons-completion cape consult corfu doom-themes magit marginalia nerd-icons orderless projectile pulsar vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
