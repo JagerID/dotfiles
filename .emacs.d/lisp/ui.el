@@ -1,45 +1,32 @@
-;; Встроенные настройки
-(setq-default display-line-numbers-type 'relative)
-(setq-default display-line-numbers-current-absolute t)
-(setq-default cursor-type 'bar)
-(setq-default display-line-numbers-width 3)
-(setq-default display-line-numbers-grow-only t)
+;; Modeline
+(use-package doom-modeline
+  :custom
+  (doom-modeline-checkers t)
+  (doom-modeline-lsp t)
+  (doom-modeline-indent-info t)
+  (doom-modeline-github t)
+  (doom-modeline-icon-set 'nerd-icons)
+  (doom-modeline-height 24)
+  (doom-modeline-bar-width 4)
+  (doom-modeline-minor-modes nil)
+  :init
+  (doom-modeline-mode 1))
 
-(setq ring-bell-function 'ignore)
-(setq inhibit-startup-screen t)
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
-(global-display-line-numbers-mode 1)
-(blink-cursor-mode -1)
-(global-hl-line-mode 1)
-(pixel-scroll-precision-mode 1)
-(global-set-key (kbd "TAB") #'tab-to-tab-stop)
-
-(set-face-attribute 'default nil
-					:height 110
-					:font "Iosevka Nerd Font")
-
-(set-window-fringes nil 0 0)
-
-;; Пакеты
+;; Иконки
 (use-package nerd-icons)
-
-(use-package nerd-icons-completion
+(use-package nerd-icons-completion ;; Для vertico
   :config
   (nerd-icons-completion-mode))
 
-(use-package kind-icon
+(use-package kind-icon ;; Для corfu
   :after corfu
   :custom
-  (kind-icon-use-cache 1)
+  (kind-icon-use-cache t)
   :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
-  (setq kind-icon-force-faded-background t)
-  (setq svg-lib-icons-dir (expand-file-name "svg-lib" user-emacs-directory))
-  (setq svg-lib-remote-icons nil))
-
-(use-package doom-themes
-  :config
-  (load-theme 'doom-molokai t))
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package pulsar
   :bind
@@ -58,6 +45,7 @@
   (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
   (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry))
 
+;; Экранирующие символы и espace-последовательности
 (use-package whitespace
   :hook (prog-mode . whitespace-mode)
   :config
@@ -73,5 +61,45 @@
         '((tab-mark ?\t [?> ?\t])
           (newline ?\n [?↲ ?\n])
           (space-mark ?\xA0 [?␣]))))
+
+;; Менеджер файлов
+(use-package dirvish
+  :custom
+  (dirvish-attributes '(nerd-icons file-size collapse git-msg))
+  :config
+  (setq dirvish-emerge-groups
+	'(("Recent files" (predicate . recent-files-2h))
+	  ("Documents" (extensions "pdf" "tex" "bib" "epub"))
+	  ("Video" (extensions "mp4" "mkv" "webm"))
+	  ("Pictures" (extensions "jpg" "png" "svg" "gif" "webp"))
+	  ("Audio" (extensions "mp3" "flac" "wav" "ape" "aac"))
+	  ("Archives" (extensions "gz" "rar" "zip"))))
+  :bind
+  (("C-x d" . dirvish)
+   ("C-c f" . dirvish-side)
+   :map dirvish-mode-map
+   ("TAB" . dirvish-subtree-toggle)
+   ("h" . dirvish-up-directory) ;; На уровень выше
+   ("l" . dired-find-file) ;; На уровень ниже / войти в файл
+   ("j" . dired-next-line) ;; Следующий файл
+   ("k" . dired-previous-line) ;; Предыдущий
+   ("s" . dirvish-setup-mode) ;; Меню настроек
+   ("e" . dirvish-emerge-mode)
+   ("M-e" . dirvish-emerge-menu)
+   )
+  :init
+  (dirvish-override-dired-mode))
+
+(use-package which-key
+  :custom
+  (which-key-idle-delay 0.7)
+  :init
+  (which-key-mode 1))
+
+;; Подсветка цветов (hex, rgba etc)
+(use-package colorful-mode
+  :config
+  (setq colorful-use-prefix t)
+  (global-colorful-mode 1))
 
 (provide 'ui)

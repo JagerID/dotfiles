@@ -1,0 +1,16 @@
+s;; Отключение лишних элементов интерфейса
+
+(set-fringe-mode 0) ;; Размер отступов по краям
+
+(setq ring-bell-function 'ignore) ;; Отключение звука
+(setq-default cursor-type 'bar)
+
+;; Номера строк
+(setq-default display-line-numbers-type 'relative)
+(global-display-line-numbers-mode 1)
+
+;; Файлы
+(setq make-backup-files nil) ;; Отключение бекап-файлов (file.el~)
+(setq auto-save-default nil) ;; Отключение автосейвов (#file.el#)
+
+(provide 'common)

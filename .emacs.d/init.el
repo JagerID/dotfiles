@@ -1,38 +1,65 @@
 ;; Подключение папок с конфигами
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-;; Возврат работы GC
-(defvar file-name-handler-alist-original file-name-handler-alist)
-(setq file-name-handler-alist nil)
-(add-hook 'emacs-startup-hook
-	  (lambda ()
-	    (setq gc-cons-threshold (* 16 1024 1024)
-		  file-name-handler-alist file-name-handler-alist-original)))
-
-;; Подключение MELPA
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-
+(setq use-package-always-ensure t)
 (unless package-archive-contents
   (package-refresh-contents))
 
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-(require 'ui)
+(require 'theme)
+(require 'common)
 (require 'editing)
+(require 'ui)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(apheleia kind-icon nerd-icons-completion cape consult corfu doom-themes magit marginalia nerd-icons orderless projectile pulsar vertico)))
+;; Возобновление работы GC и обработчиков имен файлов
+(add-hook 'emacs-startup-hook
+	  (lambda ()
+	    (setq file-name-handler-alist temp-file-name-handler-alist)
+	    (setq gc-const-threshold (* 16 1024 1024))
+	    (makunbound 'temp-file-name-handler-alist) ;; Очистка временной переменной
+	    ;; Опционально: выводим время загрузки в сообщения
+            (message "Emacs loaded in %s with %d garbage collections."
+                     (format "%.2fs" (float-time (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
+;; (custom-set-variables
+;; custom-set-variables was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+'(custom-safe-themes
+  '("0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
+    default))
+'(package-selected-packages
+  '(apheleia cape colorful-mode consult corfu dirvish doom-modeline
+	     doom-themes embark embark-consult ember-theme
+	     ember-twilight-theme kind-icon magit marginalia
+	     nerd-icons nerd-icons-completion nerd-icons-corfu
+	     orderless pulsar solo-jazz-theme treesit treesit-auto
+	     vertico))
+'(package-vc-selected-packages
+  '((ember-theme :url "https://github.com/ember-theme/emacs")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
+     "3613617b9953c22fe46ef2b593a2e5bc79ef3cc88770602e7e569bbd71de113b"
+     default))
+ '(package-selected-packages
+   '(apheleia cape colorful-mode corfu dirvish doom-modeline
+	      embark-consult ember-theme ember-twilight-theme
+	      flycheck-posframe kind-icon magit marginalia
+	      nerd-icons-completion nerd-icons-corfu orderless
+	      projectile pulsar rainbow-delimiters solo-jazz-theme
+	      treesit-auto vertico vterm)))

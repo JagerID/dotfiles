@@ -2,10 +2,10 @@
 (setq gc-cons-threshold most-positive-fixnum)
 
 ;; Отключение проверки magic numbers файлов
-(defvar temp-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
 ;; Отключение UI элементов перед запуском
+(defvar native-file-name-alist file-name-handler-alist)
 (setq inhibit-startup-message t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
