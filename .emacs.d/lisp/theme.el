@@ -1,3 +1,8 @@
+;;; theme.el --- theme settings
+;;; Commentary:
+
+;;; Code:
+
 ;; Тема
 ;; (add-to-list 'custom-theme-load-path "~/.config/doom/themes/ember/")
 ;; (load-theme 'ember t)
@@ -8,10 +13,10 @@
   (load-theme 'doom-molokai t))
 
 (defun customize-theme ()
-  (set-face-attribute 'whitespace-tab nil
-		      :foreground "#525252")
-  (set-face-attribute 'whitespace-newline nil
-		      :foreground "#525252")
+  ;; (set-face-attribute 'whitespace-tab nil
+  ;; 		      :foreground "#525252")
+  ;; (set-face-attribute 'whitespace-newline nil
+  ;; 		      :foreground "#525252")
   )
 
 (customize-theme)

@@ -1,3 +1,7 @@
+;;; ui.el --- ui settings
+;;; Commentary:
+
+;;; Code:
 ;; Modeline
 (use-package doom-modeline
   :custom
@@ -103,3 +107,4 @@
   (global-colorful-mode 1))
 
 (provide 'ui)
+;;; ul.el ends here

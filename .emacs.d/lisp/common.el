@@ -26,6 +26,7 @@
 ;; Файлы
 (setq make-backup-files nil) ;; Отключение бекап-файлов (file.el~)
 (setq auto-save-default nil) ;; Отключение автосейвов (#file.el#)
+(setq create-lockfiles nil)
 (global-auto-revert-mode 1) ;; Обновлять буфер, если файл был изменен
 (setq global-auto-revert-non-file-buffers t) ;; .. dired (dirvish в том числе)
 

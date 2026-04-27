@@ -11,3 +11,5 @@
 .emacs.d/.cache
 .emacs.d/var
 .emacs.d/backups
+.emacs.d/projectile-*
+

@@ -1,5 +1,7 @@
-;; Git
+;;; editing.el --- for programming
+;;; Commentary:
 
+;;; Code:
 (use-package olivetti)
 
 (defun center-magit ()
@@ -280,4 +282,26 @@
   :mode "\\.svelte\\'"
   :hook (svelte-mode . eglot-ensure))
 
+(use-package avy
+  :bind (("M-S" . avy-goto-char-2)
+	 ("M-g l" . avy-goto-line)
+	 ("M-g w" . avy-goto-word-1)
+	 ("M-s" . avy-goto-char)))
+
+
+(use-package evil
+  :init
+  (evil-mode 1)
+  :config
+  (defvar leader-map (make-sparse-keymap)
+    "Keymap for leader.")
+
+  (evil-define-key  '(normal visual) 'global (kbd "SPC") leader-map)
+
+  (evil-define-key 'normal leader-map
+    (kbd "f") 'find-file
+    (kbd "n") 'switch-to-buffer
+    (kbd "w") 'save-buffer))
+
 (provide 'editing)
+;;; editing.el ends here
