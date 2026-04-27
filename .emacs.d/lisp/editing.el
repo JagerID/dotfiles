@@ -1,7 +1,16 @@
 ;; Git
+
+(use-package olivetti)
+
+(defun center-magit ()
+  (olivetti-mode 1)
+  (setq olivetti-body-with 0.7))
+
 (use-package magit
   :bind
-  ("C-x g" . magit-status))
+  ("C-x g" . magit-status)
+  :config
+  (add-hook 'magit-mode-hook #'center-magit))
 
 ;; Minibuffer
 (use-package vertico
@@ -235,5 +244,40 @@
   :after flycheck
   :config
   (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+
+;; Frontend
+(use-package web-mode
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.phtml\\'" . web-mode)
+         ("\\.tpl\\.php\\'" . web-mode)
+         ("\\.[agj]sp\\'" . web-mode)
+         ("\\.as[cp]x\\'" . web-mode)
+         ("\\.erb\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.djhtml\\'" . web-mode)
+	 ("\\.js\\'" . web-mode)
+	 ("\\.ts\\'" . web-mode)
+         ("\\.jsx\\'" . web-mode)
+         ("\\.tsx\\'" . web-mode)
+         ("\\.vue\\'" . web-mode))
+  :hook (web-mode . eglot-ensure)
+  :config
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
+
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-closing t)
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-enable-current-column-highlight t)
+
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+		 '(web-mode . ("typescript-language-server" "--stdio")))))
+
+(use-package svelte-mode
+  :mode "\\.svelte\\'"
+  :hook (svelte-mode . eglot-ensure))
 
 (provide 'editing)

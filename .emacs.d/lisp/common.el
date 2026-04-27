@@ -17,6 +17,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (winner-mode 1)
 (global-hl-line-mode 1)
+(setq create-lockfiles nil)
 
 ;; Скобки
 (electric-pair-mode 1)

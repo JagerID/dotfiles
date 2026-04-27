@@ -53,13 +53,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
-     "3613617b9953c22fe46ef2b593a2e5bc79ef3cc88770602e7e569bbd71de113b"
-     default))
+   '("19d62171e83f2d4d6f7c31fc0a6f437e8cec4543234f0548bad5d49be8e344cd" "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1" "3613617b9953c22fe46ef2b593a2e5bc79ef3cc88770602e7e569bbd71de113b" default))
  '(package-selected-packages
-   '(apheleia cape colorful-mode corfu dirvish doom-modeline
-	      embark-consult ember-theme ember-twilight-theme
-	      flycheck-posframe kind-icon magit marginalia
-	      nerd-icons-completion nerd-icons-corfu orderless
-	      projectile pulsar rainbow-delimiters solo-jazz-theme
-	      treesit-auto vertico vterm)))
+   '(olivetti svelte-mode web-mode apheleia cape colorful-mode corfu dirvish doom-modeline embark-consult ember-theme ember-twilight-theme flycheck-posframe kind-icon magit marginalia nerd-icons-completion nerd-icons-corfu orderless projectile pulsar rainbow-delimiters solo-jazz-theme treesit-auto vertico vterm)))
