@@ -109,5 +109,14 @@
 (use-package cognitive-complexity
   :hook (prog-mode . cognitive-complexity-mode))
 
+(use-package helpful
+  :config
+  (global-set-key (kbd "C-h f") #'helpful-callable)
+  (global-set-key (kbd "C-h v") #'helpful-variable)
+  (global-set-key (kbd "C-h k") #'helpful-key)
+  (global-set-key (kbd "C-h x") #'helpful-command)
+  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
+  (global-set-key (kbd "C-h F") #'helpful-function))
+
 (provide 'ui)
 ;;; ui.el ends here

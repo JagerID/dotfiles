@@ -38,6 +38,13 @@
   ;; (completion-pcm-leading-wildcard t)
   (completion-category-overrides '((file (styles partial-completion)))))
 
+(use-package dumb-jump
+  :custom
+  (dumb-jump-prefer-searcher 'rg)
+  (xref-show-definitions-function #'consult-xref)
+  :config
+  (add-hook 'xref-background-functions #'dumb-jump-xref-activate))
+
 ;; Пояснения для команд в списке выбора
 (use-package marginalia
   :init
