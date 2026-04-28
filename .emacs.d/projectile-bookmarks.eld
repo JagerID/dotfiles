@@ -1,1 +1,0 @@
-("~/dev/fizpribor/itr-main/itr/" "~/dev/fizpribor/itr-main/" "~/dotfiles/" "~/dev/three/" "~/dev/c-lang/")
