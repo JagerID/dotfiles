@@ -1,4 +1,4 @@
-;; Подключение папок с конфигами
+;;; Подключение папок с конфигами
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (require 'package)
