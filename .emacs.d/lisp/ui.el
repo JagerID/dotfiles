@@ -106,5 +106,8 @@
   (setq colorful-use-prefix t)
   (global-colorful-mode 1))
 
+(use-package cognitive-complexity
+  :hook (prog-mode . cognitive-complexity-mode))
+
 (provide 'ui)
-;;; ul.el ends here
+;;; ui.el ends here

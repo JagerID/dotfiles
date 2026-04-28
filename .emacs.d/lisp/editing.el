@@ -2,26 +2,29 @@
 ;;; Commentary:
 
 ;;; Code:
-(use-package olivetti)
-
-(defun center-magit ()
-  (olivetti-mode 1)
-  (setq olivetti-body-with 0.7))
 
 (use-package magit
   :bind
-  ("C-x g" . magit-status)
-  :config
-  (add-hook 'magit-mode-hook #'center-magit))
+  ("C-x g" . magit-status))
 
 ;; Minibuffer
 (use-package vertico
   :custom
-  (vertico-count 5)
+  (vertico-count 10)
   (vertico-resize 1)
   (vertico-cycle 1)
   :init
   (vertico-mode 1))
+
+(use-package vertico-multiform
+  :after vertico
+  :config
+  (vertico-multiform-mode 1))
+
+(use-package vertico-posframe
+  :after vertico
+  :config
+  (vertico-posframe-mode 1))
 
 (use-package savehist
   :init
@@ -69,7 +72,7 @@
   :config
   (setq treesit-language-source-alist
         '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-          (c "https://github.com/tree-sitter/tree-sitter-c")
+          (c "https://github.com/tree-sitter/tree-sitter-c" "v0.23.5")
           (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
           (cmake "https://github.com/uyha/tree-sitter-cmake")
           (css "https://github.com/tree-sitter/tree-sitter-css")
@@ -288,20 +291,9 @@
 	 ("M-g w" . avy-goto-word-1)
 	 ("M-s" . avy-goto-char)))
 
-
 (use-package evil
   :init
-  (evil-mode 1)
-  :config
-  (defvar leader-map (make-sparse-keymap)
-    "Keymap for leader.")
-
-  (evil-define-key  '(normal visual) 'global (kbd "SPC") leader-map)
-
-  (evil-define-key 'normal leader-map
-    (kbd "f") 'find-file
-    (kbd "n") 'switch-to-buffer
-    (kbd "w") 'save-buffer))
+  (evil-mode 1))
 
 (provide 'editing)
 ;;; editing.el ends here
