@@ -52,14 +52,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(apheleia avy cape cognitive-complexity colorful-mode corfu dirvish
-	      doom-modeline dumb-jump embark-consult ember-theme
-	      ember-twilight-theme evil flycheck-posframe helpful
-	      kind-icon magit marginalia nerd-icons-completion
-	      nerd-icons-corfu orderless popup projectile pulsar
-	      rainbow-delimiters solo-jazz-theme svelte-mode
-	      treesit-auto vertico-posframe vterm web-mode))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
-   '((cognitive-complexity :vc-backend Git :url
+   '((ellama :vc-backend Git :url
+	     "https://github.com/s-kostyaev/ellama.git")
+     (cognitive-complexity :vc-backend Git :url
 			   "https://github.com/emacs-vs/cognitive-complexity"))))

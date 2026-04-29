@@ -7,6 +7,13 @@
   :bind
   ("C-x g" . magit-status))
 
+(use-package magit-todos
+  :after magit
+  :config
+  (magit-todos-mode 1))
+
+;; TODO: asd
+
 ;; Minibuffer
 (use-package vertico
   :custom
@@ -21,6 +28,7 @@
   :config
   (vertico-multiform-mode 1))
 
+;; Открывать minibuffer в попапе по центру
 (use-package vertico-posframe
   :after vertico
   :config
@@ -302,5 +310,25 @@
   :init
   (evil-mode 1))
 
+(use-package ellama
+  :bind
+  ("C-c e" . ellama-transient-main-menu)
+  :hook (org-ctrl-c-ctrl-c-hook . ellama-chat-send-last-message)
+  :init
+  (setopt ellama-language "Russian")
+  :config
+  (let ((qwen-coder (make-llm-ollama
+		     :scheme "http"
+		     :host "localhost"
+		     :port 11434
+		     :chat-model "qwen2.5-coder:1.5b"
+		     :embedding-model "qwen2.5-coder:1.5b")))
+
+    (setq ellama-providers
+	  (list (cons "qwen-coder" qwen-coder)))
+    (setq ellama-naming-scheme 'ellama-generate-name-by-llm)
+    (setq ellama-default-chat-provider qwen-coder)))
+
 (provide 'editing)
 ;;; editing.el ends here
+

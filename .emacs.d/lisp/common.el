@@ -1,6 +1,9 @@
-;; Отключение лишних элементов интерфейса
+;;; common.el --- common settings
+;;; Commentary:
+;;; Code:
 
-(set-fringe-mode 0) ;; Размер отступов по краям
+;; Отключение лишних элементов интерфейса
+(set-fringe-mode 7) ;; Размер отступов по краям
 
 (setq ring-bell-function 'ignore) ;; Отключение звука
 (setq-default cursor-type 'bar)
@@ -44,3 +47,4 @@
 		    :background 'unspecified)
 
 (provide 'common)
+;;; common.el ends here

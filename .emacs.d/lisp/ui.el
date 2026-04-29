@@ -118,5 +118,21 @@
   (global-set-key (kbd "C-c C-d") #'helpful-at-point)
   (global-set-key (kbd "C-h F") #'helpful-function))
 
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode 1)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  (diff-hl-dired-mode))
+
+(use-package ultra-scroll
+  :init
+  (setq scroll-conservatively 101
+	scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
+
+(use-package disproject
+  :bind (("C-c p p" . disproject-dispatch)))
+
 (provide 'ui)
 ;;; ui.el ends here
