@@ -306,9 +306,14 @@
 	 ("M-g w" . avy-goto-word-1)
 	 ("M-s" . avy-goto-char)))
 
+(use-package undo-fu)
+
 (use-package evil
+  :after undo-fu
   :init
-  (evil-mode 1))
+  (evil-mode 1)
+  :custom
+  (setq evil-undo-system 'undo-fu))
 
 (use-package ellama
   :bind

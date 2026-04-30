@@ -21,9 +21,14 @@
 (winner-mode 1)
 (global-hl-line-mode 1)
 (setq create-lockfiles nil)
+(setq-default indent-tabs-mode t)
+(setq-default indent-line-function 'ignore)
+(setq backward-delete-char-untabify-method nil)
+(setq-default c-basic-offset 8)
 
 ;; Скобки
 (electric-pair-mode 1)
+(electric-indent-mode -1)
 (setq electric-pair-preserve-balance t)
 
 ;; Файлы
