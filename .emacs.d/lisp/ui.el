@@ -1,4 +1,4 @@
-;;; ui.el --- ui settings
+;;; ui.el --- ui settings  -*- lexical-binding: t; -*-
 ;;; Commentary:
 
 ;;; Code:

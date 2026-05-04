@@ -1,3 +1,7 @@
+;;; init.el --- init  -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Code:
+
 ;;; Подключение папок с конфигами
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 

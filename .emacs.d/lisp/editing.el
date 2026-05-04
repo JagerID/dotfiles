@@ -1,4 +1,4 @@
-;;; editing.el --- for programming
+;;; editing.el --- for programming  -*- lexical-binding: t; -*-
 ;;; Commentary:
 
 ;;; Code:
@@ -24,6 +24,7 @@
   (vertico-mode 1))
 
 (use-package vertico-multiform
+  :ensure nil
   :after vertico
   :config
   (vertico-multiform-mode 1))
@@ -83,38 +84,47 @@
 	 ))
 
 ;; LSP
+
 (use-package treesit
+  :ensure nil
   :config
-  (setq treesit-language-source-alist
-        '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-          (c "https://github.com/tree-sitter/tree-sitter-c" "v0.23.5")
-          (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
-          (cmake "https://github.com/uyha/tree-sitter-cmake")
-          (css "https://github.com/tree-sitter/tree-sitter-css")
-          (go "https://github.com/tree-sitter/tree-sitter-go")
-          (html "https://github.com/tree-sitter/tree-sitter-html")
-          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-          (json "https://github.com/tree-sitter/tree-sitter-json")
-          (make "https://github.com/alemuller/tree-sitter-make")
-          (python "https://github.com/tree-sitter/tree-sitter-python")
-          (rust "https://github.com/tree-sitter/tree-sitter-rust")
-          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-          (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-
-  (add-hook 'typescript-ts-mode-hook #'treesit-font-lock-enable)
-
   (setq major-mode-remap-alist
-        '((c-mode          . c-mode)
-          (c++-mode        . c++-mode)
-          (bash-mode       . bash-ts-mode)
-          (python-mode     . python-ts-mode)
-          (js-mode         . js-ts-mode)
-	  (javascript-mode . js-ts-mode)
-          (json-mode       . json-ts-mode)
-          (css-mode        . css-ts-mode)))
+	'((c-mode	.	c-ts-mode)
+	  (c++-mode	.	c++-ts-mode))))
 
-  (setq treesit-font-lock-level 4))
+;; (use-package treesit
+;;   :ensure nil
+;;   :config
+;;   (setq treesit-language-source-alist
+;;         '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+;;           (c "https://github.com/tree-sitter/tree-sitter-c" "v0.23.5")
+;;           (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+;;           (cmake "https://github.com/uyha/tree-sitter-cmake")
+;;           (css "https://github.com/tree-sitter/tree-sitter-css")
+;;           (go "https://github.com/tree-sitter/tree-sitter-go")
+;;           (html "https://github.com/tree-sitter/tree-sitter-html")
+;;           (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+;;           (json "https://github.com/tree-sitter/tree-sitter-json")
+;;           (make "https://github.com/alemuller/tree-sitter-make")
+;;           (python "https://github.com/tree-sitter/tree-sitter-python")
+;;           (rust "https://github.com/tree-sitter/tree-sitter-rust")
+;;           (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+;;           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+;;           (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+;;   (add-hook 'typescript-ts-mode-hook #'treesit-font-lock-enable)
+
+;;   (setq major-mode-remap-alist
+;;         '((c-mode          . c-ts-mode)
+;;           (c++-mode        . c++-ts-mode)
+;;           (bash-mode       . bash-ts-mode)
+;;           (python-mode     . python-ts-mode)
+;;           (js-mode         . js-ts-mode)
+;; 	  (javascript-mode . js-ts-mode)
+;;           (json-mode       . json-ts-mode)
+;;           (css-mode        . css-ts-mode)))
+
+;;   (setq treesit-font-lock-level 4))
 
 ;; Форматтер
 (use-package apheleia
@@ -133,7 +143,7 @@
 	    "MaxEmptyLinesToKeep: 1, "
 	    "IncludeBlocks: Regroup, "
 	    "SeparateDefinitionBlocks: Always, "
-	    "AlignArrayOfStructures: Right, "
+	    "AlignArrayOfStructures: Left, "
 	    "BreakBeforeBraces: Custom, "
 	    "BraceWrapping: {"
 	    "AfterFunction: true, AfterStruct: false, AfterUnion: false, "
@@ -162,6 +172,7 @@
 	    "SpaceBeforeSquareBrackets: true, "
 	    "SpacesInSquareBrackets: true, "
 	    "AlignTrailingComments: true, "
+	    "BinPackArguments: false, "
 	    "SortIncludes: CaseSensitive, "
 	    "PointerAlignment: Right, "
 	    "DerivePointerAlignment: false, "

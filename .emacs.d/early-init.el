@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; Повышение порога для GC (фактиччески отключение GC на старте)
 (setq gc-cons-threshold most-positive-fixnum)
 

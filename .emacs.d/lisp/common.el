@@ -1,4 +1,4 @@
-;;; common.el --- common settings
+;;; common.el --- common settings  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -27,8 +27,8 @@
 (setq-default c-basic-offset 8)
 
 ;; Скобки
-(electric-pair-mode 1)
-(electric-indent-mode -1)
+(electric-pair-mode -1)
+(electric-indent-mode 1)
 (setq electric-pair-preserve-balance t)
 
 ;; Файлы
