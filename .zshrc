@@ -43,18 +43,18 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light joshskidmore/zsh-fzf-history-search
 
-# --- Aliases ---
-if command -v lsd > /dev/null; then
-    alias ls="lsd"
-    alias ll="lsd -l"
-    alias la="lsd -a"
-    alias lla="lsd -la"
-    alias lt="lsd --tree"
-fi
+# --- Autosuggestions ---
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-if command -v z > /dev/null; then
-   alias cd="z"
-fi
+# --- Aliases ---
+alias ls="lsd -l --sort time"
+alias ll="lsd -l"
+alias la="lsd -a"
+alias lla="lsd -la"
+alias lst="lsd --tree"
+
+alias cd="z"
 
 # --- FZF-preview ---
 zstyle ':fzf-tab:complete:*:*' fzf-preview \

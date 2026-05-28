@@ -19,8 +19,9 @@ config.window_padding = {
 	top = 0,
 	bottom = 0,
 }
--- config.window_decorations = "NONE"
-config.window_background_opacity = 0.7
+
+config.window_decorations = "NONE"
+config.window_background_opacity = 0.6
 config.max_fps = 165
 config.window_close_confirmation = "NeverPrompt"
 
@@ -35,12 +36,7 @@ config.use_fancy_tab_bar = false
 config.animation_fps = 165
 
 -- Launch Menu
--- TODO: Сделать keybindings для launch_menu (04.10.2025)
 config.launch_menu = {
-	-- {
-	--   args = { "/bin/nu", "-l" },
-	--   label = "Nushell"
-	-- },
 	{
 		args = { "/bin/zsh", "-l" },
 		label = "Zsh",

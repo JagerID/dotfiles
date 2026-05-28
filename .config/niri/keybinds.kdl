@@ -15,43 +15,55 @@ binds {
   Mod+Up { focus-window-up; }
   Mod+Right { focus-column-right; }
 
-  Mod+Shift+Left { focus-monitor-left; }
-  Mod+Shift+Down { focus-monitor-down; }
-  Mod+Shift+Up { focus-monitor-up; }
-  Mod+Shift+Right { focus-monitor-right; }
-
   Mod+H { focus-column-left; }
   Mod+J { focus-window-down; }
   Mod+K { focus-window-up; }
   Mod+L { focus-column-right; }
 
-  Mod+Shift+H { focus-monitor-left; }
-  Mod+Shift+J { focus-monitor-down; }
-  Mod+Shift+K { focus-monitor-up; }
-  Mod+Shift+L { focus-monitor-right; }
-
+  Mod+WheelScrollLeft cooldown-ms=150 { focus-column-left; }
   Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
   Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
-  Mod+WheelScrollLeft cooldown-ms=150 { focus-column-left; }
   Mod+WheelScrollRight cooldown-ms=150 { focus-column-right; }
 
-  Mod+Shift+WheelScrollDown cooldown-ms=150 { focus-monitor-down; }
-  Mod+Shift+WheelScrollUp cooldown-ms=150 { focus-monitor-up; }
+  Mod+Shift+Left { focus-monitor-left; }
+  Mod+Shift+Down { focus-workspace-down; }
+  Mod+Shift+Up { focus-workspace-up; }
+  Mod+Shift+Right { focus-monitor-right; }
+
+  Mod+Shift+H { focus-monitor-left; }
+  Mod+Shift+J { focus-workspace-down; }
+  Mod+Shift+K { focus-workspace-up; }
+  Mod+Shift+L { focus-monitor-right; }
+
   Mod+Shift+WheelScrollLeft cooldown-ms=150 { focus-monitor-left; }
+  Mod+Shift+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+  Mod+Shift+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
   Mod+Shift+WheelScrollRight cooldown-ms=150 { focus-monitor-right; }
 
   // Movement
-  // Mod+Ctrl+H { move-column-left; }
-  // Mod+Ctrl+J { move-column-down; }
-  // Mod+Ctrl+K { move-column-up; }
-  // Mod+Ctrl+L { move-column-right; };
+  Mod+Ctrl+Left { move-column-left-or-to-monitor-left; }
+  Mod+Ctrl+Down { move-window-down-or-to-workspace-down; }
+  Mod+Ctrl+Up { move-window-up-or-to-workspace-up; }
+  Mod+Ctrl+Right { move-column-right-or-to-monitor-right; };
+
+  Mod+Ctrl+H { move-column-left-or-to-monitor-left; }
+  Mod+Ctrl+J { move-window-down-or-to-workspace-down; }
+  Mod+Ctrl+K { move-window-up-or-to-workspace-up; }
+  Mod+Ctrl+L { move-column-right-or-to-monitor-right; };
+
+  Mod+Ctrl+WheelScrollLeft cooldown-ms=150 { move-column-left-or-to-monitor-left; }
+  Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-window-down-or-to-workspace-down; }
+  Mod+Ctrl+WheelScrollUp cooldown-ms=150 { move-window-up-or-to-workspace-up; }
+  Mod+Ctrl+WheelScrollRight cooldown-ms=150 { move-column-right-or-to-monitor-right; };
 
   // Apps
-  Mod+Shift+Q repeat=false { spawn "chromium"; }
+  Mod+Shift+Q repeat=false { spawn "firefox-developer-edition"; }
   Mod+T repeat=false { spawn "wezterm"; }
   Mod+D repeat=false { spawn "fuzzel"; }
-  Shift+Alt+L repeat=false { spawn "swaylock"; }
+  Shift+Alt+L repeat=false { spawn-sh "veila lock"; }
   Mod+Backspace repeat=false { spawn "emacsclient" "-c" "-a" ""; }
+  Mod+Shift+M repeat=false { spawn-sh "QT_QPA_PLATFORM=xcb vkworkspace"; }
+  Mod+Shift+Slash repeat=false { spawn-sh "wezterm start --class clipse -e clipse"; }
 
   // Screenshots
   Print repeat=false { screenshot; }

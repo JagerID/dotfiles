@@ -13,11 +13,11 @@
   "scm.autoReveal": true,
   "files.trimTrailingWhitespace": true,
   "editor.fontSize": 14,
-  "editor.tabSize": 2,
+  "editor.tabSize": 8,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
-  "workbench.colorTheme": "Bearded Theme Monokai Black",
+  "workbench.colorTheme": "Bearded Theme Arc",
   "terminal.explorerKind": "external",
   "terminal.external.linuxExec": "wezterm",
   "terminal.integrated.defaultProfile.linux": "nushell",
@@ -47,11 +47,13 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
   },
   "[svelte]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "svelte.svelte-vscode",
   },
   "zig.zls.enabled": "on",
-  "[c]": {
-    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
-  },
   "workbench.iconTheme": "vscode-great-icons",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "editor.insertSpaces": false,
+  "C_Cpp.formatting": "disabled",
 }

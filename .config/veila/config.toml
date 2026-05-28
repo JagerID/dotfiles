@@ -1,0 +1,37 @@
+theme = "default"
+
+[lock]
+screen_off_seconds = 10
+
+[background]
+mode = "file"
+path = "/home/jager/.config/wallpapers/debian.png"
+blur_strength = 7
+
+[weather]
+enabled = true
+location = "Podolsk"
+refresh_minutes = 10
+unit = "celsius"
+
+[visuals.avatar]
+enabled = false
+
+[visuals.username]
+enabled = true
+font_family = "Raligo"
+font_weight = 400
+font_size = 46
+
+[visuals.clock]
+enabled = true
+style = "standard"
+format = "24h"
+
+[visuals.input]
+placeholder = "Username"
+reveal_on_interaction = true
+reveal_mode = "full"
+
+[visuals.reveal]
+mode = "hidden"
