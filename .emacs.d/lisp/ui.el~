@@ -1,0 +1,3 @@
+(set-fringe-mode 10)
+
+(provide 'ui)
