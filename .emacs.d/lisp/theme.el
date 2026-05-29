@@ -1,7 +1,6 @@
-;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t; -*-
 
-
-(use-package doom-themes
-  :config (load-theme 'doom-molokai t))
+(use-package kanagawa-themes
+  :config (load-theme 'kanagawa-wave t))
 
 (provide 'theme)
