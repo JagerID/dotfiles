@@ -27,7 +27,16 @@
   (global-corfu-mode 1)
   (corfu-history-mode 1)
   (corfu-popupinfo-mode 1)
-  (corfu-indexed-mode 1))
+  (corfu-indexed-mode 1)
+
+  (setq completion-in-region-function #'corfu--in-region)
+
+  :custom
+  (corfu-auto nil)
+  (corfu-auto-delay 0.4)
+  (corfu-auto-prefix)
+
+  (setq corfu-popupinfo-delay nil))
 
 ;; Источники данных для автодополнения corfu
 (use-package cape
@@ -117,17 +126,30 @@
 ;; LSP
 (use-package eglot
   :ensure nil
-  :hook (prog-mode . eglot-ensure)
+  :hook (
+	 (c-ts-mode . eglot-ensure)
+	 (lua-mode . eglot-ensure)
+	 )
+  :init
+  (setq eglot-events-buffer-config '(:size 0 :format full))
+  (global-unset-key (kbd "C-S-r"))
   :bind (:map eglot-mode-map
-	      ("M-?"	.	xref-find-references)
+	      ("C-S-r"	.	xref-find-references)
 	      ("M-."	.	xref-find-definitions))
   :config
+  (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider :hoverProvider))
   (setq xref-prompt-for-identifier nil)
   (set-face-attribute 'eglot-highlight-symbol-face nil
 		      :background "#3e4451"
 		      :underline t)
   (setq-default eglot-workspace-configuration
-		`((:clangd . (:fallbackFlags ("--style=file"
-					      ,(concat "--style=file:" (expand-file-name ".clang-format-fallback" user-emacs-directory))))))))
+		'(:clangd (:fallbackFlags ["--style=file" "--style=file:/home/jager/.emacs.d/.clang-format-fallback"]))))
+
+(with-eval-after-load 'semantic/symref/grep
+  (add-to-list 'semantic-symref-filepattern-alist
+	       '(c-ts-mode "*.c" "*.h")))
+
+;; Lua
+(use-package lua-mode)
 
 (provide 'prog)

@@ -10,6 +10,7 @@
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
 (package-initialize)
 
 (setq use-package-always-ensure t)
@@ -25,9 +26,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("be0d9f0e72a4ebc4a59c382168921b082b4dc15844bdaf1353c08157806b3321"
+     default))
  '(package-selected-packages
-   '(apheleia cape colorful-mode consult consult-projectile corfu diff-hl
-	      dirvish drag-stuff flycheck-inline flycheck-posframe
+   '(apheleia cape citre colorful-mode consult consult-flycheck corfu
+	      diff-hl dirvish doom-themes drag-stuff flycheck-posframe
 	      gcmh kanagawa-themes kind-icon magit-todos marginalia
 	      orderless projectile rainbow-delimiters smartparens
 	      undo-fu vertico)))

@@ -48,27 +48,22 @@
 (use-package which-key
   :config (which-key-mode 1))
 
+(use-package consult-flycheck
+  :bind ("C-S-m" . consult-flycheck))
+
 ;; Улучшенные команды поиска, переключения буффера и т.п.
 (use-package consult
-  :bind (
-	 ("C-x b" . consult-buffer) ;; Переключение буферов
-	 ("M-y" . consult-yank-pop) ;; Буфер обмена
-	 ("M-g g" . consult-goto-line) ;; Переход на строку
-
-	 ("C-f" . consult-line) ;; Поиск внутри текущего файла (с предпросмотром)
-	 ;; ("C-S-s" . consult-ripgrep) ;; Поиск текста во всем проекте
-	 
-	 ("C-p" . consult-find) ;; Поиск файла
-	 ;; ("M-s s" . consult-eglot-symbols)
-	 )
-  :init (setq xref-show-xrefs-function #'consult-xref
-	      xref-show-definitions-function #'consult-xref
-	      consult-project-function (lambda () (projectile-project-root))))
-
-(use-package consult-projectile
-  :bind (
-	 ("C-S-s" . consult-projectile-ripgrep)
-	 ))
+  :bind (("C-f" . consult-line) ;; Поиск внутри текущего файла (с предпросмотром)
+	 ("C-S-f" . consult-ripgrep) ;; Поиск текста во всем проекте
+	 ("C-p" . projectile-find-file) ;; Поиск файла
+	 ("C-S-o" . consult-outline))
+  :init
+  (setq consult-ripgrep-command
+	"rg --null --hidden --smart-case --no-heading --line-number --color=always -e ARG OPTS")
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref)
+  (autoload 'projectile-project-root "projectile")
+  (setq consult-project-function (lambda (_) (projectile-project-root))))
 
 ;; Без учета позиции слов в поиске
 (use-package orderless
@@ -96,6 +91,6 @@
 ;; Проекты
 (use-package projectile
   :bind ("C-c p" . projectile-command-map)
-  :config (projectile mode 1))
+  :config (projectile-mode 1))
 
 (provide 'ui)

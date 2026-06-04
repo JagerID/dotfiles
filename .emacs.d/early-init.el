@@ -13,4 +13,6 @@
 (setq frame-inhibit-implied-resize t)
 
 ;; Оптимизация компиляции плагинов
+(setq debug-on-error t)
+
 (setq native-comp-speed 3)

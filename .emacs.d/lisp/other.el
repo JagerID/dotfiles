@@ -5,10 +5,21 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq-default indent-tabs-mode t)
+(setq-default flymake-mode nil)
+(global-eldoc-mode -1)
+
+(electric-indent-mode -1)
 
 (global-set-key (kbd "<backspace>") 'backward-delete-char)
 (global-set-key (kbd "TAB") 'self-insert-command)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(setq-default toggle-truncate t)
+(setq-default truncate-lines t)
+
+(setq-default display-line-numbers-grow-only t)
+(setq-default display-line-numbers-width 3)
+(setq-default long-line-threshold 1000)
 
 ;; Нормальные undo / redo
 (use-package undo-fu
