@@ -2,13 +2,18 @@
 
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
+(setq auto-save-default nil)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq-default indent-tabs-mode t)
-(setq-default flymake-mode nil)
-(global-eldoc-mode -1)
+(add-hook 'prog-mode-hook (lambda () (flymake-mode nil)))
 
-(electric-indent-mode -1)
+(global-eldoc-mode -1)
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
+
+(electric-indent-mode 1)
+(cua-mode 1)
 
 (global-set-key (kbd "<backspace>") 'backward-delete-char)
 (global-set-key (kbd "TAB") 'self-insert-command)
@@ -37,5 +42,18 @@
 	 ("M-<up>" . drag-stuff-up)
 	 ("M-<down>" . drag-stuff-down))
   :config (drag-stuff-global-mode 1))
+
+(use-package multiple-cursors
+  :bind (
+	 ("C-d" . mc/mark-next-like-this-word)
+	 ("C-S-d" . mc/mark-previous-like-this-word)
+	 ("C-c C-<" . mc/mark-all-like-this)
+
+	 ;; :map mc/keymap
+	 ;; ("<escape>" . mc/keyboard-quit)
+	 ;; ("<return>" . nil)
+	 )
+  :config
+  (setq mc/always-run-for-all t))
 
 (provide 'other)

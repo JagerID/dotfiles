@@ -3,6 +3,6 @@
 (use-package kanagawa-themes)
 
 (use-package doom-themes
-  :config (load-theme 'doom-monokai-spectrum t))
+  :config (load-theme 'doom-monokai-classic t))
 
 (provide 'theme)

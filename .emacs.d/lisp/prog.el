@@ -1,51 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; Git клиент
-(use-package magit
-  :bind ("C-x g" . magit-status))
-
-;; Отображение TODOs в magit
-(use-package magit-todos
-  :after magit
-  :config (magit-todos-mode 1))
-
-;; Умные скобки
-(use-package smartparens
-  :hook (prog-mode . smartparens-mode)
-  :config (require 'smartparens-config))
-
-;; Автодополнения
-(use-package corfu
-  :bind ("C-SPC" . completion-at-point)
-  (:map corfu-map
-	("TAB" . corfu-next)
-	([tab] . corfu-next)
-	("S-TAB" . corfu-previous)
-	([backtab] . corfu-previous)
-	("M-SPC" . corfu-insert-separator))
-  :config
-  (global-corfu-mode 1)
-  (corfu-history-mode 1)
-  (corfu-popupinfo-mode 1)
-  (corfu-indexed-mode 1)
-
-  (setq completion-in-region-function #'corfu--in-region)
-
-  :custom
-  (corfu-auto nil)
-  (corfu-auto-delay 0.4)
-  (corfu-auto-prefix)
-
-  (setq corfu-popupinfo-delay nil))
-
-;; Источники данных для автодополнения corfu
-(use-package cape
-  :config
-  (add-to-list 'completion-at-point-functions #'cape-file) ;; Пути к файлам
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev) ;; Слова из текущего буфера
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)) ;; Ключевые слова языка
-
 ;; Remap дефолтных режимов на treesit
 (use-package treesit
   :ensure nil
@@ -53,12 +7,19 @@
   (setq major-mode-remap-alist
 	'((c-mode		.	c-ts-mode)
 	  (c++-mode		.	c++-ts-mode)
-	  (c-or-c++-mode	.	c-or-c++-ts-mode)))
+	  (c-or-c++-mode	.	c-or-c++-ts-mode)
+	  (lua-mode		.	lua-ts-mode)))
 
   (add-hook 'c-ts-mode-hook
 	    (lambda ()
 	      (setq c-ts-mode-indent-offset 8)
-	      (setq c-ts-mode-indent-style 'linux))))
+	      (setq c-ts-mode-indent-style 'linux)))
+
+  (add-hook 'lua-ts-mode-hook
+	    (lambda ()
+	      (setq lua-ts-indent-level 8)
+	      (setq lua-ts-indent-offset 8)
+	      (setq apheleia-inhibit t))))
 
 ;; Форматтер
 (use-package apheleia
@@ -128,8 +89,7 @@
   :ensure nil
   :hook (
 	 (c-ts-mode . eglot-ensure)
-	 (lua-mode . eglot-ensure)
-	 )
+	 (lua-ts-mode . eglot-ensure))
   :init
   (setq eglot-events-buffer-config '(:size 0 :format full))
   (global-unset-key (kbd "C-S-r"))
@@ -149,7 +109,5 @@
   (add-to-list 'semantic-symref-filepattern-alist
 	       '(c-ts-mode "*.c" "*.h")))
 
-;; Lua
-(use-package lua-mode)
 
 (provide 'prog)

@@ -15,4 +15,5 @@
 ;; Оптимизация компиляции плагинов
 (setq debug-on-error t)
 
-(setq native-comp-speed 3)
+;; (setq native-comp-speed 3)
+;; (setq native-comp-async-report-warnings-errors 'silent)
