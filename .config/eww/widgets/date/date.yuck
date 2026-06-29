@@ -1,0 +1,7 @@
+(defpoll date :interval "1m" "LC_TIME=ru_RU.UTF-8 date '+%A, %d %B'")
+
+(defwidget date_widget []
+	(box
+		:class "date-widget"
+		:halign "center"
+		"${date}"))

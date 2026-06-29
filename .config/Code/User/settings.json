@@ -50,10 +50,15 @@
     "editor.defaultFormatter": "svelte.svelte-vscode",
   },
   "zig.zls.enabled": "on",
-  "workbench.iconTheme": "vscode-great-icons",
+  "workbench.iconTheme": "bearded-icons",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "editor.insertSpaces": false,
   "C_Cpp.formatting": "disabled",
+  "security.workspace.trust.untrustedFiles": "open",
+  "settingsSync.ignoredExtensions": [],
+  "workbench.settings.applyToAllProfiles": [
+
+  ],
 }

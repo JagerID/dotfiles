@@ -1,12 +1,15 @@
-@import "./widgets/datetime/datetime";
-@import "./widgets/language/language";
+@import "./widgets/time/time.scss";
 
 * {
   all: unset;
 }
 
-.glass-container {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
+.bar-layout {
+	margin: 10px 20px 0;
+	padding: 5px 10px;
+	border-radius: 8px;
+
+	background-color: rgba( 255, 255, 255, 0.05 );
+	border: 2px solid rgba( 255, 255, 255, 0.1);
+	box-shadow: 0 8px 32px 0 rgba( 0, 0, 0, 0.37 );
 }

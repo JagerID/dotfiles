@@ -4,6 +4,10 @@
 (use-package treesit
   :ensure nil
   :config
+
+  (add-to-list 'treesit-language-source-alist
+	       '(yuck "https://github.com/tree-sitter-grammars/tree-sitter-yuck"))
+
   (setq major-mode-remap-alist
 	'((c-mode		.	c-ts-mode)
 	  (c++-mode		.	c++-ts-mode)
@@ -106,8 +110,8 @@
 		'(:clangd (:fallbackFlags ["--style=file" "--style=file:/home/jager/.emacs.d/.clang-format-fallback"]))))
 
 (with-eval-after-load 'semantic/symref/grep
-  (add-to-list 'semantic-symref-filepattern-alist
-	       '(c-ts-mode "*.c" "*.h")))
+  (add-to-list 'semantic-symref-filepattern-alist '(c-ts-mode "*.c" "*.h"))
+  (add-to-list 'semantic-symref-filepattern-alist '(lua-ts-mode "*.lua")))
 
 
 (provide 'prog)
