@@ -1,30 +1,28 @@
 (include "./widgets/time/time.yuck")
-(include "./widgets/date/date.yuck")
 
-(defwidget bar_layout_center []
+(defwidget bar_layout_left []
 	(box
+		:halign "start"
 		:class "bar-layout-center"
-		(date_widget)
 		(time_widget)))
 
 (defwidget bar_layout []
 	(centerbox
 		:class "bar-layout"
 		:orientation "h"
+		(bar_layout_left)
 		(box)
-		(bar_layout_center)
 		(box)))
 
-
-(defwindow bar
-	:monitor 0
+(defwindow bar_m1
+	:monitor 1
 	:geometry (geometry
 		:x 0
 		:y 0
 		:width "100%"
-		:height "20px"
+		:height "16px"
 		:anchor "top center")
-	:stacking "fg"
+	:stacking "bg"
 	:exclusive true
 	:focusable false
 	(bar_layout))
