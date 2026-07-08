@@ -1,15 +1,10 @@
-@import "./widgets/time/time.scss";
+@import "widgets/time/time.scss";
+@import "windows/bar/bar.scss";
+@import "widgets/cpu/cpu.scss";
+@import "widgets/ram/ram.scss";
+@import "widgets/battery/battery.scss";
 
 * {
   all: unset;
 }
 
-.bar-layout {
-	margin: 10px 20px 0;
-	padding: 2px 10px;
-	border-radius: 8px;
-
-	background-color: rgba( 255, 255, 255, 0.05 );
-	border: 2px solid rgba( 255, 255, 255, 0.1);
-	box-shadow: 0 8px 32px 0 rgba( 0, 0, 0, 0.37 );
-}

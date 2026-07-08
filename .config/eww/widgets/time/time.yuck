@@ -3,5 +3,4 @@
 (defwidget time_widget []
 	(box
 		:class "time-widget"
-		:halign "center"
 		"${time}"))

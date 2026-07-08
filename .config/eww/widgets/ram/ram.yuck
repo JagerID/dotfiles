@@ -1,0 +1,9 @@
+(defwidget ram_widget []
+	(box
+		:class "ram-widget"
+		:space-evenly false
+		;; (progress
+		;; 	:orientation "h"
+		;; 	:value {EWW_RAM.used_mem_perc})
+		(label
+			:text "${round(EWW_RAM.used_mem_perc, 0)}%")))

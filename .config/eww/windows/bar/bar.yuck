@@ -1,0 +1,77 @@
+(include "widgets/time/time.yuck")
+(include "widgets/cpu/cpu.yuck")
+(include "widgets/ram/ram.yuck")
+(include "widgets/battery/battery.yuck")
+
+(defwidget bar_layout_left []
+	(box
+		:class "bar-layout-place"
+		:halign "left"
+		:spacing 25
+		:space-evenly false
+		(box)))
+
+(defwidget bar_layout_center []
+	(box
+		:class "bar-layout-place"
+		:halign "center"
+		:space-evenly false
+		:spacing 25
+		(time_widget)))
+
+(defwidget bar_layout_right []
+	(box
+		:class "bar-layout-place"
+		:halign "end"
+		:space-evenly false
+		:spacing 25
+		(ram_widget)
+		(cpu_widget)
+		(battery_widget)))
+
+(defwidget bar_layout []
+	(centerbox
+		:class "bar-layout"
+		:orientation "h"
+		(bar_layout_left)
+		(bar_layout_center)
+		(bar_layout_right)))
+
+(defwindow bar_m0
+	:monitor 0
+	:geometry (geometry
+		:x 0
+		:y 0
+		:width "100%"
+		:height "16px"
+		:anchor "top center")
+	:stacking "bg"
+	:exclusive true
+	:focusable false
+	(bar_layout))
+
+(defwindow bar_m1
+	:monitor 1
+	:geometry (geometry
+		:x 0
+		:y 0
+		:width "100%"
+		:height "16px"
+		:anchor "top center")
+	:stacking "bg"
+	:exclusive true
+	:focusable false
+	(bar_layout))
+
+(defwindow bar_m2
+	:monitor 2
+	:geometry (geometry
+		:x 0
+		:y 0
+		:width "100%"
+		:height "16px"
+		:anchor "top center")
+	:stacking "bg"
+	:exclusive true
+	:focusable false
+	(bar_layout))

@@ -58,7 +58,12 @@
   "C_Cpp.formatting": "disabled",
   "security.workspace.trust.untrustedFiles": "open",
   "settingsSync.ignoredExtensions": [],
-  "workbench.settings.applyToAllProfiles": [
-
-  ],
+  "workbench.settings.applyToAllProfiles": [],
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg",
+  },
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.svg": "default",
+  },
 }

@@ -16,14 +16,14 @@ output "Samsung Display Corp. 0x41B7 Unknown" {
 	scale 1.0
 }
 
-output "DP-6" {
+output "HDMI-A-1" {
 	mode "2560x1440@119.998"
-	position x=0 y=0
+	position x=2560 y=0
 	scale 1.0
 }
 
 output "Samsung Electric Company Odyssey G65B H1AK500000" {
 	mode "2560x1440@119.998"
-	position x=2560 y=0
+	position x=0 y=0
 	scale 1.0
 }

@@ -1,0 +1,9 @@
+(defwidget cpu_widget []
+	(box
+		:class "cpu-widget"
+		:space-evenly false
+		;; (progress
+		;; 	:orientation "h"
+		;; 	:value {EWW_CPU.avg})
+		(label
+		 :text "${round(EWW_CPU.avg, 0)}%")))
