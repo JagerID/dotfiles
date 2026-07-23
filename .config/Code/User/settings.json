@@ -7,7 +7,7 @@
   "editor.smoothScrolling": true,
   "explorer.confirmDelete": false,
   "editor.fontLigatures": true,
-  "editor.fontFamily": "Iosevka Nerd Font",
+  "editor.fontFamily": "Monocraft",
   "terminal.integrated.fontFamily": "Iosevka Nerd Font",
   "workbench.statusBar.visible": false,
   "scm.autoReveal": true,
