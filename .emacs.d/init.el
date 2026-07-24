@@ -34,11 +34,11 @@
  '(package-selected-packages
    '(apheleia cape colorful-mode consult-dir consult-flycheck consult-jq
 	      corfu diff-hl dirvish doom-themes drag-stuff ef-themes
-	      flycheck-posframe gcmh kanagawa-themes kind-icon
-	      magit-todos marginalia multiple-cursors orderless
-	      projectile rainbow-delimiters sleek-modeline smartparens
-	      toxi-theme undo-fu vertico vscode-dark-plus-theme
-	      yuck-mode))
+	      flycheck-posframe gcmh kanagawa-themes kdl-mode
+	      kind-icon magit-todos marginalia multiple-cursors
+	      orderless projectile rainbow-delimiters sleek-modeline
+	      smartparens toxi-theme undo-fu vertico
+	      vscode-dark-plus-theme yuck-mode))
  '(package-vc-selected-packages
    '((consult-jq :vc-backend Git :url
 		 "https://github.com/bigbuger/consult-jq")
