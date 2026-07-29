@@ -1,1 +1,32 @@
-(include "windows/bar/bar.yuck")
+(defpoll time :interval "1s" "date '+%H:%M'")
+
+(defwidget hud []
+	(box :class "hud frame"
+		:orientation "h"
+		:space-evenly false
+		:spacing 12
+		:halign "start"
+		(label :text time)))
+
+(defwindow void [mon]
+	   :monitor mon
+	   :geometry (geometry :x "0px"
+			       :y "0px"
+			       :width "100%"
+			       :height "30px"
+			       :anchor "top center")
+	   :stacking "bg"
+	   :exclusive true
+	   :namespace "eww-void"
+	   (box))
+
+(defwindow island [x y w h anch mon content]
+	:monitor mon
+	:geometry (geometry :x x
+			    :y y
+			    :width w
+			    :height h
+			    :anchor anch)
+	:stacking "fg"
+	:exclusive false
+	(literal :content content))

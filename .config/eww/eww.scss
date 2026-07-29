@@ -1,10 +1,20 @@
-@import "widgets/time/time.scss";
-@import "windows/bar/bar.scss";
-@import "widgets/cpu/cpu.scss";
-@import "widgets/ram/ram.scss";
-@import "widgets/battery/battery.scss";
-
 * {
-  all: unset;
+	all: unset;
 }
 
+window {
+	
+}
+
+.island {
+	margin: 5px 10px 0;
+}
+
+.hud {
+
+}
+
+.frame {
+	padding: 4px 10px;
+	border-radius: 6px;
+}

@@ -33,7 +33,7 @@ binds {
 	Mod+D		{ spawn "fuzzel"; }
 	Mod+T		{ spawn "wezterm"; }
 	Mod+Backspace	{ spawn "emacsclient" "-c" "-a" ""; }
-	
+
 	Mod+Shift+Q	{ spawn "firefox-developer-edition"; }
 	Mod+Shift+M	{ spawn-sh "QT_QPA_PLATFORM=xcb vkworkspace"; }
 
@@ -76,7 +76,7 @@ binds {
 layout {
 	gaps 10
 	background-color "transparent"
-	
+
 	default-column-width { proportion 0.5; }
 	preset-column-widths {
 		proportion 0.33333
@@ -101,7 +101,24 @@ window-rule {
 		xray true
 		blur true
 	}
+}
 
+layer-rule {
+	match namespace="gtk-layer-shell"
+	geometry-corner-radius	8
+
+	background-effect {
+		xray true
+		blur true
+	}
+}
+
+layer-rule {
+	match namespace="^eww-void$"
+
+	background-effect {
+		blur false
+	}
 }
 
 blur {
@@ -133,4 +150,22 @@ input {
 		accel-speed	0.2
 		accel-profile	"flat"
 	}
+}
+
+output "Samsung Display Corp. 0x41B7 Unknown" {
+	mode		"2048x1280@120.001"
+	scale		1.0
+	position	x=5120 y=0
+}
+
+output "Samsung Electric Company Odyssey G65B H1AK500000" {
+	mode		"2560x1440@119.998"
+	scale		1.0
+	position	x=0 y=0
+}
+
+output "HDMI-A-1" {
+	mode		"2560x1440@119.998"
+	scale		1.0
+	position	x=2560 y=0
 }

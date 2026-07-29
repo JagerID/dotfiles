@@ -1,6 +1,0 @@
-(defpoll time :interval "1s" "date '+%H:%M:%S'")
-
-(defwidget time_widget []
-	(box
-		:class "time-widget"
-		"${time}"))

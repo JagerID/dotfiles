@@ -17,7 +17,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
-  "workbench.colorTheme": "Bearded Theme Arc",
+  "workbench.colorTheme": "Monokai Classic",
   "terminal.explorerKind": "external",
   "terminal.external.linuxExec": "wezterm",
   "terminal.integrated.defaultProfile.linux": "nushell",
