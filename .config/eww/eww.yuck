@@ -1,24 +1,27 @@
 (defpoll time :interval "1s" "date '+%H:%M'")
+(defpoll battery :interval "15s" "cat /sys/class/power_supply/BAT1/capacity")
+(defpoll charge :interval "15s" "cat /sys/class/power_supply/BAT1/status")
 
-(defwidget hud []
-	(box :class "hud frame"
-		:orientation "h"
-		:space-evenly false
-		:spacing 12
-		:halign "start"
+(defwidget v-separator []
+	(box :class "v-separator"))
+
+(defwidget power []
+	(box :class "power"
+		(label :text "${battery}%")))
+
+(defwidget time []
+	(box :class "time"
 		(label :text time)))
 
-(defwindow void [mon]
-	   :monitor mon
-	   :geometry (geometry :x "0px"
-			       :y "0px"
-			       :width "100%"
-			       :height "30px"
-			       :anchor "top center")
-	   :stacking "bg"
-	   :exclusive true
-	   :namespace "eww-void"
-	   (box))
+(defwidget cpu []
+	(box :class "cpu"
+		(label :text "CPU: ${round(EWW_CPU.avg, 0)}%")))
+
+(defwidget ram []
+	   (box :class "ram"
+		:space-evenly false
+		:spacing 0
+		(label :text "RAM: ${round(EWW_RAM.used_mem_perc, 0)}%")))
 
 (defwindow island [x y w h anch mon content]
 	:monitor mon
@@ -27,6 +30,7 @@
 			    :width w
 			    :height h
 			    :anchor anch)
-	:stacking "fg"
+	:stacking "overlay"
 	:exclusive false
-	(literal :content content))
+	(box :class "island" :valign "center" :halign "center"
+	     (literal :content content)))

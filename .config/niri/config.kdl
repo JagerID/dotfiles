@@ -5,13 +5,10 @@ spawn-sh-at-startup	"syncthing"
 spawn-sh-at-startup	"emacs --daemon"
 spawn-at-startup	"obsidian"
 
-spawn-sh-at-startup	"eww daemon"
-spawn-sh-at-startup	"eww open bar_m0"
-spawn-sh-at-startup	"eww open bar_m1"
-spawn-sh-at-startup	"eww open bar_m2"
+spawn-sh-at-startup	"~/.config/niri/scripts/eww.sh"
 
 binds {
-	// ============ Niri Actions ============ 
+	// ============ Niri Actions ============
 	Mod+Q			{ close-window; }
 	Mod+O			{ toggle-overview; }
 	Mod+R			{ switch-preset-column-width; }
@@ -90,6 +87,10 @@ layout {
 		active-gradient from="#00ff87" to="#60efff" angle=45
 		inactive-color "#0d1b15"
 	}
+
+	struts {
+		top 30
+	}
 }
 
 window-rule {
@@ -105,19 +106,11 @@ window-rule {
 
 layer-rule {
 	match namespace="gtk-layer-shell"
-	geometry-corner-radius	8
+	geometry-corner-radius 6
 
 	background-effect {
-		xray true
+		xray false
 		blur true
-	}
-}
-
-layer-rule {
-	match namespace="^eww-void$"
-
-	background-effect {
-		blur false
 	}
 }
 

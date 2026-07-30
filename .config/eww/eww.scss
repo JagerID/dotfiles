@@ -1,20 +1,20 @@
 * {
 	all: unset;
-}
-
-window {
-	
+	font-family: "Monocraft";
 }
 
 .island {
-	margin: 5px 10px 0;
+	padding: 0 8px;
 }
 
-.hud {
+.hud {}
 
+.v-separator {
+	min-width: 2px;
+	border-radius: 2px;
+	background-color: rgba(255,255,255,1)
 }
 
-.frame {
-	padding: 4px 10px;
-	border-radius: 6px;
+.time {
+	font-size: 1.4rem;
 }
