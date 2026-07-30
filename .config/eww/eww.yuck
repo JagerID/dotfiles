@@ -1,13 +1,17 @@
-(defpoll time :interval "1s" "date '+%H:%M'")
-(defpoll battery :interval "15s" "cat /sys/class/power_supply/BAT1/capacity")
-(defpoll charge :interval "15s" "cat /sys/class/power_supply/BAT1/status")
+(defpoll time :interval "1s" "date '+%I:%M %p'")
+
+(defpoll battery :interval "15s" "cat /sys/class/power_supply/BAT1/capacity || echo 'null'")
+(defpoll charge :interval "15s" "cat /sys/class/power_supply/BAT1/status echo 'null'")
+(defpoll date :interval "10m" "date '+%d %B %Y' | tr '[:lower:]' '[:upper:]'")
+(defpoll day  :interval "10m" "date '+%A' | sed 's/lunes/MONDAY/;s/martes/TUESDAY/;s/miércoles/WEDNESDAY/;s/jueves/THURSDAY/;s/viernes/FRIDAY/;s/sábado/SATURDAY/;s/domingo/SUNDAY/' | tr '[:lower:]' '[:upper:]'")
 
 (defwidget v-separator []
 	(box :class "v-separator"))
 
 (defwidget power []
 	(box :class "power"
-		(label :text "${battery}%")))
+		(if { battery != "null" }
+		(label :text "${battery}%"))))
 
 (defwidget time []
 	(box :class "time"
@@ -23,6 +27,11 @@
 		:spacing 0
 		(label :text "RAM: ${round(EWW_RAM.used_mem_perc, 0)}%")))
 
+(defwidget date []
+	(box :class "date" :orientation "v" :space-evenly false :spacing 10
+		(label :class "day" :text day)
+		(label :class "subdate" :text date)))
+
 (defwindow island [x y w h anch mon content]
 	:monitor mon
 	:geometry (geometry :x x
@@ -34,3 +43,13 @@
 	:exclusive false
 	(box :class "island" :valign "center" :halign "center"
 	     (literal :content content)))
+
+(defwindow bg-centered [mon]
+	:monitor mon
+	:geometry (geometry :x "0"
+			:y "0"
+			:width "800"
+			:anchor "center")
+	:namespace "void"
+	:stacking "bg"
+	(date))
