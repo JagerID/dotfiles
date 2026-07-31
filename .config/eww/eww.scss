@@ -7,9 +7,6 @@
 	padding: 0 8px;
 }
 
-.hud {
-}
-
 .v-separator {
 	min-width: 2px;
 	border-radius: 2px;
@@ -22,14 +19,15 @@
 
 .date {
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+
 	.day {
 		font-family: "Anurati";
-		font-size: 10rem;
+		font-size: 12rem;
 		color: #d8dee9;
 	}
 	.subdate {
 		font-family: "Anurati";
-		font-size: 3rem;
+		font-size: 3.5rem;
 		letter-spacing: 4px;
 		color: #d8dee9;
 	}

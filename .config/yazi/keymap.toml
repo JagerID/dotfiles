@@ -1,0 +1,41 @@
+[mgr]
+keymap	= [
+	{ on = "h",		run = "leave",				desc = "Go to parent directory" },
+	{ on = "j",		run = "arrow 1",			desc = "Move cursor down" },
+	{ on = "k",		run = "arrow -1",			desc = "Move cursor up" },
+	{ on = "l",		run = "enter",				desc = "Enter dir or open file" },
+
+	{ on = "<Left>",	run = "leave",				desc = "Go to parent directory" },
+	{ on = "<Down>",	run = "arrow 1",			desc = "Move cursor up" },
+	{ on = "<Up>",		run = "arrow -1",			desc = "Move cursor down" },
+	{ on = "<Right>",	run = "enter",				desc = "Enter dir or open file" },
+
+	{ on = "<Enter>",	run = "enter",				desc = "Open file or enter dir" },
+
+	{ on = "r",		run = "rename --cursor=before_ext",	desc = "Rename file" },
+	{ on = "<F2>",		run = "rename --cursor=before_ext",	desc = "Rename file" },
+
+	{ on = "d",		run = "remove",				desc = "Move to trash" },
+	{ on = "<S-d>",		run = "remove --permanently",		desc = "Remove permanently" },
+	{ on = "<Delete>",	run = "remove",				desc = "Move to trash" },
+	{ on = "<S-Delete>",	run = "remove --permanently",		desc = "Remove permanently" },
+
+	{ on = "c",		run = "create",				desc = "Create new file or folder" },
+
+	{ on = "<C-c>",		run = "yank",				desc = "Copy selected files" },
+	{ on = "<C-x>",		run = "yank --cut",			desc = "Cut selected files" },
+	{ on = "<C-v>",		run = "paste",				desc = "Paste files from buf" },
+	{ on = "<C-a>",		run = "toggle_all",			desc = "Select all files" },
+
+	{ on = "<C-A-p>",	run = "copy path",			desc = "Copy path" },
+	{ on = "<C-A-n>",	run = "copy filename",			desc = "Copy filename" },
+
+	{ on = "<C-z>",		run = "undo",				desc = "Undo" },
+	{ on = "<C-S-z>",	run = "redo",				desc = "Redo" },
+
+	{ on = "<C-t>",		run = "shell /bin/zsh --block",		desc = "Open terminal here" },
+	
+	{ on = "<F5>",		run = "reload",				desc = "Reload file list (force)" },
+
+	{ on = "q",		run = "quit",				desc = "Quit" },
+]

@@ -6,6 +6,7 @@ spawn-sh-at-startup	"emacs --daemon"
 spawn-at-startup	"obsidian"
 
 spawn-sh-at-startup	"~/.config/niri/scripts/eww.sh"
+spawn-sh-at-startup	"~/.config/niri/scripts/wallpaper.sh"
 
 binds {
 	// ============ Niri Actions ============

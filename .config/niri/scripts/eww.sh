@@ -9,14 +9,6 @@ load_eww () {
 	h=30
 	lw=200
 	cw=130
-	rw=70
-
-	    # Проверяем, существует ли батарея
-	if [ -d /sys/class/power_supply/BAT1 ]; then
-		HAS_BATTERY=true
-	else
-		HAS_BATTERY=false
-	fi
 
 	if [ ${#outputs[@]} -eq 0 ]; then
 		outputs=("0")
@@ -47,17 +39,6 @@ load_eww () {
 		    --arg content="(box :orientation \"horizontal\" :space-evenly false :spacing 10 \
 			(time))"
 
-		eww open island \
-		    --id "island-right-$mon" \
-		    --arg x="5" \
-		    --arg y="5" \
-		    --arg w="$rw" \
-		    --arg h="$h" \
-		    --arg anch="top right" \
-		    --arg mon="$mon" \
-		    --arg content="(box :orientation \"horizontal\" :space-evenly false :spacing 10 \
-			(power))"
-
 		eww open bg-centered \
 		    --id "bg-centered-$mon" \
 		    --arg mon="$mon"
@@ -65,7 +46,7 @@ load_eww () {
 }
 
 if ! pgrep -x "eww" > /dev/null; then
-    eww daemon
+    eww daemon & sleep 1
 fi
 
 load_eww
