@@ -48,7 +48,7 @@
 	:monitor mon
 	:geometry (geometry :x "0"
 			:y "0"
-			:width "800"
+			:width "1200"
 			:anchor "center")
 	:namespace "void"
 	:stacking "bg"

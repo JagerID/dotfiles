@@ -10,3 +10,24 @@ show_symlink	=	true
 tab_size	=	8
 image_filter	=	"nearest"
 image_quality	=	80
+
+[opener]
+edit	= [
+	{ run = "${EDITOR:-vim} %s",	for = "unix",	block = true,	desc = "$EDITOR"	},
+]
+open	= [
+	{ run = "xdg-open %s1",		for = "linux",			desc = "Open"		},
+]
+reveal	= [
+	{ run = "xdg-open %d1",		for = "linux",			desc = "Reveal"		},
+]
+
+[open]
+rules = [
+	{ url	= "*/",							use = [ "edit", "reveal"	] }, # Folder
+	{ mime	= "text/*",						use = [ "edit", "fallback"	] }, # Text
+	{ mime	= "image/*",						use = [ "reveal"		] }, # Image
+	{ mime	= "application/{json,ndjson,javascript,geojson}",	use = [ "edit", "fallback"	] }, # JSON
+	{ mime	= "inode/empty",					use = [ "edit", "reveal"	] }, # Empty file
+	{ url	= "*",							use = [ "open", "reveal"	] }  # Fallback
+]

@@ -15,7 +15,8 @@ binds {
 	Mod+R			{ switch-preset-column-width; }
 	Mod+F			{ maximize-column; }
 	Mod+C			{ center-column; }
-	Mod+V			{ switch-focus-between-floating-and-tiling; }
+	// Mod+V			{ switch-focus-between-floating-and-tiling; }
+	Mod+V			{ toggle-window-floating; }
 	Mod+Tab			{ fullscreen-window; }
 
 	Mod+BracketLeft		{ consume-or-expel-window-left; }
@@ -103,6 +104,11 @@ window-rule {
 		xray true
 		blur true
 	}
+}
+
+window-rule {
+	match is-floating=true
+	baba-is-float true
 }
 
 layer-rule {
