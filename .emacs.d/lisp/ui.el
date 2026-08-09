@@ -104,9 +104,6 @@
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
 
-(use-package consult-jq
-  :ensure nil)
-
 ;; Умные скобки
 (use-package smartparens
   :hook (prog-mode . smartparens-mode)
