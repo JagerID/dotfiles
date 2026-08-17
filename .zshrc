@@ -55,6 +55,7 @@ alias lla="lsd -la"
 alias lst="lsd --tree"
 
 alias cd="z"
+alias get_idf='. $HOME/esp-idf/export.sh'
 
 alias get_idf=". $HOME/esp/export.sh"
 
