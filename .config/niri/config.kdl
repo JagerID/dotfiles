@@ -1,5 +1,5 @@
 spawn-sh-at-startup	"awww-daemon -n wallpaper"
-spawn-sh-at-startup	"awww img /home/jager/.config/wallpapers/flowers.png"
+spawn-sh-at-startup	"awww img -n wallpaper /home/jager/.config/wallpapers/flowers.png"
 
 spawn-sh-at-startup	"syncthing"
 spawn-sh-at-startup	"emacs --daemon"

@@ -18,7 +18,7 @@ while true; do
 	echo "$WALLPAPER"
 
 	if [ -n "$WALLPAPER" ]; then
-		awww img --transition-type random --transition-step 2 --transition-fps 120 "$WALLPAPER"
+		awww img -n wallpaper --transition-type random --transition-step 2 --transition-fps 120 "$WALLPAPER"
 	fi
 
 	sleep "$INTERVAL"
