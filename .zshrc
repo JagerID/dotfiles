@@ -56,6 +56,8 @@ alias lst="lsd --tree"
 
 alias cd="z"
 
+alias get_idf=". $HOME/esp/export.sh"
+
 # --- FZF-preview ---
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
   'if [ -d $realpath ]; then \

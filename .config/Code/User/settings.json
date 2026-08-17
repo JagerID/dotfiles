@@ -66,4 +66,5 @@
     "*.copilotmd": "vscode.markdown.preview.editor",
     "*.svg": "default",
   },
+  "idf.hasWalkthroughBeenShown": true,
 }

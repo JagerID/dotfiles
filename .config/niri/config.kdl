@@ -1,11 +1,11 @@
-spawn-sh-at-startup	"awww-daemon"
+spawn-sh-at-startup	"awww-daemon -n wallpaper"
 spawn-sh-at-startup	"awww img /home/jager/.config/wallpapers/flowers.png"
 
 spawn-sh-at-startup	"syncthing"
 spawn-sh-at-startup	"emacs --daemon"
 spawn-at-startup	"obsidian"
 
-spawn-sh-at-startup	"~/.config/niri/scripts/eww.sh"
+spawn-sh-at-startup	"~/.config/niri/scripts/eww.sh --daemon"
 spawn-sh-at-startup	"~/.config/niri/scripts/wallpaper.sh"
 
 binds {
@@ -150,6 +150,10 @@ input {
 		accel-speed	0.2
 		accel-profile	"flat"
 	}
+}
+
+overview {
+	zoom 0.3
 }
 
 output "Samsung Display Corp. 0x41B7 Unknown" {
