@@ -1,8 +1,9 @@
-;; -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t; -*-
 
-(use-package kanagawa-themes)
+(load-theme 'modus-operandi t)
 
-(use-package doom-themes
-  :config (load-theme 'doom-monokai-classic t))
+(set-face-attribute 'default nil
+		    :family "Iosevka Nerd Font"
+		    :height 120)
 
 (provide 'theme)

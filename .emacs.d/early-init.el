@@ -1,19 +1,14 @@
-;; -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t; -*-
 
-;; Повышение порога для GC
-(setq gc-cons-threshold most-positive-fixnum)
+(setq inhibit-startup-screen t)
+(setq frame-inhibit-implied-resize t)
+(setq ring-bell-function 'ignore)
+(setq debug-on-error t)
 
-;; Отключение UI элементов
-(setq inhibit-startup-message t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; Отключение расчета размера окна перед запуском
-(setq frame-inhibit-implied-resize t)
-
-;; Оптимизация компиляции плагинов
-(setq debug-on-error t)
-
-;; (setq native-comp-speed 3)
-;; (setq native-comp-async-report-warnings-errors 'silent)
+(setq gc-cons-threshold (* 1024 1024 1024))
+(add-hook 'emacs-startup-hook
+	  (lambda () (setq gc-cons-threshold (* 1024 1024 1024))))
