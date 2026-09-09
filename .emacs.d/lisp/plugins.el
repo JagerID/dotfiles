@@ -24,6 +24,9 @@
 (use-package magit
   :bind ("C-x g"	.	magit-status))
 
+(use-package breadcrumb
+  :init (breadcrumb-mode 1))
+
 (use-package undo-fu
   :bind
   ("C-z"	.	undo-fu-only-undo)
@@ -43,12 +46,61 @@
   (corfu-auto-prefix	2)
   (corfu-quit-no-match	t)
   (corfu-auto-delay		0.25)
+  (setq corfu-popupinfo-delay 0.5)
   :init
   (global-corfu-mode)
   (corfu-popupinfo-mode)
   (corfu-history-mode))
 
-(use-package
-  :config)
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (sp-pair "(" ")" :unless '(sp-point-after-word-p sp-point-before-word-p))
+  (setq sp-pair-overlay-mode nil)
+  (setq sp-cancel-autoskip-on-backward-movement t)
+  :hook (prog-mode . smartparens-mode))
+
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
+(defun my/mc-mark-next-dwim ()
+  "Выделить слово под курсором или добавить следующее вхождение."
+  (interactive)
+  (if (region-active-p)
+      (mc/mark-next-like-this 1)
+    ;; Если регион не активен, выделяем только слово
+    (let ((bounds (bounds-of-thing-at-point 'word)))
+      (if bounds
+          (progn
+            (goto-char (car bounds))
+            (set-mark (cdr bounds))
+            (activate-mark))
+        ;; Если курсор не на слове, просто подаем сигнал
+        (message "No symbol at point")))))
+
+(use-package multiple-cursors
+  :bind
+  (("C-d"		.	my/mc-mark-next-dwim)
+   ("C-S-d"		.	mc/unmark-next-like-this)
+   ("C-c C-d"	.	mc/mark-all-like-this))
+  :config
+  (with-eval-after-load 'multiple-cursors
+  (add-to-list 'mc/cmds-to-run-for-all 'corfu-next)
+  (add-to-list 'mc/cmds-to-run-for-all 'corfu-previous)))
+
+(use-package drag-stuff
+  :bind (
+	 ("M-<up>" . drag-stuff-up)
+	 ("M-<down>" . drag-stuff-down))
+  :config (drag-stuff-global-mode 1))
 
 (provide 'plugins)

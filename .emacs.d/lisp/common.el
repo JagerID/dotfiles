@@ -1,18 +1,20 @@
 ;;; -*- lexical-binding: t; -*-
 
 ;; Режимы
-(delete-selection-mode 1)
-(show-paren-mode 1)
-(global-auto-revert-mode 1)
+(show-paren-mode)
+(delete-selection-mode)
+(global-auto-revert-mode)
 (setq global-auto-revert-non-file-buffers t)
-(global-visual-line-mode 1)
-(global-hl-line-mode 1)
-(global-display-line-numbers-mode 1)
-(column-number-mode 1)
-(winner-mode 1)
-(electric-pair-mode 1)
-(save-place-mode 1)
-(savehist-mode 1)
+(global-display-line-numbers-mode)
+(global-visual-line-mode)
+(global-auto-revert-mode)
+(setq auto-revert-verbose nil)
+(global-hl-line-mode)
+(column-number-mode)
+(save-place-mode)
+(savehist-mode)
+(winner-mode)
+;; (electric-pair-mode 1)
 (setq history-length 50)
 
 ;; Буфер обмена
