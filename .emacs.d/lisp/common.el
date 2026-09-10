@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
+(setq-default cursor-type 'bar)
+
 ;; Режимы
 (show-paren-mode)
 (delete-selection-mode)
@@ -23,30 +25,20 @@
 
 ;; Табы
 (setq-default indent-tabs-mode t)
-(setq-default tab-width 4)
+(setq-default tab-width 8)
 
 ;; Подтверждение
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq confirm-kill-emacs 'y-or-n-p)
 
 ;; Бэкапы
-(defvar emacs-backup-dir (expand-file-name "backups/" user-emacs-directory))
-(setq backup-directory-alist `(("." . ,emacs-backup-dir))
-	  backup-by-copying t
-	  version-control t
-	  kept-old-versions 2
-	  kept-new-versions 5
-	  delete-old-versions t)
 (setq create-lockfiles nil)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
-;; Автогенерируемые emacs'ом файлы
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
-;; Скролл
-(setq scroll-step 1
-      scroll-conservatively 101
-      mouse-wheel-scroll-amount '(1 ((shift) . 1))
-      mouse-wheel-progressive-speed nil)
+;; Кейбинды
+(global-set-key (kbd "TAB") #'self-insert-command)
+(global-set-key (kbd "<backspace>") #'backward-delete-char)
 
 ;; Создание отсутствующих папок при сохранении файла (mkdir -p)
 (add-hook 'before-save-hook
