@@ -16,7 +16,10 @@
   :bind
   (("C-f"	.	consult-line)
    ("C-S-f"	.	consult-ripgrep)
-   ("C-S-o"	.	consult-outline)))
+   ("C-S-o"	.	consult-outline))
+  :config
+  (global-set-key (kbd "C-p") #'project-find-file)
+  (global-set-key (kbd "C-S-p") #'project-switch-project))
 
 (use-package marginalia
   :init (marginalia-mode))
@@ -81,7 +84,7 @@
     (let ((bounds (bounds-of-thing-at-point 'word)))
       (if bounds
           (progn
-            (goto-char (car bounds))
+	    (goto-char (car bounds))
             (set-mark (cdr bounds))
             (activate-mark))
         ;; Если курсор не на слове, просто подаем сигнал
@@ -101,6 +104,26 @@
   :bind (
 	 ("M-<up>" . drag-stuff-up)
 	 ("M-<down>" . drag-stuff-down))
-  :config (drag-stuff-global-mode 1))
+  :config (drag-stuff-global-mode))
+
+(use-package nerd-icons)
+(use-package nerd-icons-corfu
+  :after corfu
+  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package nerd-icons-completion
+  :after vertico
+  :config (nerd-icons-completion-mode))
+
+(use-package colorful-mode
+  :config (global-colorful-mode))
+
+(use-package embark
+  :bind
+  (("C-`"	.	embark-act)
+   ("C-;"	.	embark-dwim)
+   ("C-h B"	.	embark-bindings)))
+
+(use-package embark-consult)
 
 (provide 'plugins)

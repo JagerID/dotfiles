@@ -9,7 +9,7 @@
   (set-face-attribute 'header-line nil
                       :background 'unspecified
                       :foreground "#bbc2cf"
-                      :box nil))
+                      :box nil)))
 
 (set-face-attribute 'default nil
 		    :family "Iosevka Nerd Font"
