@@ -124,6 +124,36 @@
    ("C-;"	.	embark-dwim)
    ("C-h B"	.	embark-bindings)))
 
+;; (use-package diff-hl
+;;   :init (global-diff-hl-mode))
+
+(use-package dap-mode
+  :hook (lsp-mode	. dap-mode)
+  :config
+  (require 'dap-gdb-lldb)
+  (dap-auto-configure-mode)
+  (require 'dap-ui)
+  (dap-ui-mode)
+  (dap-tooltip-mode)
+  (tooltip-mode)
+  (dap-ui-controls-mode))
+
+;; (use-package whitespace
+;;   :hook (prog-mode . whitespace-mode)
+;;   :config
+;;   (setq whitespace-style
+;; 	'(face
+;; 	  tabs
+;; 	  spaces
+;; 	  trailing
+;; 	  newline
+;; 	  tab-mark
+;; 	  newline-mark))
+;;   (setq whitespace-display-mappings
+;; 	'((tab-mark ?\t [?> ?\t])
+;;           (newline ?\n [?↲ ?\n])
+;;           (space-mark ?\xA0 [?␣]))))
+
 (use-package embark-consult)
 
 (provide 'plugins)

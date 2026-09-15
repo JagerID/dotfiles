@@ -18,6 +18,7 @@
 (winner-mode)
 ;; (electric-pair-mode 1)
 (setq history-length 50)
+(setq warning-minimum-level :error)
 
 ;; Буфер обмена
 (setq select-enable-clipboard t)
@@ -39,10 +40,11 @@
 ;; Кейбинды
 (global-set-key (kbd "TAB") #'self-insert-command)
 (global-set-key (kbd "<backspace>") #'backward-delete-char)
+(global-set-key (kbd "RET") #'newline-and-indent)
 
 ;; Создание отсутствующих папок при сохранении файла (mkdir -p)
 (add-hook 'before-save-hook
-		  (lambda ()
+	  (lambda ()
             (when buffer-file-name
               (let ((dir (file-name-directory buffer-file-name)))
                 (when (and dir (not (file-exists-p dir)))
