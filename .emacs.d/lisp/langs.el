@@ -21,10 +21,15 @@
    '(:documentOnTypeFormattingProvider
      :documentRangeFormattingProvider)))
 
+(defun my/format-before-save ()
+  (when (eglot-managed-p)
+    (eglot-format-buffer)))
+
 (add-hook 'c-ts-mode-hook
 	  (lambda ()
 	    (setq c-ts-mode-indent-style 'k&r)
-	    (setq c-ts-mode-indent-offset 8)))
+	    (setq c-ts-mode-indent-offset 8)
+	    (add-hook 'before-save-hook #'my/format-before-save nil t)))
 
 (add-hook 'lua-ts-mode-hook
 	  (lambda ()
