@@ -1,81 +1,55 @@
-# --- Основные настройки отступов и табуляции ---
-IndentWidth: 8                  		# Ширина отступа (в пробелах)
-TabWidth: 8                     		# Ширина символа табуляции
-UseTab: ForIndentation          		# Использовать табуляцию ТОЛЬКО для отступов (а для выравнивания внутри строк — пробелы)
-ContinuationIndentWidth: 8      		# Ширина отступа для перенесенных строк (продолжения длинных выражений)
-
-# --- Ограничения и переносы ---
-ColumnLimit: 0                  		# Максимальная длина строки (0 — без ограничений, переносы по ширине отключены)
-MaxEmptyLinesToKeep: 1          		# Максимальное количество подряд идущих пустых строк, которые разрешено оставлять
-KeepEmptyLinesAtTheStartOfBlocks: false		# Удалять пустые строки сразу после открывающей фигурной скобки блока
-
-# --- Директивы препроцессора и включения ---
-IndentPPDirectives: BeforeHash 			# Как форматировать препроцессор (#define/#if): ставить отступ ДО знака решетки (#)
-IncludeBlocks: Regroup         			# Сортировать и объединять блоки заголовочных файлов (#include) в группы
-SortIncludes: CaseSensitive    			# Строгая чувствительная к регистру сортировка инклюдов
-
-# --- Скобки и блоки кода ---
-BreakBeforeBraces: Custom      			# Использовать кастомный (ручной) стиль расстановки фигурных скобок через BraceWrapping
+IndentWidth: 8
+TabWidth: 8
+UseTab: Always
+ColumnLimit: 0
+AlignAfterOpenBracket: DontAlign
+BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterFunction: true          			# Переносить открывающую скобку '{' с новой строки для функций
-  AfterStruct: false           			# Не переносить '{' для struct
-  AfterUnion: false            			# Не переносить '{' для union
-  AfterEnum: false             			# Не переносить '{' для enum
-  AfterClass: false            			# Не переносить '{' для class
-  AfterExternBlock: false      			# Не переносить '{' для блоков extern "C"
-  AfterCaseLabel: false        			# Не переносить '{' после метки case (внутри switch)
-  AfterControlStatement: Never 			# Никогда не переносить '{' после управляющих конструкций (if/for/while)
-  BeforeElse: false            			# Не переносить ключевое слово 'else' на новую строку (оставлять на той же, что и '}')
-  IndentBraces: false          			# Не делать дополнительный отступ для самих фигурных скобок
-
-# --- Компактные конструкции (в одну строку) ---
-AllowShortFunctionsOnASingleLine: Empty		# Сжимать в одну строку только пустые функции (например: void foo() {} )
-AllowShortIfStatementsOnASingleLine: Never	# Никогда не сжимать конструкции if в одну строку
-AllowShortLoopsOnASingleLine: false    		# Никогда не сжимать циклы (for/while) в одну строку
-AllowShortLambdasOnASingleLine: All    		# Разрешить лямбда-функциям занимать одну строку всегда
-AllowShortBlocksOnASingleLine: Empty   		# Сжимать в одну строку только пустые произвольные блоки кода
-AllowShortCaseLabelsOnASingleLine: true		# Разрешить коротким case-меткам находиться на одной строке
-
-# --- Выравнивание и пробелы ---
-AlignAfterOpenBracket: DontAlign		# Не выравнивать аргументы по открывающей скобке при переносе строк
-SeparateDefinitionBlocks: Always		# Всегда отделять определения функций пустой строкой друг от друга
-AlignArrayOfStructures: Left			# Выравнивать элементы массивов структур по левому краю
-
-# Вертикальное выравнивание знаков равенства (=) в последовательных строках/присваиваниях
+  AfterFunction: true
+  AfterStruct: false
+  AfterUnion: false
+  AfterEnum: false
+  AfterClass: false
+  BeforeElse: false
+  IndentBraces: false
+  AfterCaseLabel: false
+  AfterNamespace: false
+  AfterExternBlock: false
+  AfterControlStatement: Never
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortLambdasOnASingleLine: All
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: true
 AlignConsecutiveAssignments:
   Enabled: true
-  AcrossEmptyLines: false			# Не переносить выравнивание через пустые строки
-  AcrossComments: true				# Распространять выравнивание сквозь комментарии
-
-# Вертикальное выравнивание объявлений переменных в последовательных строках
+  AcrossEmptyLines: false
+  AcrossComments: true
 AlignConsecutiveDeclarations:
   Enabled: true
   AcrossEmptyLines: false
   AcrossComments: true
-
-# --- Указатели и ссылки ---
-PointerAlignment: Right				# Прижимать звездочку указателя к имени переменной (например: int *ptr)
-DerivePointerAlignment: false			# Отключить автоопределение стиля указателей по коду (строго использовать PointerAlignment)
-
-# --- Пробелы в круглых/квадратных скобках и кастах ---
-SpacesInCStyleCastParentheses: true		# Добавлять пробелы внутри скобок C-стиля приведении типов (например: ( int )x)
-SpaceAfterCStyleCast: true			# Добавлять пробел после скобок приведения типов (например: (int) x)
-
-SpacesInParens: Custom				# Использовать детальную кастомную настройку пробелов внутри круглых скобок
+SpacesInCStyleCastParentheses: true
+SpaceAfterCStyleCast: true
+SpacesInParens: Custom
 SpacesInParensOptions:
-  InConditionalStatements: true			# Пробелы внутри скобок условных операторов (if / while / for)
-  InCStyleCasts: true				# Пробелы внутри скобок C-стиля кастов
-  InEmptyParentheses: false			# НЕ добавлять пробелы в пустые скобки функции (оставлять '()', а не '( )')
-  Other: true					# Включать пробелы внутри круглых скобок во всех остальных случаях
-
-#SpacesInContainerLiterals: true			# Пробелы внутри фигурных скобок инициализаторов контейнеров / списков
-#SpaceBeforeSquareBrackets: true			# Добавлять пробел перед квадратными скобками (например, при объявлении массива)
-#SpacesInSquareBrackets: true			# Добавлять пробелы внутри квадратных скобок (например: arr[ i ])
-
-# --- Пробелы перед круглыми скобками ---
-SpaceBeforeParens: Custom			# Тонкая настройка пробелов перед открывающей круглой скобкой
+  InConditionalStatements: true
+  InCStyleCasts: true
+  InEmptyParentheses: false
+  Other: true
+SpacesInContainerLiterals: true
+SpaceBeforeSquareBrackets: true
+SpacesInSquareBrackets: true
+AlignTrailingComments: true
+BinPackArguments: false
+SortIncludes: CaseSensitive
+PointerAlignment: Right
+DerivePointerAlignment: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+SpaceBeforeParens: Custom
 SpaceBeforeParensOptions:
-  AfterControlStatements: true			# Пробел перед скобками в control-структурах (if (...), for (...))
-  AfterFunctionDefinitionName: true		# Пробел перед скобками при определении функции (void foo (...))
-  AfterFunctionDeclarationName: true		# Пробел перед скобками при объявлении функции (void foo (...))
-  BeforeNonEmptyParentheses: true		# Пробел перед непустыми скобками в других местах
+  AfterControlStatements: true
+  AfterFunctionDefinitionName: true
+  AfterFunctionDeclarationName: true
+  BeforeNonEmptyParentheses: true

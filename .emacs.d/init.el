@@ -15,14 +15,7 @@
  '(custom-safe-themes
    '("0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      default))
- '(package-selected-packages
-   '(breadcrumb cape colorful-mode corfu dap-mode diff-hl doom-themes
-		drag-stuff embark-consult expand-region hl-todo
-		info-colors magit marginalia multiple-cursors
-		nerd-icons-completion nerd-icons-corfu orderless
-		rainbow-delimiters realgud smartparens solaire-mode
-		spacious-padding undo-fu vertico volatile-highlights
-		zoom)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

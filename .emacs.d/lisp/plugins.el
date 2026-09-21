@@ -127,16 +127,16 @@
 ;; (use-package diff-hl
 ;;   :init (global-diff-hl-mode))
 
-(use-package dap-mode
-  :hook (lsp-mode	. dap-mode)
-  :config
-  (require 'dap-gdb-lldb)
-  (dap-auto-configure-mode)
-  (require 'dap-ui)
-  (dap-ui-mode)
-  (dap-tooltip-mode)
-  (tooltip-mode)
-  (dap-ui-controls-mode))
+;; (use-package dap-mode
+;;   :hook (lsp-mode	. dap-mode)
+;;   :config
+;;   (require 'dap-gdb-lldb)
+;;   (dap-auto-configure-mode)
+;;   (require 'dap-ui)
+;;   (dap-ui-mode)
+;;   (dap-tooltip-mode)
+;;   (tooltip-mode)
+;;   (dap-ui-controls-mode))
 
 ;; (use-package whitespace
 ;;   :hook (prog-mode . whitespace-mode)
