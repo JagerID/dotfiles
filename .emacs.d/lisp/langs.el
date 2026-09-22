@@ -21,6 +21,9 @@
    '(:documentOnTypeFormattingProvider
      :documentRangeFormattingProvider)))
 
+(use-package eldoc-box
+  :hook (eldoc-mode	. eldoc-box-hover-mode))
+
 (defun my/format-before-save ()
   (when (eglot-managed-p)
     (eglot-format-buffer)))
