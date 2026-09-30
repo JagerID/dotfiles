@@ -19,6 +19,11 @@
 ;; (electric-pair-mode 1)
 (setq history-length 50)
 (setq warning-minimum-level :error)
+(setq read-process-output-max (* 1024 1024))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
+(global-so-long-mode 1)
+(setq use-package-compute-statistics t)
 
 ;; Буфер обмена
 (setq select-enable-clipboard t)

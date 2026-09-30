@@ -67,4 +67,8 @@
     "*.svg": "default",
   },
   "idf.hasWalkthroughBeenShown": true,
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+  },
+  "markdown-preview-enhanced.enablePreviewZenMode": false,
 }

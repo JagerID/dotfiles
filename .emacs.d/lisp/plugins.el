@@ -21,10 +21,14 @@
   (global-set-key (kbd "C-p") #'project-find-file)
   (global-set-key (kbd "C-S-p") #'project-switch-project))
 
+(use-package embark-consult)
+
 (use-package marginalia
   :init (marginalia-mode))
 
 (use-package magit
+  :custom
+  (magit-diff-refine-hunk 'all)
   :bind ("C-x g"	.	magit-status))
 
 (use-package breadcrumb
@@ -124,19 +128,50 @@
    ("C-;"	.	embark-dwim)
    ("C-h B"	.	embark-bindings)))
 
-;; (use-package diff-hl
-;;   :init (global-diff-hl-mode))
+(use-package diff-hl
+  :init
+  (global-diff-hl-mode)
+  (diff-hl-flydiff-mode)
+  (diff-hl-show-hunk-mouse-mode))
 
-;; (use-package dap-mode
-;;   :hook (lsp-mode	. dap-mode)
-;;   :config
-;;   (require 'dap-gdb-lldb)
-;;   (dap-auto-configure-mode)
-;;   (require 'dap-ui)
-;;   (dap-ui-mode)
-;;   (dap-tooltip-mode)
-;;   (tooltip-mode)
-;;   (dap-ui-controls-mode))
+(use-package dirvish
+  :custom
+  (dirvish-quick-access-entries
+   '(("h" "~/" "Home")
+     ("d" "~/Downloads" "Downloads")
+     ("p" "~/dev" "Projects")
+     ("e" "~/.emacs.d/lisp" "Emacs config")))
+  (dirvish-mode-line-format
+   '(:left (sort symlink) :right (omit yank index)))
+  (dirvish-attributes
+   '(nerd-icons file-size collapse subtree-state vc-state git-msg))
+  (dired-listing-switches
+   "-l --almost-all --human-readable --group-directories-first --no-group")
+
+  (dirvish-subtree-state-style 'nerd)
+  (delete-by-moving-to-trash t)
+  (dirvish-side-width 35)
+  (dired-dwim-taget t)
+  (dired-kill-when-opening-new-dired-buffer t)
+  (dired-auto-revert-buffer t)
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'top)
+  (dired-create-destination-dirs 'ask)
+  (dirvish-default-layout '(0 0.4 0.6))
+
+  :bind
+  (("C-c f"	.	dirvish)
+   ("C-c t"	.	dirvish-side)
+   :map dirvish-mode-map
+   ("TAB"	.	dirvish-subtree-toggle)		; раскрыть / свернуть папку
+   ("<backtab>"	.	dirvish-subtree-up)		; к родителю раскрытой папки
+   ("h"		.	dired-up-directory)		; на уровень вверх
+   ("l"		.	dired-find-file)		; войти в папку / открыть файл
+   ("y"		.	dirvish-yank-menu)		; копировать / переместить / симлинк
+   ("s"		.	dirvish-quicksort))		; сортировка
+
+  :hook (dired-mode . dired-omit-mode)
+  :init (dirvish-override-dired-mode))
 
 ;; (use-package whitespace
 ;;   :hook (prog-mode . whitespace-mode)
@@ -154,11 +189,32 @@
 ;;           (newline ?\n [?↲ ?\n])
 ;;           (space-mark ?\xA0 [?␣]))))
 
-(use-package embark-consult)
+(use-package spacious-padding
+  :ensure t
+  :custom
+  (spacious-padding-widths
+   '(:internal-border-width 12 :right-divider-width 20 :fringe-width 8))
+  :config (spacious-padding-mode 1))
 
 (use-package zoom
   :config
   (setq zoom-size '(0.618 . 0.618))
   :init (zoom-mode))
+
+(use-package ligature                   ; лигатуры (JetBrains Mono, Iosevka и др.)
+  :ensure t
+  :config
+  (ligature-set-ligatures 'prog-mode '("->" "=>" "!=" "==" ">=" "<=" "::" "&&" "||"))
+  (global-ligature-mode t))
+
+(use-package helpful                    ; более подробная справка по функциям и переменным
+  :ensure t
+  :bind (("C-h f" . helpful-callable)
+         ("C-h v" . helpful-variable)
+         ("C-h k" . helpful-key)))
+
+(use-package pulsar                     ; краткая подсветка строки после прыжка
+  :ensure t
+  :config (pulsar-global-mode 1))
 
 (provide 'plugins)

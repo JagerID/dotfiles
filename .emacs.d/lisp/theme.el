@@ -1,18 +1,15 @@
 ;;; -*- lexical-binding: t; -*-
 
 (use-package doom-themes
+  :ensure t
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
   :config
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-enable-italic t)
-  (load-theme 'doom-one t)
-  (with-eval-after-load 'breadcrumb
-  (set-face-attribute 'header-line nil
-                      :background 'unspecified
-                      :foreground "#bbc2cf"
-                      :box nil)))
+  (load-theme 'doom-tokyo-night t))
 
 (set-face-attribute 'default nil
-		    :family "Iosevka Nerd Font"
-		    :height 120)
+                    :family "Iosevka Nerd Font"
+                    :height 120)
 
 (provide 'theme)

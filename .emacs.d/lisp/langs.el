@@ -13,13 +13,15 @@
   :hook
   ((c-ts-mode		. eglot-ensure)
    (c++-ts-mode		. eglot-ensure)
-   (lua-ts-mode		. eglot-ensure))
+   (lua-ts-mode		. eglot-ensure)
+   (rust-ts-mode	. eglot-ensure))
   :custom
   (eglot-autoshutdown t)
   (eglot-sync-connect nil)
   (eglot-ignored-server-capabilities
    '(:documentOnTypeFormattingProvider
-     :documentRangeFormattingProvider)))
+     :documentRangeFormattingProvider))
+  ())
 
 (use-package eldoc-box
   :hook (eldoc-mode	. eldoc-box-hover-mode))
@@ -27,6 +29,12 @@
 (defun my/format-before-save ()
   (when (eglot-managed-p)
     (eglot-format-buffer)))
+
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+
+(add-hook 'rust-ts-mode-hook
+	  (lambda ()
+	    (add-hook 'before-save-hook #'my/format-before-save nil t)))
 
 (add-hook 'c-ts-mode-hook
 	  (lambda ()
