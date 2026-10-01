@@ -215,6 +215,15 @@
 
 (use-package pulsar                     ; краткая подсветка строки после прыжка
   :ensure t
-  :config (pulsar-global-mode 1))
+  :custom
+  (pulsar-delay 0.055)
+  (pulsar-iterations 5)
+  (pulsar-face 'pulsar-red)
+  (pulsar-highlight-pulse 'pulsar-magenta)
+  (pulsar-region-face 'pulsar-yellow)
+  :init (pulsar-global-mode 1))
+
+(use-package docker
+  :bind ("C-x d" . docker))
 
 (provide 'plugins)

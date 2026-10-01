@@ -7,4 +7,4 @@
 (require 'common)
 (require 'langs)
 (require 'theme)
-(require 'org)
+(require 'morg)

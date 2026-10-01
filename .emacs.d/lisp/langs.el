@@ -6,7 +6,10 @@
   (setq major-mode-remap-alist
 	'((c-mode	.	c-ts-mode)
 	  (c++-mode	.	c++-ts-mode)
-	  (lua-mode	.	lua-ts-mode))))
+	  (lua-mode	.	lua-ts-mode)
+	  (js-json-mode	.	json-ts-mode)
+	  (css-mode	.	css-ts-mode)
+	  (html-mode	.	html-ts-mode))))
 
 (use-package eglot
   :ensure nil
@@ -14,14 +17,17 @@
   ((c-ts-mode		. eglot-ensure)
    (c++-ts-mode		. eglot-ensure)
    (lua-ts-mode		. eglot-ensure)
-   (rust-ts-mode	. eglot-ensure))
+   (rust-ts-mode	. eglot-ensure)
+   (typescript-ts-mode	. eglot-ensure)
+   (css-ts-mode		. eglot-ensure)
+   (html-ts-mode	. eglot-ensure)
+   (tsx-ts-mode		. eglot-ensure))
   :custom
   (eglot-autoshutdown t)
   (eglot-sync-connect nil)
   (eglot-ignored-server-capabilities
    '(:documentOnTypeFormattingProvider
-     :documentRangeFormattingProvider))
-  ())
+     :documentRangeFormattingProvider)))
 
 (use-package eldoc-box
   :hook (eldoc-mode	. eldoc-box-hover-mode))
