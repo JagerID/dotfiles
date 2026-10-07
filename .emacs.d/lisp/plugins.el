@@ -64,7 +64,6 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'eglot-completion-at-point)
   (add-to-list 'completion-at-point-functions #'tempel-complete))
 
 (use-package rainbow-delimiters
