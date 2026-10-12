@@ -93,6 +93,11 @@
       (org-download-clipboard)					; картинка -> в images/
     (call-interactively #'yank)))				; текст -> обычная вставка
 
+(defun my/org-redisplay-images ()
+  "Обновить картинки в буфере после выполнения блока (схемы, графики)."
+  (when (display-graphic-p)
+    (org-redisplay-inline-images)))
+
 (defun my/setup-ctrl-i (&optional frame)
   "Отделить C-i от TAB в графическом фрейме FRAME."
   (with-selected-frame (or frame (selected-frame))
@@ -339,7 +344,8 @@ glslangValidator определяет стадию по расширению в�
   :hook ((org-mode . my/org-prettify-setup)			; символы вместо [ ], #+begin_src
          (org-mode . my/org-tag-badges)				; плашки тегов
          (org-mode . my/org-color-marks)			; цветные выделения (` ! % & ^ @ ?)
-         (org-mode . org-hide-drawer-all))			; свернуть drawers при открытии
+         (org-mode . org-hide-drawer-all)			; свернуть drawers при открытии
+         (org-babel-after-execute . my/org-redisplay-images))	; обновить схему после C-c C-c
   :custom
   (org-directory "~/org/")
   (org-default-notes-file (concat org-directory "inbox.org"))
@@ -358,6 +364,9 @@ glslangValidator определяет стадию по расширению в�
   (org-startup-with-latex-preview nil)				; формулы по запросу (ошибка LaTeX не ломает открытие)
   (org-preview-latex-default-process 'dvisvgm)			; SVG чётче, чем dvipng
   (org-preview-latex-image-directory "~/.cache/org-ltximg/")	; картинки формул не в папке заметок
+
+  (org-startup-with-inline-images t)				; картинки и схемы видны при открытии
+  (org-plantuml-exec-mode 'plantuml)				; команда plantuml, а не jar
 
   (org-src-fontify-natively t)					; подсветка кода в блоках
   (org-edit-src-content-indentation 0)				; без отступа внутри блока
@@ -390,7 +399,19 @@ glslangValidator определяет стадию по расширению в�
 
   (org-babel-do-load-languages					; языки для C-c C-c
    'org-babel-load-languages
-   '((C . t) (shell . t) (python . t) (emacs-lisp . t) (rust . t) (lua . t))))
+   '((C          . t)
+     (shell      . t)
+     (python     . t)
+     (emacs-lisp . t)
+     (rust       . t)
+     (lua        . t)
+     (dot        . t)
+     (plantuml   . t)))
+
+  (setf (alist-get :cmdline org-babel-default-header-args:dot)
+        "-Gbgcolor=white")					; белый фон: на тёмной теме схема читается
+  (setf (alist-get :cmdline org-babel-default-header-args:plantuml)
+        "-SbackgroundColor=white"))				; то же для PlantUML
 
 (use-package org-appear						; разметка видна, когда курсор на ней
   :hook (org-mode . org-appear-mode)
@@ -486,7 +507,25 @@ glslangValidator определяет стадию по расширению в�
       "    " p n
       "}" n
       "#+end_src" n)
-    "<gf" "GLSL: фрагментный шейдер" 'org-tempo-tags))
+    "<gf" "GLSL: фрагментный шейдер" 'org-tempo-tags)
+
+  (tempo-define-template "org-dot"				; <dot  схема Graphviz
+    '("#+begin_src dot :file " (p "images/graph.svg" file) n
+      "digraph {" n
+      "  rankdir=LR;" n
+      "  node [shape=box, style=rounded];" n
+      "  " p n
+      "}" n
+      "#+end_src" n)
+    "<dot" "Схема Graphviz" 'org-tempo-tags)
+
+  (tempo-define-template "org-uml"				; <uml  диаграмма PlantUML
+    '("#+begin_src plantuml :file " (p "images/diagram.svg" file) n
+      "@startuml" n
+      p n
+      "@enduml" n
+      "#+end_src" n)
+    "<uml" "Диаграмма PlantUML" 'org-tempo-tags))
 
 (use-package org-download
   :after org
