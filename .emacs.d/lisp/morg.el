@@ -400,6 +400,7 @@ glslangValidator определяет стадию по расширению в�
   (org-babel-do-load-languages					; языки для C-c C-c
    'org-babel-load-languages
    '((C          . t)
+     (sql	 . t)
      (shell      . t)
      (python     . t)
      (emacs-lisp . t)

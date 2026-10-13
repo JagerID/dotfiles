@@ -7,7 +7,7 @@ show_always = true
 
 [hostname]
 ssh_only = true
-format = 'on [$hostname](bold yellow) '
+format = '[$hostname](bold yellow) '
 disabled = false
 trim_at = '.'
 # ssh_symbol = '...'
