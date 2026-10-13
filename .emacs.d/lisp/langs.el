@@ -9,7 +9,8 @@
 	  (lua-mode	.	lua-ts-mode)
 	  (js-json-mode	.	json-ts-mode)
 	  (css-mode	.	css-ts-mode)
-	  (html-mode	.	html-ts-mode))))
+	  (html-mode	.	html-ts-mode)
+	  (glsl-mode	.	glsl-ts-mode))))
 
 (use-package eglot
   :ensure nil
