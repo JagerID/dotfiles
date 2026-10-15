@@ -8,6 +8,7 @@
 (global-auto-revert-mode)
 (setq auto-revert-use-notify nil)
 (setq global-auto-revert-non-file-buffers t)
+(setq org-startup-with-link-previews t)
 (global-display-line-numbers-mode)
 (setq-default truncate-lines t)
 (global-visual-line-mode -1)

@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 
 (use-package tempel
   :bind (("M-+"		.	tempel-complete)
@@ -6,8 +6,7 @@
 	 :map tempel-map
 	 ("TAB"		.	tempel-next)
 	 ("S-TAB"	.	tempel-previous))
-  :init
-  (setq tempel-path (expand-file-name "templates/*.eld" user-emacs-directory)))
+  :custom (tempel-path (expand-file-name "templates/*.eld" user-emacs-directory)))
 
 (defun my/header-guard ()
   "Имя include guard из имени файла: foo-bar.h -> FOO_BAR_H"

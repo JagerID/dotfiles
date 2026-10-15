@@ -33,6 +33,15 @@
 (use-package eldoc-box
   :hook (eldoc-mode	. eldoc-box-hover-mode))
 
+(use-package plantuml-mode
+  :mode "\\.puml\\'"
+  :config
+  (setq plantuml-default-exec-mode 'jar
+	plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
+  (setq org-plantuml-exec-mode 'plantuml))
+
+
+
 (defun my/format-before-save ()
   (when (eglot-managed-p)
     (eglot-format-buffer)))

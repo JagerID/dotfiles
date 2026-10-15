@@ -1,0 +1,19 @@
+spawn-at-startup "wezterm"
+
+animations {
+	window-open {
+		duration-ms 800
+		curve "linear"
+		custom-shader r"
+			vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+				vec3 coords_tex = niri_geo_to_tex * coords_geo;
+				vec4 color = texture2D(niri_tex, coords_tex.st);
+
+				// круговое раскрытие от центра окна
+				float d = distance(coords_geo.xy * size_geo.xy, size_geo.xy * 0.5);
+				float r = niri_clamped_progress * length(size_geo.xy) * 0.5;
+				return color * step(d, r);
+			}
+		"
+	}
+}

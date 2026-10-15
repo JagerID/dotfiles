@@ -227,4 +227,11 @@
 (use-package docker
   :bind ("C-x d" . docker))
 
+(use-package reverse-im
+  :custom (reverse-im-input-methods '("russian-computer"))
+  :config (reverse-im-mode 1))
+
+(use-package reader
+  :vc (:url "https://codeberg.org/MonadicSheep/emacs-reader"))
+
 (provide 'plugins)
