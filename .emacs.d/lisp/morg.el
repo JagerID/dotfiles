@@ -2,15 +2,28 @@
 
 (require 'morg-templates)
 
-(defvar root-dir		(expand-file-name "~/sync"))
+(defvar root-dir		(expand-file-name "~/syn"))
 (defvar books-dir		(expand-file-name "books/"		root-dir))
 (defvar org-dir			(expand-file-name "org/"		root-dir))
 (defvar org-roam-dir		(expand-file-name "roam/"		org-dir))
 (defvar org-notes-file		(expand-file-name "index.org"		org-dir))
 (defvar org-attachments-dir	(expand-file-name "attachments/"	org-dir))
+(defvar org-tasks-file		(expand-file-name "tasks.org"		org-dir))
+(defvar org-agenda-fls		(list org-tasks-file))
 (make-directory		books-dir		t)
 (make-directory		org-roam-dir		t)
 (make-directory		org-attachments-dir	t)
+
+(defvar morg-capture-templates
+  '(("t" "задача" entry
+     (file+headline org-tasks-file "Inbox")		; всегда tasks.org → Inbox
+     "* TODO %?\n")
+    ("s" "задача с датой" entry
+     (file+headline org-tasks-file "Inbox")
+     "* TODO %?\nSCHEDULED: %^t\n")			; спросит дату, попадёт в agenda
+    ("l" "задача со ссылкой" entry
+     (file+headline org-tasks-file "Inbox")
+     "* TODO %?\n%a\n")))
 
 (defvar my/org-babel-languages
   '((shell	.	t)
@@ -67,17 +80,26 @@
 
   (org-return-follows-link		t)
   (org-log-done				'time)
+  (org-enforce-todo-dependencies	t)
 
   (org-image-max-width			'window)
   (org-image-align			'center)
 
-  (setq org-plantuml-args
+  (org-refile-targets			'((org-agenda-files :maxlevel . 3)))
+  (org-refile-use-outline-path		'file)
+  (org-outline-path-complete-in-steps	nil)
+
+  (org-agenda-files			org-agenda-fls)
+  (org-capture-templates		morg-capture-templates)
+  (org-todo-keywords			'((sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)" "CANCEL(c)")))
+
+  (org-plantuml-args
       (list "-headless"
             "-config" (expand-file-name "plantuml.cfg" user-emacs-directory))))
 
 (use-package org-roam
   :bind (("C-c n f"	.	org-roam-node-find)
-	 ("C-c n i"	.	org-roam-node-xinsert)
+	 ("C-c n i"	.	org-roam-node-insert)
 	 ("C-c n l"	.	org-roam-buffer-toggle)
 	 ("C-c n c"	.	org-roam-capture)
 	 ("C-c n r"	.	org-roam-ref-find)
@@ -90,12 +112,12 @@
   (org-support-shift-select		t)
   (org-roam-complete-everywhere		t)
   (org-roam-directory			org-roam-dir)
-  (org-roam-capture-templates morg-roam-capture-templates)
-  (org-roam-dailies-capture-templates morg-roam-dailies-capture-templates)
+  (org-roam-capture-templates		morg-roam-capture-templates)
+  (org-roam-dailies-capture-templates	morg-roam-dailies-capture-templates)
   :config
   (org-roam-db-autosync-mode		1)
 
-  (org-babel-do-load-languages 'org-babel-load-languages my/org-babel-languages)
+  (org-babel-do-load-languages		'org-babel-load-languages my/org-babel-languages)
   (setq org-confirm-babel-evaluate	nil
 	org-src-fontify-natively	t
 	org-src-tab-acts-natively	t

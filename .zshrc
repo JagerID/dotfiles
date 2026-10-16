@@ -48,7 +48,7 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # --- Aliases ---
-alias ls="lsd -l --sort time"
+alias ls="lsd -l --sort size"
 alias ll="lsd -l"
 alias la="lsd -a"
 alias lla="lsd -la"
@@ -58,6 +58,9 @@ alias cd="z"
 alias get_idf='. $HOME/esp-idf/export.sh'
 
 alias get_idf=". $HOME/esp/export.sh"
+
+alias hd="hexyl"
+alias hexduml="hexyl"
 
 # --- FZF-preview ---
 zstyle ':fzf-tab:complete:*:*' fzf-preview \

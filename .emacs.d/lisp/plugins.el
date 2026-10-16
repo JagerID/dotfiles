@@ -234,4 +234,32 @@
 (use-package reader
   :vc (:url "https://codeberg.org/MonadicSheep/emacs-reader"))
 
+(use-package vterm
+  :commands vterm
+  :custom
+  (vterm-shell			"/usr/bin/zsh")
+  (vterm-max-scrollback		10000)
+  (vterm-kill-buffer-on-exit	t)
+  (vterm-always-compile-module	t)
+  :bind (("C-c t"	.	vterm-toggle)
+	 :map vterm-mode-map
+	 ("<escape>"	.	vterm-send-escape))
+  :config
+  (add-to-list 'display-buffer-alist
+	       '("\\*vterm"
+		 (display-buffer-at-bottom)
+		 (window-height	.	0.3))))
+
+(use-package multi-vterm
+  :ensure t
+  :after vterm
+  :custom
+  (multi-vterm-dedicated-window-height-percent 30)	; высота выделенного терминала
+  :bind (("C-t" . multi-vterm-dedicated-toggle)		; показать/спрятать терминал снизу
+         ("C-S-t" . multi-vterm)			; новый терминал
+         :map vterm-mode-map
+         ("C-t" . multi-vterm-dedicated-toggle)		; то же самое изнутри терминала
+         ("C-S-t" . multi-vterm)			; новый терминал изнутри терминала
+         ("<escape>" . vterm-send-escape)))		; ESC уходит в шелл, а не в Emacs
+
 (provide 'plugins)

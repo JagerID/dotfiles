@@ -45,9 +45,10 @@
 (setq auto-save-default nil)
 
 ;; Кейбинды
-(global-set-key (kbd "TAB") #'self-insert-command)
-(global-set-key (kbd "<backspace>") #'backward-delete-char)
-(global-set-key (kbd "RET") #'newline-and-indent)
+(global-set-key (kbd "TAB")		#'self-insert-command)
+(global-set-key (kbd "<backspace>")	#'backward-delete-char)
+(global-set-key (kbd "RET")		#'newline-and-indent)
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
 ;; Создание отсутствующих папок при сохранении файла (mkdir -p)
 (add-hook 'before-save-hook

@@ -4,6 +4,7 @@ spawn-sh-at-startup	"awww img -n wallpaper /home/jager/.config/wallpapers/flower
 spawn-sh-at-startup	"syncthing"
 spawn-sh-at-startup	"emacs --daemon"
 spawn-at-startup	"obsidian"
+spawn-sh-at-startup	"veilad"
 
 spawn-sh-at-startup	"~/.config/niri/scripts/eww.sh --daemon"
 spawn-sh-at-startup	"~/.config/niri/scripts/wallpaper.sh"
@@ -44,7 +45,7 @@ binds {
 	Mod+Down		{ focus-window-or-workspace-down; }
 	Mod+Up			{ focus-window-or-workspace-up; }
 
-	Mod+Shift+Left		{ focus-monitor-left; }
+	mod+Shift+Left		{ focus-monitor-left; }
 	Mod+Shift+Right		{ focus-monitor-right; }
 
 	Mod+Ctrl+Left		{ move-column-left-or-to-monitor-left; }
