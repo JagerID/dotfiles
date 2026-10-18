@@ -50,8 +50,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 # --- Aliases ---
 alias ls="lsd -l --sort size"
 alias ll="lsd -l"
-alias la="lsd -a"
-alias lla="lsd -la"
+alias la="lsd -la"
 alias lst="lsd --tree"
 
 alias cd="z"

@@ -1,63 +1,55 @@
-;;; -*- lexical-binding: t; -*-
+;;; early-init.el --- generated from config.org -*- lexical-binding: t -*-
 
-(setq-default cursor-type 'bar)
+(defun make-missing-dirs ()
+  (when buffer-file-name
+    (let ((dir (file-name-directory buffer-file-name)))
+      (when (and dir (not (file-exists-p dir)))
+	(make-directory dir t)))))
 
-;; Режимы
-(show-paren-mode)
-(delete-selection-mode)
-(global-auto-revert-mode)
-(setq auto-revert-use-notify nil)
-(setq global-auto-revert-non-file-buffers t)
-(setq org-startup-with-link-previews t)
-(global-display-line-numbers-mode)
-(setq-default truncate-lines t)
-(global-visual-line-mode -1)
-(setq auto-revert-verbose nil)
-(global-hl-line-mode)
-(column-number-mode)
-(save-place-mode)
-(savehist-mode)
-(winner-mode)
-;; (electric-pair-mode 1)
-(setq history-length 50)
-(setq warning-minimum-level :error)
-(setq read-process-output-max (* 1024 1024))
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
-(global-so-long-mode 1)
-(setq use-package-compute-statistics t)
 
-;; Буфер обмена
-(setq select-enable-clipboard t)
-(setq save-interprogram-paste-before-kill t)
+(defun trim-whitespace ()
+  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
 
-;; Табы
-(setq-default indent-tabs-mode t)
-(setq-default tab-width 8)
+(use-package emacs
+  :ensure nil
+  :custom
+  (cursor-type				'bar)
+  (truncate-lines				t)
+  (indent-tabs-mode				t)
+  (tab-width					8)
+  (history-length				50)
+  (use-short-answer				t)
+  (confirm-kill-emacs				'y-or-n-p)
 
-;; Подтверждение
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq confirm-kill-emacs 'y-or-n-p)
+  (save-interprogram-paste-before-kill	t)
 
-;; Бэкапы
-(setq create-lockfiles nil)
-(setq make-backup-files nil)
-(setq auto-save-default nil)
+  (create-lockfiles				nil)
+  (make-backup-files				nil)
+  (auto-save-default				nil)
+  (auto-revert-use-notify			nil)
+  (auto-revert-verbose			nil)
+  (global-auto-revert-non-file-buffers	t)
 
-;; Кейбинды
-(global-set-key (kbd "TAB")		#'self-insert-command)
-(global-set-key (kbd "<backspace>")	#'backward-delete-char)
-(global-set-key (kbd "RET")		#'newline-and-indent)
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-
-;; Создание отсутствующих папок при сохранении файла (mkdir -p)
-(add-hook 'before-save-hook
-	  (lambda ()
-            (when buffer-file-name
-              (let ((dir (file-name-directory buffer-file-name)))
-                (when (and dir (not (file-exists-p dir)))
-                  (make-directory dir t))))))
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (custom-file		(expand-file-name "custom.el" user-emacs-directory))
+  
+  (read-process-output-max	(* 1024 1024))
+  :hook
+  ((after-init	.	show-paren-mode)
+   (after-init	.	delete-selection-mode)
+   (after-init	.	global-auto-revert-mode)
+   (after-init	.	global-hl-line-mode)
+   (after-init	.	column-number-mode)
+   (after-init	.	save-place-mode)
+   (after-init	.	savehist-mode)
+   (after-init	.	winner-mode)
+   (after-init	.	global-so-long-mode)
+   (before-save	.	make-missing-dirs)
+   (prog-mode		.	display-line-numbers-mode)
+   (prog-mode		.	trim-whitespace))
+  :bind
+  (("TAB"		.	self-insert-command))
+  :config
+  (load	custom-file 'noerror)
+  (define-key	key-translation-map (kbd "ESC") (kbd "C-g")))
 
 (provide 'common)

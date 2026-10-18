@@ -1,0 +1,614 @@
+#+TITLE: Emacs config
+
+* Предзагрузочный конфиг
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle early-init.el
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; early-init.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq inhibit-startup-screen    t
+        frame-inhibit-implied-resize t
+        ring-bell-function        'ignore)
+
+  (menu-bar-mode    -1)
+  (tool-bar-mode    -1)
+  (scroll-bar-mode  -1)
+
+  ;; на время загрузки GC отключён, после старта возвращаем разумное значение
+  (setq gc-cons-threshold most-positive-fixnum)
+  (add-hook 'emacs-startup-hook
+            (lambda () (setq gc-cons-threshold (* 64 1024 1024))))
+#+end_src
+
+* Конфиг инициализации
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle init.el
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; init.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+  (require 'pkg)
+  (require 'common)
+  (require 'theme)
+  (require 'templates)
+  (require 'plugins)
+  (require 'morg)
+#+end_src
+
+* Пакетный менеджер
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp/pkg.el :mkdirp yes
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; pkg.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+  (package-initialize)
+
+  (setq use-package-verbose         t
+        use-package-always-ensure   t)
+  (unless package-archive-contents (package-refresh-contents))
+
+  (provide 'pkg)
+#+end_src
+
+* Обычные настройки emacs
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp/common.el :mkdirp yes
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; common.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun make-missing-dirs ()
+    (when buffer-file-name
+      (let ((dir (file-name-directory buffer-file-name)))
+        (when (and dir (not (file-exists-p dir)))
+          (make-directory dir t)))))
+
+  (defun trim-whitespace ()
+    (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :ensure nil
+    :custom
+    (cursor-type                              'bar)
+    (truncate-lines                           t)
+    (indent-tabs-mode                         t)
+    (tab-width                                8)
+    (history-length                           50)
+    (use-short-answers                        t)
+    (confirm-kill-emacs                       'y-or-n-p)
+
+    (save-interprogram-paste-before-kill      t)
+
+    (create-lockfiles                         nil)
+    (make-backup-files                        nil)
+    (auto-save-default                        nil)
+    (auto-revert-use-notify                   nil)
+    (auto-revert-verbose                      nil)
+    (global-auto-revert-non-file-buffers      t)
+
+    (custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+    (read-process-output-max (* 1024 1024))
+    :hook
+    ((after-init  . show-paren-mode)
+     (after-init  . delete-selection-mode)
+     (after-init  . global-auto-revert-mode)
+     (after-init  . global-hl-line-mode)
+     (after-init  . column-number-mode)
+     (after-init  . save-place-mode)
+     (after-init  . savehist-mode)
+     (after-init  . winner-mode)
+     (after-init  . global-so-long-mode)
+     (before-save . make-missing-dirs)
+     (prog-mode   . display-line-numbers-mode)
+     (prog-mode   . trim-whitespace))
+    :bind
+    (("TAB" . self-insert-command))
+    :config
+    (load custom-file 'noerror)
+    (define-key key-translation-map (kbd "ESC") (kbd "C-g")))
+
+  (provide 'common)
+#+end_src
+
+* Плагины
+** Шаблоны
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp/templates.el :mkdirp yes
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; templates.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package tempel
+    :bind (("M-+" . tempel-complete)
+           ("M-*" . tempel-insert)
+           :map tempel-map
+           ("TAB"   . tempel-next)
+           ("S-TAB" . tempel-previous))
+    :custom (tempel-path (expand-file-name "templates/*.eld" user-emacs-directory)))
+
+  (defun my/header-guard ()
+    "Имя include guard из имени файла: foo-bar.h -> FOO_BAR_H"
+    (let ((name (file-name-nondirectory (or buffer-file-name (buffer-name)))))
+      (upcase (replace-regexp-in-string "[^A-Za-z0-9]" "_" name))))
+
+  (provide 'templates)
+#+end_src
+
+** Тема
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp/theme.el :mkdirp yes
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; theme.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :custom
+    (doom-themes-enable-bold    t)
+    (doom-themes-enable-italic  t)
+    :config
+    (load-theme 'doom-tokyo-night t))
+
+  (set-face-attribute 'default nil
+                      :family "Iosevka Nerd Font"
+                      :height 120)
+
+  (provide 'theme)
+#+end_src
+
+** Остальное
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp/plugins.el :mkdirp yes
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; plugins.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+*** Vertico
+
+#+begin_src emacs-lisp
+  (use-package vertico
+    :custom
+    (vertico-count  10)
+    (vertico-cycle  t)
+    :init (vertico-mode))
+#+end_src
+
+*** Marginalia
+
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :init (marginalia-mode))
+#+end_src
+
+*** Embark
+
+#+begin_src emacs-lisp
+  (use-package embark
+    :bind
+    (("C-`"    . embark-act)
+     ("C-;"    . embark-dwim)
+     ("C-h B"  . embark-bindings)))
+
+  (use-package embark-consult)
+#+end_src
+
+*** Orderless
+
+#+begin_src emacs-lisp
+  (use-package orderless
+    :custom
+    (completion-styles            '(orderless basic))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
+*** Consult
+
+#+begin_src emacs-lisp
+  (use-package consult
+    :bind
+    (("C-f"    . consult-line)
+     ("C-S-f"  . consult-ripgrep)
+     ("C-S-o"  . consult-outline))
+    :config
+    (global-set-key (kbd "C-p")    #'project-find-file)
+    (global-set-key (kbd "C-S-p")  #'project-switch-project))
+#+end_src
+
+*** Дополнения
+
+#+begin_src emacs-lisp
+  (use-package corfu
+    :bind
+    ("C-SPC" . completion-at-point)
+    (:map corfu-map
+          ("TAB"      . corfu-next)
+          ([tab]      . corfu-next)
+          ("S-TAB"    . corfu-previous)
+          ([backtab]  . corfu-previous))
+    :custom
+    (corfu-auto             t)
+    (corfu-cycle            t)
+    (corfu-auto-prefix      2)
+    (corfu-quit-no-match    t)
+    (corfu-auto-delay       0.25)
+    (corfu-popupinfo-delay  0.5)
+    :init
+    (global-corfu-mode)
+    (corfu-popupinfo-mode)
+    (corfu-history-mode))
+
+  (use-package cape
+    :init
+    (add-to-list 'completion-at-point-functions #'cape-keyword)
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    (add-to-list 'completion-at-point-functions #'cape-file)
+    (add-to-list 'completion-at-point-functions #'tempel-complete))
+#+end_src
+
+*** Git + Docker
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :custom (magit-diff-refine-hunk 'all)
+    :bind ("C-x g" . magit-status))
+
+  (use-package docker
+    :bind ("C-x d" . docker))
+#+end_src
+
+*** Файловый менеджер
+
+#+begin_src emacs-lisp
+  (use-package dirvish
+    :custom
+    (dirvish-quick-access-entries
+     '(("h" "~/" "Home")
+       ("d" "~/Downloads" "Downloads")
+       ("p" "~/dev" "Projects")
+       ("e" "~/.emacs.d/lisp" "Emacs config")))
+    (dirvish-mode-line-format
+     '(:left (sort symlink) :right (omit yank index)))
+    (dirvish-attributes
+     '(nerd-icons file-size collapse subtree-state vc-state git-msg))
+    (dired-listing-switches
+     "-l --almost-all --human-readable --group-directories-first --no-group")
+
+    (dirvish-subtree-state-style 'nerd)
+    (delete-by-moving-to-trash t)
+    (dirvish-side-width 35)
+    (dired-dwim-target t)
+    (dired-kill-when-opening-new-dired-buffer t)
+    (dired-auto-revert-buffer t)
+    (dired-recursive-copies 'always)
+    (dired-recursive-deletes 'top)
+    (dired-create-destination-dirs 'ask)
+    (dirvish-default-layout '(0 0.4 0.6))
+
+    :bind
+    (("C-c f"  . dirvish)
+     ("C-c t"  . dirvish-side)
+     :map dirvish-mode-map
+     ("TAB"        . dirvish-subtree-toggle)   ; раскрыть / свернуть папку
+     ("<backtab>"  . dirvish-subtree-up)       ; к родителю раскрытой папки
+     ("h"          . dired-up-directory)       ; на уровень вверх
+     ("l"          . dired-find-file)          ; войти в папку / открыть файл
+     ("y"          . dirvish-yank-menu)        ; копировать / переместить / симлинк
+     ("s"          . dirvish-quicksort))       ; сортировка
+    :hook (dired-mode . dired-omit-mode)
+    :init (dirvish-override-dired-mode))
+#+end_src
+
+*** Терминал
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :commands vterm
+    :custom
+    (vterm-shell                  "/usr/bin/zsh")
+    (vterm-max-scrollback         10000)
+    (vterm-kill-buffer-on-exit    t)
+    (vterm-always-compile-module  t)
+    :bind (:map vterm-mode-map
+                ("<escape>" . vterm-send-escape))   ; ESC уходит в шелл, а не в Emacs
+    :config
+    (add-to-list 'display-buffer-alist
+                 '("\\*vterm"
+                   (display-buffer-at-bottom)
+                   (window-height . 0.3))))
+
+  (use-package multi-vterm
+    :after vterm
+    :custom
+    (multi-vterm-dedicated-window-height-percent 30)
+    :bind (("C-t"    . multi-vterm-dedicated-toggle)   ; показать/спрятать терминал снизу
+           ("C-S-t"  . multi-vterm)                    ; новый терминал
+           :map vterm-mode-map
+           ("C-t"    . multi-vterm-dedicated-toggle)
+           ("C-S-t"  . multi-vterm)))
+#+end_src
+
+*** Полезное
+
+#+begin_src emacs-lisp
+  (use-package breadcrumb
+    :init (breadcrumb-mode 1))
+
+  (use-package undo-fu
+    :bind
+    ("C-z"    . undo-fu-only-undo)
+    ("C-S-z"  . undo-fu-only-redo))
+
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+
+  (use-package smartparens
+    :config
+    (require 'smartparens-config)
+    (sp-pair "(" ")" :unless '(sp-point-after-word-p sp-point-before-word-p))
+    (setq sp-pair-overlay-mode nil)
+    (setq sp-cancel-autoskip-on-backward-movement t)
+    :hook (prog-mode . smartparens-mode))
+
+  (use-package expand-region
+    :bind ("C-=" . er/expand-region))
+
+  (use-package drag-stuff
+    :bind (("M-<up>"   . drag-stuff-up)
+           ("M-<down>" . drag-stuff-down))
+    :config (drag-stuff-global-mode))
+
+  (use-package nerd-icons)
+  (use-package nerd-icons-corfu
+    :after corfu
+    :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+  (use-package nerd-icons-completion
+    :after vertico
+    :config (nerd-icons-completion-mode))
+
+  (use-package colorful-mode
+    :config (global-colorful-mode))
+
+  (use-package diff-hl
+    :init
+    (global-diff-hl-mode)
+    (diff-hl-flydiff-mode)
+    (diff-hl-show-hunk-mouse-mode))
+
+  (use-package spacious-padding
+    :custom
+    (spacious-padding-widths
+     '(:internal-border-width 12 :right-divider-width 20 :fringe-width 8))
+    :config (spacious-padding-mode 1))
+
+  (use-package zoom
+    :custom (zoom-size '(0.618 . 0.618))
+    :init (zoom-mode))
+
+  (use-package ligature                   ; лигатуры (JetBrains Mono, Iosevka и др.)
+    :config
+    (ligature-set-ligatures 'prog-mode '("->" "=>" "!=" "==" ">=" "<=" "::" "&&" "||"))
+    (global-ligature-mode t))
+
+  (use-package helpful                    ; более подробная справка по функциям и переменным
+    :bind (("C-h f" . helpful-callable)
+           ("C-h v" . helpful-variable)
+           ("C-h k" . helpful-key)))
+
+  (provide 'plugins)
+#+end_src
+
+* Org мод
+** Шаблоны
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp/morg-templates.el :mkdirp yes
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; morg-templates.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (defvar books-dir)   ; задаётся в morg.el
+
+  (defun morg-book-file (_node)
+    "Спросить файл книги и вернуть его путь для ссылки."
+    (abbreviate-file-name
+     (read-file-name "Файл книги: " (file-name-as-directory books-dir))))
+
+  (defvar morg-roam-capture-templates
+    '(("d" "заметка" plain "%?"
+       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                          "#+title: ${title}\n#+date: %<%Y-%m-%d>\n")
+       :unnarrowed t)
+
+      ("b" "книга" plain "* Конспект\n%?\n* Цитаты\n"
+       :target (file+head "sources/%<%Y%m%d%H%M%S>-${slug}.org"
+                          "#+title: ${title}\n#+author: ${author}\n#+year: ${year}\n#+filetags: :source:book:\n#+date: %<%Y-%m-%d>\n\nФайл: [[file:${morg-book-file}]]\n")
+       :unnarrowed t)))
+
+  (defvar morg-roam-dailies-capture-templates
+    '(("d" "ежедневная заметка" entry "* %<%H:%M> %?"
+       :target (file+head "%<%Y-%m-%d>.org"
+                          "#+title: %<%Y-%m-%d>\n"))))
+
+  (provide 'morg-templates)
+#+end_src
+
+** Конфиг
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp/morg.el :mkdirp yes
+:END:
+
+#+begin_src emacs-lisp :comments no
+  ;;; morg.el --- generated from config.org -*- lexical-binding: t -*-
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'morg-templates)
+
+  (defvar root-dir             (expand-file-name "~/sync"))
+  (defvar books-dir            (expand-file-name "books/"        root-dir))
+  (defvar org-dir              (expand-file-name "org/"          root-dir))
+  (defvar org-roam-dir         (expand-file-name "roam/"         org-dir))
+  (defvar org-notes-file       (expand-file-name "index.org"     org-dir))
+  (defvar org-attachments-dir  (expand-file-name "attachments/"  org-dir))
+  (defvar org-tasks-file       (expand-file-name "tasks.org"     org-dir))
+  (defvar org-agenda-fls       (list org-tasks-file))
+  (make-directory books-dir            t)
+  (make-directory org-roam-dir         t)
+  (make-directory org-attachments-dir  t)
+
+  (defvar morg-capture-templates
+    '(("t" "задача" entry
+       (file+headline org-tasks-file "Inbox")        ; всегда tasks.org → Inbox
+       "* TODO %?\n")
+      ("s" "задача с датой" entry
+       (file+headline org-tasks-file "Inbox")
+       "* TODO %?\nSCHEDULED: %^t\n")                ; спросит дату, попадёт в agenda
+      ("l" "задача со ссылкой" entry
+       (file+headline org-tasks-file "Inbox")
+       "* TODO %?\n%a\n")))
+
+  (defvar my/org-babel-languages
+    '((shell     . t)
+      (python    . t)
+      (plantuml  . t)
+      (sql       . t)
+      (C         . t)))
+
+  (defun my/split-ctrl-i ()
+    "В GUI-фрейме сделать C-i отдельной клавишей, не равной TAB."
+    (when (display-graphic-p)
+      (define-key input-decode-map [?\C-i] [C-i])))
+
+  (defun my/org-toggle-emphasis (m)
+    "Обернуть выделение (или слово у курсора) маркером M или снять его."
+    (let* ((c (char-to-string m))
+           (r (if (use-region-p)
+                  (cons (region-beginning) (region-end))
+                (bounds-of-thing-at-point 'word))))
+      (if (null r)
+          (progn (insert c c) (backward-char))   ; нет слова: пустая пара
+        (let ((b (car r)) (e (cdr r)))
+          (save-excursion
+            (if (and (eq (char-before b) m) (eq (char-after e) m))
+                (progn (goto-char e) (delete-char 1)   ; маркеры снаружи: снять
+                       (goto-char b) (delete-char -1))
+              (goto-char e) (insert c)                 ; иначе обернуть
+              (goto-char b) (insert c)))
+          (deactivate-mark)))))
+
+  (defun my/org-bold ()   (interactive) (my/org-toggle-emphasis ?*))
+  (defun my/org-italic () (interactive) (my/org-toggle-emphasis ?/))
+  (defun my/org-code ()   (interactive) (my/org-toggle-emphasis ?~))
+
+  (my/split-ctrl-i)
+  (add-hook 'server-after-make-frame-hook #'my/split-ctrl-i)
+
+  (use-package org
+    :bind (("C-c c" . org-capture)
+           ("C-c a" . org-agenda)
+           :map org-mode-map
+           ("C-b"   . my/org-bold)
+           ("<C-i>" . my/org-italic))
+    :hook (org-babel-after-execute . org-redisplay-inline-images)
+    :custom
+    (org-directory                        org-dir)
+    (org-default-notes-file               org-notes-file)
+    (org-attach-dir                       org-attachments-dir)
+
+    (org-startup-indented                 t)
+    (org-hide-emphasis-markers            t)
+    (org-pretty-entities                  t)
+    (org-link-descriptive                 t)
+    (org-support-shift-select             t)
+
+    (org-startup-with-inline-images       t)
+    (org-image-actual-width               '(500))
+
+    (org-return-follows-link              t)
+    (org-log-done                         'time)
+    (org-enforce-todo-dependencies        t)
+
+    (org-image-max-width                  'window)
+    (org-image-align                      'center)
+
+    (org-refile-targets                   '((org-agenda-files :maxlevel . 3)))
+    (org-refile-use-outline-path          'file)
+    (org-outline-path-complete-in-steps   nil)
+
+    (org-agenda-files                     org-agenda-fls)
+    (org-capture-templates                morg-capture-templates)
+    (org-todo-keywords                    '((sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)" "CANCEL(c)")))
+
+    (org-plantuml-args
+     (list "-headless"
+           "-config" (expand-file-name "plantuml.cfg" user-emacs-directory)))
+
+    (org-confirm-babel-evaluate           nil)
+    (org-src-fontify-natively             t)
+    (org-src-tab-acts-natively            t)
+    (org-src-content-indentation          0)
+    :config
+    (org-babel-do-load-languages 'org-babel-load-languages my/org-babel-languages))
+
+  (use-package org-roam
+    :after org
+    :bind (("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n r" . org-roam-ref-find)
+           ("C-c n d" . org-roam-dailies-capture-today)
+           ("C-c n t" . org-roam-dailies-goto-today))
+    :custom
+    (org-roam-complete-everywhere           t)
+    (org-roam-directory                     org-roam-dir)
+    (org-roam-capture-templates             morg-roam-capture-templates)
+    (org-roam-dailies-capture-templates     morg-roam-dailies-capture-templates)
+    :config
+    (org-roam-db-autosync-mode 1))
+
+  (use-package org-roam-ui
+    :after org-roam
+    :custom (org-roam-ui-follow t))
+
+  (use-package org-modern
+    :hook (org-mode . org-modern-mode))
+
+  (use-package org-appear
+    :hook (org-mode . org-appear-mode))
+
+  (provide 'morg)
+#+end_src
