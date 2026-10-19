@@ -1,14 +1,14 @@
 ;;; early-init.el --- generated from config.org -*- lexical-binding: t -*-
 
-(setq inhibit-startup-screen		t
-      frame-inhibit-implied-resize	t
-      ring-bell-function		'ignore
-      debug-on-error			t)
+(setq inhibit-startup-screen    t
+      frame-inhibit-implied-resize t
+      ring-bell-function        'ignore)
 
-(menu-bar-mode		-1)
-(tool-bar-mode		-1)
-(scroll-bar-mode	-1)
+(menu-bar-mode    -1)
+(tool-bar-mode    -1)
+(scroll-bar-mode  -1)
 
-(setq gc-cons-threshold (* 1024 1024 1024))
+;; на время загрузки GC отключён, после старта возвращаем разумное значение
+(setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'emacs-startup-hook
-	  (lambda () (setq gc-cons-threshold (* 1024 1024 1024))))
+          (lambda () (setq gc-cons-threshold (* 64 1024 1024))))

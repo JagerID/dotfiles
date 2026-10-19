@@ -1,9 +1,9 @@
-;;; early-init.el --- generated from config.org -*- lexical-binding: t -*-
+;;; plugins.el --- generated from config.org -*- lexical-binding: t -*-
 
 (use-package vertico
   :custom
-  (vertico-count	10)
-  (vertico-cycle	t)
+  (vertico-count  10)
+  (vertico-cycle  t)
   :init (vertico-mode))
 
 (use-package marginalia
@@ -11,42 +11,42 @@
 
 (use-package embark
   :bind
-  (("C-`"	.	embark-act)
-   ("C-;"	.	embark-dwim)
-   ("C-h B"	.	embark-bindings)))
+  (("C-`"    . embark-act)
+   ("C-;"    . embark-dwim)
+   ("C-h B"  . embark-bindings)))
 
 (use-package embark-consult)
 
 (use-package orderless
   :custom
-  (completion-styles			'(orderless basic))
-  (completion-category-defaults	nil)
-  (completion-category-overrides	'((file (styles partial-completion)))))
+  (completion-styles            '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package consult
   :bind
-  (("C-f"	.	consult-line)
-   ("C-S-f"	.	consult-ripgrep)
-   ("C-S-o"	.	consult-outline))
+  (("C-f"    . consult-line)
+   ("C-S-f"  . consult-ripgrep)
+   ("C-S-o"  . consult-outline))
   :config
-  (global-set-key (kbd "C-p")		#'project-find-file)
-  (global-set-key (kbd "C-S-p")	#'project-switch-project))
+  (global-set-key (kbd "C-p")    #'project-find-file)
+  (global-set-key (kbd "C-S-p")  #'project-switch-project))
 
 (use-package corfu
   :bind
   ("C-SPC" . completion-at-point)
   (:map corfu-map
-      ("TAB"		.	corfu-next)
-      ([tab]		.	corfu-next)
-      ("S-TAB"	.	corfu-previous)
-      ([backtab]	.	corfu-previous))
+        ("TAB"      . corfu-next)
+        ([tab]      . corfu-next)
+        ("S-TAB"    . corfu-previous)
+        ([backtab]  . corfu-previous))
   :custom
-  (corfu-auto			t)
-  (corfu-cycle			t)
-  (corfu-auto-prefix	2)
-  (corfu-quit-no-match	t)
-  (corfu-auto-delay		0.25)
-  (setq corfu-popupinfo-delay 0.5)
+  (corfu-auto             t)
+  (corfu-cycle            t)
+  (corfu-auto-prefix      2)
+  (corfu-quit-no-match    t)
+  (corfu-auto-delay       0.25)
+  (corfu-popupinfo-delay  0.5)
   :init
   (global-corfu-mode)
   (corfu-popupinfo-mode)
@@ -61,10 +61,10 @@
 
 (use-package magit
   :custom (magit-diff-refine-hunk 'all)
-  :bind ("C-x g"	.	magit-status))
+  :bind ("C-x g" . magit-status))
 
 (use-package docker
-  :bind ("C-x d"	.	docker))
+  :bind ("C-x d" . docker))
 
 (use-package dirvish
   :custom
@@ -79,11 +79,11 @@
    '(nerd-icons file-size collapse subtree-state vc-state git-msg))
   (dired-listing-switches
    "-l --almost-all --human-readable --group-directories-first --no-group")
-  
+
   (dirvish-subtree-state-style 'nerd)
   (delete-by-moving-to-trash t)
   (dirvish-side-width 35)
-  (dired-dwim-taget t)
+  (dired-dwim-target t)
   (dired-kill-when-opening-new-dired-buffer t)
   (dired-auto-revert-buffer t)
   (dired-recursive-copies 'always)
@@ -92,53 +92,54 @@
   (dirvish-default-layout '(0 0.4 0.6))
 
   :bind
-  (("C-c f"	.	dirvish)
-   ("C-c t"	.	dirvish-side)
+  (("C-c f"  . dirvish)
+   ("C-c T"  . dirvish-side)
    :map dirvish-mode-map
-   ("TAB"	.	dirvish-subtree-toggle)		; раскрыть / свернуть папку
-   ("<backtab>"	.	dirvish-subtree-up)		; к родителю раскрытой папки
-   ("h"		.	dired-up-directory)		; на уровень вверх
-   ("l"		.	dired-find-file)		; войти в папку / открыть файл
-   ("y"		.	dirvish-yank-menu)		; копировать / переместить / симлинк
-   ("s"		.	dirvish-quicksort))		; сортировка
+   ("TAB"        . dirvish-subtree-toggle)   ; раскрыть / свернуть папку
+   ("<backtab>"  . dirvish-subtree-up)       ; к родителю раскрытой папки
+   ("h"          . dired-up-directory)       ; на уровень вверх
+   ("l"          . dired-find-file)          ; войти в папку / открыть файл
+   ("y"          . dirvish-yank-menu)        ; копировать / переместить / симлинк
+   ("s"          . dirvish-quicksort))       ; сортировка
   :hook (dired-mode . dired-omit-mode)
   :init (dirvish-override-dired-mode))
 
 (use-package vterm
   :commands vterm
   :custom
-  (vterm-shell			"/usr/bin/zsh")
-  (vterm-max-scrollback		10000)
-  (vterm-kill-buffer-on-exit	t)
-  (vterm-always-compile-module	t)
-  :bind (("C-c t"	.	vterm-toggle)
-	 :map vterm-mode-map
-	 ("<escape>"	.	vterm-send-escape))
+  (vterm-shell                  "/usr/bin/zsh")
+  (vterm-max-scrollback         10000)
+  (vterm-kill-buffer-on-exit    t)
+  (vterm-always-compile-module  t)
+  :bind (:map vterm-mode-map
+              ("<escape>" . vterm-send-escape))   ; ESC уходит в шелл, а не в Emacs
   :config
   (add-to-list 'display-buffer-alist
-	       '("\\*vterm"
-		 (display-buffer-at-bottom)
-		 (window-height	.	0.3))))
+               '("\\*vterm"
+                 (display-buffer-at-bottom)
+                 (window-height . 0.3))))
+
+(use-package vterm-toggle
+  :after vterm
+  :bind ("C-c t" . vterm-toggle))
 
 (use-package multi-vterm
-  :ensure t
   :after vterm
   :custom
-  (multi-vterm-dedicated-window-height-percent 30)	; высота выделенного терминала
-  :bind (("C-t" . multi-vterm-dedicated-toggle)		; показать/спрятать терминал снизу
-         ("C-S-t" . multi-vterm)			; новый терминал
+  (multi-vterm-dedicated-window-height-percent 30)
+  :bind (("C-t"    . multi-vterm-dedicated-toggle)   ; показать/спрятать терминал снизу
+         ("C-S-t"  . multi-vterm)                    ; новый терминал
          :map vterm-mode-map
-         ("C-t" . multi-vterm-dedicated-toggle)		; то же самое изнутри терминала
-         ("C-S-t" . multi-vterm)			; новый терминал изнутри терминала
-         ("<escape>" . vterm-send-escape)))		; ESC уходит в шелл, а не в Emacs
+         ("C-t"    . multi-vterm-dedicated-toggle)
+         ("C-S-t"  . multi-vterm)))
 
 (use-package breadcrumb
   :init (breadcrumb-mode 1))
 
 (use-package undo-fu
   :bind
-  ("C-z"	.	undo-fu-only-undo)
-  ("C-S-z"	.	undo-fu-only-redo))
+  ("C-z"    . undo-fu-only-undo)
+  ("C-S-z"  . undo-fu-only-redo))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -155,9 +156,8 @@
   :bind ("C-=" . er/expand-region))
 
 (use-package drag-stuff
-  :bind (
-	 ("M-<up>" . drag-stuff-up)
-	 ("M-<down>" . drag-stuff-down))
+  :bind (("M-<up>"   . drag-stuff-up)
+         ("M-<down>" . drag-stuff-down))
   :config (drag-stuff-global-mode))
 
 (use-package nerd-icons)
@@ -178,28 +178,22 @@
   (diff-hl-flydiff-mode)
   (diff-hl-show-hunk-mouse-mode))
 
-
 (use-package spacious-padding
-  :ensure t
   :custom
   (spacious-padding-widths
    '(:internal-border-width 12 :right-divider-width 20 :fringe-width 8))
   :config (spacious-padding-mode 1))
 
 (use-package zoom
-  :config
-  (setq zoom-size '(0.618 . 0.618))
+  :custom (zoom-size '(0.618 . 0.618))
   :init (zoom-mode))
 
-
 (use-package ligature                   ; лигатуры (JetBrains Mono, Iosevka и др.)
-  :ensure t
   :config
   (ligature-set-ligatures 'prog-mode '("->" "=>" "!=" "==" ">=" "<=" "::" "&&" "||"))
   (global-ligature-mode t))
 
 (use-package helpful                    ; более подробная справка по функциям и переменным
-  :ensure t
   :bind (("C-h f" . helpful-callable)
          ("C-h v" . helpful-variable)
          ("C-h k" . helpful-key)))

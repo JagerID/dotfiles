@@ -84,6 +84,10 @@
 
   (defun trim-whitespace ()
     (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+
+  ;; не показывать "Mark set" в эхо-области при установке метки / выделении
+  (define-advice push-mark (:filter-args (args) quiet)
+    (list (nth 0 args) t (nth 2 args)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -316,7 +320,7 @@
 
     :bind
     (("C-c f"  . dirvish)
-     ("C-c t"  . dirvish-side)
+     ("C-c T"  . dirvish-side)
      :map dirvish-mode-map
      ("TAB"        . dirvish-subtree-toggle)   ; раскрыть / свернуть папку
      ("<backtab>"  . dirvish-subtree-up)       ; к родителю раскрытой папки
@@ -345,6 +349,10 @@
                  '("\\*vterm"
                    (display-buffer-at-bottom)
                    (window-height . 0.3))))
+
+  (use-package vterm-toggle
+    :after vterm
+    :bind ("C-c t" . vterm-toggle))
 
   (use-package multi-vterm
     :after vterm
@@ -477,7 +485,7 @@
 #+begin_src emacs-lisp
   (require 'morg-templates)
 
-  (defvar root-dir             (expand-file-name "~/sync"))
+  (defvar root-dir             (expand-file-name "~/syn"))
   (defvar books-dir            (expand-file-name "books/"        root-dir))
   (defvar org-dir              (expand-file-name "org/"          root-dir))
   (defvar org-roam-dir         (expand-file-name "roam/"         org-dir))
@@ -542,7 +550,7 @@
            :map org-mode-map
            ("C-b"   . my/org-bold)
            ("<C-i>" . my/org-italic))
-    :hook (org-babel-after-execute . org-redisplay-inline-images)
+    :hook (org-babel-after-execute . org-link-preview-refresh)
     :custom
     (org-directory                        org-dir)
     (org-default-notes-file               org-notes-file)
@@ -584,7 +592,6 @@
     (org-babel-do-load-languages 'org-babel-load-languages my/org-babel-languages))
 
   (use-package org-roam
-    :after org
     :bind (("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
            ("C-c n l" . org-roam-buffer-toggle)
@@ -604,8 +611,20 @@
     :after org-roam
     :custom (org-roam-ui-follow t))
 
+
   (use-package org-modern
-    :hook (org-mode . org-modern-mode))
+    :hook (org-mode . org-modern-mode)
+
+    :custom
+    (org-modern-block-name
+     `((t . t)
+       ("src"       ,(nerd-icons-faicon "nf-fa-code")                "─")
+       ("note"      ,(nerd-icons-faicon "nf-fa-info_circle")         "─")
+       ("tip"       ,(nerd-icons-faicon "nf-fa-lightbulb_o")         "─")
+       ("warning"   ,(nerd-icons-faicon "nf-fa-exclamation_triangle") "─")
+       ("important" ,(nerd-icons-faicon "nf-fa-exclamation_circle")  "─")
+       ("quote"     "❝" "❞")
+       ("example"   "»–" "–«"))))
 
   (use-package org-appear
     :hook (org-mode . org-appear-mode))

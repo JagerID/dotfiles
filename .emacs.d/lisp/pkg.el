@@ -1,12 +1,12 @@
-;;; early-init.el --- generated from config.org -*- lexical-binding: t -*-
+;;; pkg.el --- generated from config.org -*- lexical-binding: t -*-
 
 (require 'package)
-(add-to-list 'package-archives '("melpa"	.	"https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
 
-(setq use-package-verbose		t
-      use-package-always-ensure	t)
-(unless package-archive-contents	(package-refresh-contents))
+(setq use-package-verbose         t
+      use-package-always-ensure   t)
+(unless package-archive-contents (package-refresh-contents))
 
 (provide 'pkg)
