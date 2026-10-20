@@ -81,6 +81,7 @@ export PATH="$BUN_HOME/bin:$PATH"
 # --- Startup ---
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(tv init zsh)"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 export EDITOR="nvim"
