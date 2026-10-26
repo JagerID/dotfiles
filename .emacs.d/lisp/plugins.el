@@ -193,6 +193,27 @@
   (ligature-set-ligatures 'prog-mode '("->" "=>" "!=" "==" ">=" "<=" "::" "&&" "||"))
   (global-ligature-mode t))
 
+(use-package pulsar                     ; короткая подсветка строки при прыжках
+  :custom
+  (pulsar-pulse       t)
+  (pulsar-delay       0.04)
+  (pulsar-iterations  10)
+  (pulsar-face        'pulsar-magenta)
+  :init
+  (pulsar-global-mode 1)
+  :config
+  (add-hook 'consult-after-jump-hook #'pulsar-pulse-line)
+  (add-hook 'imenu-after-jump-hook   #'pulsar-recenter-top))
+
+(use-package dimmer                     ; приглушает неактивные окна
+  :custom
+  (dimmer-fraction                0.25)
+  (dimmer-watch-frame-focus-events nil)
+  :config
+  (dimmer-configure-org)
+  (dimmer-configure-magit)
+  (dimmer-mode 1))
+
 (use-package helpful                    ; более подробная справка по функциям и переменным
   :bind (("C-h f" . helpful-callable)
          ("C-h v" . helpful-variable)

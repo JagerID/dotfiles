@@ -18,6 +18,9 @@
   (tool-bar-mode    -1)
   (scroll-bar-mode  -1)
 
+  ;; лёгкая прозрачность фона окна (Emacs 29+, pgtk/Wayland); текст остаётся чётким
+  (add-to-list 'default-frame-alist '(alpha-background . 95))
+
   ;; на время загрузки GC отключён, после старта возвращаем разумное значение
   (setq gc-cons-threshold most-positive-fixnum)
   (add-hook 'emacs-startup-hook
@@ -428,6 +431,27 @@
     (ligature-set-ligatures 'prog-mode '("->" "=>" "!=" "==" ">=" "<=" "::" "&&" "||"))
     (global-ligature-mode t))
 
+  (use-package pulsar                     ; короткая подсветка строки при прыжках
+    :custom
+    (pulsar-pulse       t)
+    (pulsar-delay       0.04)
+    (pulsar-iterations  10)
+    (pulsar-face        'pulsar-magenta)
+    :init
+    (pulsar-global-mode 1)
+    :config
+    (add-hook 'consult-after-jump-hook #'pulsar-pulse-line)
+    (add-hook 'imenu-after-jump-hook   #'pulsar-recenter-top))
+
+  (use-package dimmer                     ; приглушает неактивные окна
+    :custom
+    (dimmer-fraction                0.25)
+    (dimmer-watch-frame-focus-events nil)
+    :config
+    (dimmer-configure-org)
+    (dimmer-configure-magit)
+    (dimmer-mode 1))
+
   (use-package helpful                    ; более подробная справка по функциям и переменным
     :bind (("C-h f" . helpful-callable)
            ("C-h v" . helpful-variable)
@@ -544,14 +568,169 @@
   (my/split-ctrl-i)
   (add-hook 'server-after-make-frame-hook #'my/split-ctrl-i)
 
+  ;; --- размеры заголовков -------------------------------------------------
+  ;; множитель к высоте основного шрифта; уровни 5-8 всегда 1.0
+  (defvar morg-heading-presets
+    '(("обычный"    . ((org-document-title . 1.8) (org-level-1 . 1.5) (org-level-2 . 1.3)
+                       (org-level-3 . 1.15) (org-level-4 . 1.05)))
+      ("крупный"    . ((org-document-title . 2.2) (org-level-1 . 1.8) (org-level-2 . 1.5)
+                       (org-level-3 . 1.3) (org-level-4 . 1.15)))
+      ("компактный" . ((org-document-title . 1.4) (org-level-1 . 1.2) (org-level-2 . 1.1)
+                       (org-level-3 . 1.0) (org-level-4 . 1.0))))
+    "Пресеты размеров заголовков: имя -> список (лицо . множитель).")
+
+  (defvar morg-heading-preset "обычный"
+    "Текущий пресет из `morg-heading-presets'.")
+
+  (defun morg-apply-heading-sizes (&rest _)
+    "Применить текущий пресет размеров заголовков."
+    (dolist (spec (cdr (assoc morg-heading-preset morg-heading-presets)))
+      (set-face-attribute (car spec) nil :height (cdr spec) :weight 'bold))
+    (dolist (face '(org-level-5 org-level-6 org-level-7 org-level-8))
+      (set-face-attribute face nil :height 1.0 :weight 'bold)))
+
+  (defun morg-set-heading-preset (name)
+    "Интерактивно переключить пресет размеров заголовков."
+    (interactive (list (completing-read "Размер заголовков: "
+                                        (mapcar #'car morg-heading-presets) nil t)))
+    (setq morg-heading-preset name)
+    (morg-apply-heading-sizes))
+
+  (with-eval-after-load 'org
+    (morg-apply-heading-sizes))
+  ;; смена темы перезаписывает лица, применяем заново (Emacs 29+)
+  (add-hook 'enable-theme-functions #'morg-apply-heading-sizes)
+
+  ;; --- цвет обычного текста в org (вместо синеватого цвета темы) -----------
+  ;; nil — оставить цвет темы
+  (defvar morg-text-color "#ffffff")
+
+  ;; --- olivetti: текст колонкой по центру ----------------------------------
+  (use-package olivetti
+    :custom
+    (olivetti-body-width        100)
+    (olivetti-minimum-body-width 60)
+    :bind ("C-c o" . olivetti-mode))      ; переключатель
+
+  ;; --- таблицы: выравнивание по пикселям ---------------------------------
+  (use-package valign
+    :hook (org-mode . valign-mode)
+    :custom (valign-fancy-bar nil))       ; рамки рисует org-modern-table
+
+  ;; --- цвета и лица текста (палитра tokyo-night) --------------------------
+  (defun morg-apply-text-faces (&rest _)
+    "Цвета жирного, курсива, цитат, блоков, ссылок, метаданных и свойств."
+    (let ((bg-block  "#1f2335")
+          (bg-edge   "#181925")
+          (muted     "#565f89")
+          (muted-2   "#414868"))
+      (dolist (spec
+               `((bold               :foreground "#ffffff" :weight bold)
+                 (italic             :foreground "#9ece6a" :slant italic)
+                 (org-quote          :foreground "#a9b1d6" :background ,bg-block
+                                     :slant italic :extend t)
+                 (org-block          :background unspecified :extend t)
+                 (org-block-begin-line :foreground ,muted :background unspecified
+                                     :slant normal :extend t)
+                 (org-block-end-line :foreground ,muted :background unspecified
+                                     :slant normal :extend t)
+                 (org-link           :foreground "#7dcfff" :underline nil)
+                 ,@(when morg-text-color    ; таблицы того же цвета, что и текст
+                     `((org-table        :foreground ,morg-text-color)
+                       (org-table-row    :foreground ,morg-text-color)
+                       (org-table-header :foreground ,morg-text-color)))
+                 (org-meta-line      :foreground ,muted :slant italic)
+                 (org-document-info-keyword :foreground ,muted :slant italic)
+                 (org-drawer         :foreground ,muted-2)
+                 (org-special-keyword :foreground ,muted-2 :slant italic)
+                 (org-property-value :foreground ,muted)
+                 (org-modern-horizontal-rule :foreground ,muted-2
+                                     :strike-through ,muted-2)))
+        (when (facep (car spec))
+          (apply #'set-face-attribute (car spec) nil (cdr spec))))))
+
+  (with-eval-after-load 'org
+    (morg-apply-text-faces))
+  (add-hook 'enable-theme-functions #'morg-apply-text-faces)
+
+  ;; --- подсветка текущего заголовка ---------------------------------------
+  (defface morg-current-heading
+    '((t :background "#292e42" :extend t))
+    "Фон строки заголовка, в поддереве которого находится курсор.")
+
+  (defvar-local morg--heading-overlay nil)
+
+  (defun morg-highlight-heading ()
+    "Подсветить заголовок текущего поддерева."
+    (let ((pos (save-excursion
+                 (condition-case nil
+                     (progn (org-back-to-heading t) (point))
+                   (error nil)))))
+      (cond
+       ((null pos)
+        (when (overlayp morg--heading-overlay)
+          (delete-overlay morg--heading-overlay)))
+       (t
+        (let ((end (min (point-max)
+                        (1+ (save-excursion (goto-char pos) (line-end-position))))))
+          (if (overlayp morg--heading-overlay)
+              (move-overlay morg--heading-overlay pos end)
+            (setq morg--heading-overlay (make-overlay pos end nil t))
+            (overlay-put morg--heading-overlay 'face 'morg-current-heading)
+            (overlay-put morg--heading-overlay 'priority 10)))))))
+
+  ;; --- результаты org-babel ------------------------------------------------
+  (require 'ansi-color)
+
+  (defun morg-babel-ansi-colors ()
+    "Раскрасить ANSI-коды в результате блока под курсором.
+Для shell-команд нужен вывод с цветом, например `ls --color=always'."
+    (when-let* ((beg (org-babel-where-is-src-block-result))
+                (end (save-excursion (goto-char beg) (org-babel-result-end))))
+      (save-excursion
+        (ansi-color-apply-on-region beg end))))
+
+  (defvar morg-babel-fold-threshold 15
+    "Результат длиннее этого числа строк сворачивается после выполнения.")
+
+  (defun morg-babel-fold-long-result ()
+    "Свернуть длинный результат блока под курсором (раскрыть: C-c C-v t)."
+    (when-let ((beg (org-babel-where-is-src-block-result)))
+      (save-excursion
+        (goto-char beg)
+        (let ((end (org-babel-result-end)))
+          (when (> (count-lines beg end) morg-babel-fold-threshold)
+            (goto-char beg)
+            (org-babel-hide-result-toggle t))))))
+
+  (defun morg-visual-setup ()
+    "Визуальные настройки для org-буферов."
+    (setq-local line-spacing 0.25)        ; межстрочный интервал
+    (when morg-text-color
+      (face-remap-add-relative 'default :foreground morg-text-color))
+    (add-hook 'post-command-hook #'morg-highlight-heading nil t)
+    (olivetti-mode 1))                    ; выключить в буфере: C-c o
+
   (use-package org
     :bind (("C-c c" . org-capture)
            ("C-c a" . org-agenda)
            :map org-mode-map
            ("C-b"   . my/org-bold)
-           ("<C-i>" . my/org-italic))
-    :hook (org-babel-after-execute . org-link-preview-refresh)
+           ("<C-i>" . my/org-italic)
+           ("C-c h" . morg-set-heading-preset))
+    :hook ((org-babel-after-execute . org-link-preview-refresh)
+           (org-babel-after-execute . morg-babel-ansi-colors)
+           (org-babel-after-execute . morg-babel-fold-long-result)
+           (org-mode                . morg-visual-setup))
     :custom
+    (org-ellipsis                         " ▾")
+
+    ;; рекомендации org-modern
+    (org-auto-align-tags                  nil)
+    (org-tags-column                      0)
+    (org-catch-invisible-edits            'show-and-error)
+    (org-special-ctrl-a/e                 t)
+    (org-insert-heading-respect-content   t)
     (org-directory                        org-dir)
     (org-default-notes-file               org-notes-file)
     (org-attach-dir                       org-attachments-dir)
@@ -591,6 +770,11 @@
     :config
     (org-babel-do-load-languages 'org-babel-load-languages my/org-babel-languages))
 
+  ;; асинхронный запуск блоков: добавьте заголовок :async, например
+  ;; #+begin_src shell :async yes   (не работает вместе с :session)
+  (use-package ob-async
+    :after org)
+
   (use-package org-roam
     :bind (("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
@@ -612,10 +796,35 @@
     :custom (org-roam-ui-follow t))
 
 
+  (defun morg-apply-tag-faces (&rest _)
+    "Цвет тегов (палитра tokyo-night); перезапускается при смене темы."
+    (when (facep 'org-modern-tag)
+      (set-face-attribute 'org-modern-tag nil
+                          :background "#3b4261" :foreground "#bb9af7" :weight 'bold)))
+
   (use-package org-modern
     :hook (org-mode . org-modern-mode)
+    :config
+    (morg-apply-tag-faces)
+    (morg-apply-text-faces)               ; org-modern-horizontal-rule появляется после загрузки
+    (add-hook 'enable-theme-functions #'morg-apply-tag-faces)
 
     :custom
+    (org-modern-star                '("◉" "○" "✸" "✿" "◆" "▶"))
+    (org-modern-horizontal-rule     t)       ; ----- превращается в линию
+    (org-modern-block-fringe        nil)     ; с org-indent фринж у блоков не нужен
+    (org-modern-list                '((?* . "•") (?+ . "‣") (?- . "–")))
+    (org-modern-checkbox            '((?X . "☑") (?- . "◪") (?\s . "☐")))
+    (org-modern-timestamp           t)
+    (org-modern-priority            t)
+    (org-modern-progress            t)
+    (org-modern-table               t)
+    (org-modern-todo-faces
+     '(("TODO"   :background "#f7768e" :foreground "#1a1b26" :weight bold)
+       ("NEXT"   :background "#7aa2f7" :foreground "#1a1b26" :weight bold)
+       ("WAIT"   :background "#e0af68" :foreground "#1a1b26" :weight bold)
+       ("DONE"   :background "#9ece6a" :foreground "#1a1b26" :weight bold)
+       ("CANCEL" :background "#565f89" :foreground "#1a1b26" :weight bold)))
     (org-modern-block-name
      `((t . t)
        ("src"       ,(nerd-icons-faicon "nf-fa-code")                "─")
