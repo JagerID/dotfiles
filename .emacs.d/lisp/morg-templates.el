@@ -1,26 +1,11 @@
 ;;; morg-templates.el --- generated from config.org -*- lexical-binding: t -*-
 
-(defvar books-dir)	; задаётся в morg.el
-(defvar org-tasks-file)	; задаётся в morg.el
+(defvar books-dir)   ; задаётся в morg.el
 
 (defun morg-book-file (_node)
   "Спросить файл книги и вернуть его путь для ссылки."
   (abbreviate-file-name
    (read-file-name "Файл книги: " (file-name-as-directory books-dir))))
-
-(defvar morg-capture-templates
-  '(("t" "задача" entry
-     (file+headline org-tasks-file "Inbox")	; всегда tasks.org → Inbox
-     "* TODO %?\n")
-    ("s" "задача с датой" entry
-     (file+headline org-tasks-file "Inbox")
-     "* TODO %?\nSCHEDULED: %^t\n")	; спросит дату, попадёт в agenda
-    ("d" "задача с дедлайном" entry
-     (file+headline org-tasks-file "Inbox")
-     "* TODO %?\nDEADLINE: %^t\n")
-    ("l" "задача со ссылкой" entry
-     (file+headline org-tasks-file "Inbox")
-     "* TODO %?\n%a\n")))
 
 (defvar morg-roam-capture-templates
   '(("d" "заметка" plain "%?"
