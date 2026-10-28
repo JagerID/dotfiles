@@ -554,7 +554,9 @@ TITLE: Emacs config
       (python    . t)
       (plantuml  . t)
       (sql       . t)
-      (C         . t)))
+      (C         . t)
+      (d2        . t)
+      (dot       . t)))
 
   (defun my/split-ctrl-i ()
     "В GUI-фрейме сделать C-i отдельной клавишей, не равной TAB."
@@ -720,6 +722,19 @@ TITLE: Emacs config
             (goto-char beg)
             (org-babel-hide-result-toggle t))))))
 
+  (defun morg-babel-hide-success-output ()
+    "Закрыть окно stderr после успешного запуска (например d2: «success: ...»).
+Если в выводе есть что-то про ошибку, окно остаётся."
+    (when-let* ((buf (get-buffer "*Org-Babel Error Output*"))
+                (win (get-buffer-window buf)))
+      (when (with-current-buffer buf
+              (let ((text (buffer-string)))
+                (and (string-match-p "success:" text)
+                     (not (string-match-p "err" text)))))
+        (delete-window win))))
+
+  (add-hook 'org-babel-after-execute-hook #'morg-babel-hide-success-output)
+
   (defun morg-visual-setup ()
     "Визуальные настройки для org-буферов."
     (setq-local line-spacing 0.25)        ; межстрочный интервал
@@ -727,6 +742,51 @@ TITLE: Emacs config
       (face-remap-add-relative 'default :foreground morg-text-color))
     (add-hook 'post-command-hook #'morg-highlight-heading nil t)
     (olivetti-mode 1))                    ; выключить в буфере: C-c o
+
+  ;; --- PlantUML: путь к jar ------------------------------------------------
+  ;; Arch: sudo pacman -S plantuml  (jar обычно в /usr/share/java/plantuml/)
+  ;; Если jar лежит в другом месте, добавьте путь в список.
+  (defvar morg-plantuml-jar
+    (seq-find #'file-exists-p
+              (list "/usr/share/java/plantuml/plantuml.jar"
+                    "/usr/share/plantuml/plantuml.jar"
+                    (expand-file-name "plantuml.jar" user-emacs-directory)))
+    "Путь к plantuml.jar или nil, если не найден.")
+
+  (unless morg-plantuml-jar
+    (message "plantuml.jar не найден: поставьте пакет plantuml или поправьте morg-plantuml-jar"))
+
+  ;; общий файл настроек (-config): если его нет, создаём с тёмным оформлением.
+  ;; Хотите стиль по умолчанию — очистите файл, оставив только комментарии.
+  (defvar morg-plantuml-config (expand-file-name "plantuml.cfg" user-emacs-directory)
+    "Файл настроек PlantUML, передаётся через -config.")
+
+  (unless (file-exists-p morg-plantuml-config)
+    (let ((coding-system-for-write 'utf-8))
+      (with-temp-file morg-plantuml-config
+        (insert "' Common PlantUML settings (passed with -config)\n"
+                "skinparam backgroundColor #1a1b26\n"
+                "skinparam shadowing false\n"
+                "skinparam defaultFontColor #ffffff\n"
+                "skinparam ArrowColor #a9b1d6\n"
+                "skinparam ArrowFontColor #ffffff\n"
+                "skinparam rectangle {\n"
+                "  BackgroundColor #24283b\n"
+                "  BorderColor #565f89\n"
+                "  FontColor #ffffff\n"
+                "}\n"))))
+
+  ;; --- D2: диаграммы в org-блоках ------------------------------------------
+  ;; нужен бинарник `d2' в PATH. Использование:
+  ;;   #+begin_src d2 :file ~/syn/org/attachments/имя.png :flags "--pad 20"
+  ;; (результат только файл, поэтому :file обязателен; тема/раскладка через :flags,
+  ;;  например "--theme ID --layout elk"; список тем: `d2 themes')
+  ;; Пакеты стоят до (use-package org), чтобы быть установленными к загрузке языков.
+  (use-package d2-mode
+    :mode "\\.d2\\'")
+
+  (use-package ob-d2
+    :defer t)
 
   (use-package org
     :bind (("C-c c" . org-capture)
@@ -776,9 +836,11 @@ TITLE: Emacs config
     (org-capture-templates                morg-capture-templates)
     (org-todo-keywords                    '((sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)" "CANCEL(c)")))
 
+    (org-plantuml-jar-path                morg-plantuml-jar)
+    (org-plantuml-exec-mode               'jar)
     (org-plantuml-args
-     (list "-headless"
-           "-config" (expand-file-name "plantuml.cfg" user-emacs-directory)))
+     (list "-headless" "-charset" "UTF-8"          ; UTF-8 нужен для кириллицы
+           "-config" morg-plantuml-config))
 
     (org-confirm-babel-evaluate           nil)
     (org-src-fontify-natively             t)
