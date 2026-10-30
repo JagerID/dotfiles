@@ -185,7 +185,9 @@
   :config (spacious-padding-mode 1))
 
 (use-package zoom
-  :custom (zoom-size '(0.618 . 0.618))
+  :custom
+  (zoom-size '(0.618 . 0.618))
+  (zoom-ignored-buffer-names '("*org-roam*"))   ; буфер backlinks не растягивать
   :init (zoom-mode))
 
 (use-package ligature                   ; лигатуры (JetBrains Mono, Iosevka и др.)

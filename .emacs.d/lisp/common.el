@@ -26,6 +26,10 @@
 
   (save-interprogram-paste-before-kill      t)
 
+  ;; Emacs 30+: в text-mode (а значит и в org) автодополнение слов через ispell;
+  ;; без словаря (/usr/share/dict/words) оно падает с ошибкой в corfu.
+  (text-mode-ispell-word-completion         nil)
+
   (create-lockfiles                         nil)
   (make-backup-files                        nil)
   (auto-save-default                        nil)
