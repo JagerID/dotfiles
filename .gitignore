@@ -2,7 +2,4 @@
 !.config/Code/User/settings.json
 
 .emacs.d/*
-!.emacs.d/early-init.el
-!.emacs.d/init.el
 !.emacs.d/config.org
-!.emacs.d/lisp
