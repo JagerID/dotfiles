@@ -1,17 +1,26 @@
 ;;; common.el --- generated from config.org -*- lexical-binding: t -*-
 
 (defun make-missing-dirs ()
-  (when buffer-file-name
-    (let ((dir (file-name-directory buffer-file-name)))
-      (when (and dir (not (file-exists-p dir)))
-        (make-directory dir t)))))
+    (when buffer-file-name
+      (let ((dir (file-name-directory buffer-file-name)))
+        (when (and dir (not (file-exists-p dir)))
+          (make-directory dir t)))))
 
-(defun trim-whitespace ()
-  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+  (defun trim-whitespace ()
+    (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
 
-;; не показывать "Mark set" в эхо-области при установке метки / выделении
-(define-advice push-mark (:filter-args (args) quiet)
-  (list (nth 0 args) t (nth 2 args)))
+  (defun my/compile-config ()
+    "Байт- и нативная компиляция lisp/ после tangle: Emacs стартует быстрее.
+Запускать вручную после каждого tangle. Если что-то сломалось — удалите lisp/*.elc."
+    (interactive)
+    (let ((dir (locate-user-emacs-file "lisp")))
+      (byte-recompile-directory dir 0 t)
+      (when (and (fboundp 'native-comp-available-p) (native-comp-available-p))
+        (native-compile-async dir 'recursively))))
+
+  ;; не показывать "Mark set" в эхо-области при установке метки / выделении
+  (define-advice push-mark (:filter-args (args) quiet)
+    (list (nth 0 args) t (nth 2 args)))
 
 (use-package emacs
   :ensure nil
@@ -40,6 +49,13 @@
   (custom-file (expand-file-name "custom.el" user-emacs-directory))
 
   (read-process-output-max (* 1024 1024))
+
+  ;; скорость отрисовки: двунаправленный текст (арабский/иврит) не нужен,
+  ;; прокрутка без лишней подсветки, подсветка не мешает вводу
+  (bidi-inhibit-bpa                         t)
+  (bidi-paragraph-direction                 'left-to-right)
+  (fast-but-imprecise-scrolling             t)
+  (redisplay-skip-fontification-on-input    t)
   :hook
   ((after-init  . show-paren-mode)
    (after-init  . delete-selection-mode)
