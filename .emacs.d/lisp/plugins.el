@@ -50,7 +50,17 @@
   :init
   (global-corfu-mode)
   (corfu-popupinfo-mode)
-  (corfu-history-mode))
+  (corfu-history-mode)
+  :config
+  ;; Подсказки всегда моноширинным Iosevka: иначе в org (mixed-pitch) всплывающее окно
+  ;; наследует пропорциональный шрифт, и иконки с колонками «плывут».
+  ;; Тема при смене перезаписывает лица, поэтому применяем и после enable-theme.
+  (defun my/corfu-fonts (&rest _)
+    (dolist (face '(corfu-default corfu-current corfu-popupinfo))
+      (when (facep face)
+        (set-face-attribute face nil :family "Iosevka Nerd Font"))))
+  (my/corfu-fonts)
+  (add-hook 'enable-theme-functions #'my/corfu-fonts))
 
 (use-package cape
   :init
@@ -119,12 +129,14 @@
                  (display-buffer-at-bottom)
                  (window-height . 0.3))))
 
+;; без `:after vterm': иначе пакет (и клавиши C-c t, C-t) появляются только
+;; после ручного запуска vterm. Теперь клавиша сама подгружает пакет (autoload).
 (use-package vterm-toggle
-  :after vterm
+  :commands vterm-toggle
   :bind ("C-c t" . vterm-toggle))
 
 (use-package multi-vterm
-  :after vterm
+  :commands (multi-vterm multi-vterm-dedicated-toggle)
   :custom
   (multi-vterm-dedicated-window-height-percent 30)
   :bind (("C-t"    . multi-vterm-dedicated-toggle)   ; показать/спрятать терминал снизу
@@ -160,10 +172,39 @@
          ("M-<down>" . drag-stuff-down))
   :config (drag-stuff-global-mode))
 
-(use-package nerd-icons)
+;; Пиксельные иконки: все значки nerd-icons (подсказки, vertico, dired, строка состояния)
+;; рисуются шрифтом Cozette. Поставьте его с патчем Nerd Font, иначе значков в нём мало:
+;;   yay -S nerd-fonts-cozette-ttf ; fc-cache -fv ; (проверка: fc-list | grep -i cozette)
+;; Если в Cozette нет нужного значка, Emacs сам возьмёт его из Symbols Nerd Font.
+;; Вернуть обычные иконки: (setq my/icon-font-candidates nil) или удалить шрифт.
+(defvar my/icon-font-candidates
+  '("CozetteVector Nerd Font" "Cozette Nerd Font" "CozetteVector" "Cozette")
+  "Семейства шрифта для иконок, по порядку; берётся первое установленное.")
+
+(use-package nerd-icons
+  :config
+  (defun my/apply-icon-font (&rest _)
+    (when (display-graphic-p)
+      (when-let* ((fam (seq-find (lambda (f) (find-font (font-spec :family f)))
+                                 my/icon-font-candidates)))
+        (setq nerd-icons-font-family fam))))
+  ;; в daemon шрифты видны только после создания первого кадра
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook #'my/apply-icon-font)
+    (my/apply-icon-font)))
 (use-package nerd-icons-corfu
   :after corfu
-  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+  :init
+  ;; иконка в подсказках слишком близко к тексту: добавляем ещё один пробел после неё.
+  ;; Нужен шире отступ — увеличьте число в make-string (или поставьте 2).
+  (defvar my/corfu-icon-gap 1 "Сколько лишних пробелов между иконкой и текстом в подсказках.")
+  (defun my/corfu-icon-formatter (metadata)
+    "Обёртка над nerd-icons-corfu-formatter: иконка + дополнительный отступ."
+    (when-let* ((fmt (nerd-icons-corfu-formatter metadata)))
+      (lambda (cand)
+        (when-let* ((icon (funcall fmt cand)))
+          (concat icon (make-string my/corfu-icon-gap ?\s))))))
+  (add-to-list 'corfu-margin-formatters #'my/corfu-icon-formatter))
 
 (use-package nerd-icons-completion
   :after vertico
@@ -207,6 +248,13 @@
   (add-hook 'consult-after-jump-hook #'pulsar-pulse-line)
   (add-hook 'imenu-after-jump-hook   #'pulsar-recenter-top))
 
+(defun my/add-cargo-bin-to-path ()
+  "Добавить ~/.cargo/bin в exec-path и PATH (rust-analyzer, rustfmt, cargo и др.)."
+  (let ((cargo-bin (expand-file-name "~/.cargo/bin")))
+    (unless (member cargo-bin exec-path)
+      (add-to-list 'exec-path cargo-bin)
+      (setenv "PATH" (concat cargo-bin path-separator (getenv "PATH"))))))
+
 (use-package glsl-mode                  ; шейдеры: .glsl .vert .frag .geom .comp
   :mode ("\\.glsl\\'" "\\.vert\\'" "\\.frag\\'" "\\.geom\\'" "\\.comp\\'")
   :hook (glsl-mode . (lambda ()
@@ -216,9 +264,7 @@
   :config
   ;; LSP: shader-language-server (cargo install shader_language_server)
   ;; Emacs из десктопа может не видеть ~/.cargo/bin, добавляем в exec-path
-  (let ((cargo-bin (expand-file-name "~/.cargo/bin")))
-    (add-to-list 'exec-path cargo-bin)
-    (setenv "PATH" (concat cargo-bin path-separator (getenv "PATH"))))
+  (my/add-cargo-bin-to-path)
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
                  '(glsl-mode . ("shader-language-server" "--stdio"))))
@@ -237,5 +283,309 @@
   :bind (("C-h f" . helpful-callable)
          ("C-h v" . helpful-variable)
          ("C-h k" . helpful-key)))
+
+;; --- PATH из оболочки ------------------------------------------------------
+;; Emacs из десктопа/лаунчера не читает ~/.zshrc, поэтому не видит бинарники,
+;; добавленные в PATH (rust-analyzer, cargo и др.). Копируем PATH из zsh.
+;; Запуск zsh -l -i при каждом старте занимает сотни миллисекунд, поэтому результат
+;; кешируется в shell-env-cache.el на неделю. Сбросить: M-x my/refresh-shell-env.
+(use-package exec-path-from-shell
+  :defer t
+  :custom
+  (exec-path-from-shell-arguments '("-l" "-i"))     ; читать и ~/.zshrc
+  (exec-path-from-shell-variables '("PATH" "MANPATH" "CARGO_HOME" "RUSTUP_HOME")))
+
+(defvar my/shell-env-cache (locate-user-emacs-file "shell-env-cache.el"))
+(defvar my/shell-env-max-age (* 7 24 3600) "Срок жизни кеша окружения, секунд.")
+
+(defun my/load-shell-env ()
+  "Взять PATH и др. из оболочки (из кеша, если он свежий)."
+  (if (and (file-exists-p my/shell-env-cache)
+           (< (float-time (time-since (file-attribute-modification-time
+                                       (file-attributes my/shell-env-cache))))
+              my/shell-env-max-age))
+      (progn
+        (dolist (kv (with-temp-buffer
+                      (insert-file-contents my/shell-env-cache)
+                      (read (current-buffer))))
+          (setenv (car kv) (cdr kv)))
+        (setq exec-path (delete-dups
+                         (append (split-string (or (getenv "PATH") "") path-separator t)
+                                 exec-path))))
+    (require 'exec-path-from-shell)
+    (exec-path-from-shell-initialize)
+    (with-temp-file my/shell-env-cache
+      (prin1 (mapcar (lambda (v) (cons v (getenv v)))
+                     exec-path-from-shell-variables)
+             (current-buffer)))))
+
+(defun my/refresh-shell-env ()
+  "Сбросить кеш окружения и перечитать PATH из оболочки."
+  (interactive)
+  (when (file-exists-p my/shell-env-cache) (delete-file my/shell-env-cache))
+  (my/load-shell-env)
+  (message "PATH обновлён из оболочки"))
+
+(when (or (daemonp) (display-graphic-p))
+  (my/load-shell-env))
+
+;; --- Грамматики tree-sitter ------------------------------------------------
+;; Один раз: M-x treesit-install-language-grammar RET c   (и rust). Нужны gcc и сеть.
+(with-eval-after-load 'treesit
+  (dolist (src '((c    "https://github.com/tree-sitter/tree-sitter-c")
+                 (rust "https://github.com/tree-sitter/tree-sitter-rust")
+                 (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+                 (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+    (add-to-list 'treesit-language-source-alist src)))
+
+;; --- C: c-ts-mode, отступ 8 (табы, стиль Linux kernel) ---------------------
+;; Сам по себе Emacs открывает .c/.h в старом c-mode: ts-режимы нужно включать
+;; явно. .h считаем C-файлами; для C++ заголовков (.hpp/.cpp) режим не менялся.
+(setq major-mode-remap-alist
+      (append '((c-mode          . c-ts-mode)
+                (c-or-c++-mode   . c-or-c++-ts-mode))
+              major-mode-remap-alist))
+(add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
+
+(use-package c-ts-mode
+  :ensure nil                           ; встроен в Emacs
+  :custom
+  (c-ts-mode-indent-offset 8)
+  (c-ts-mode-indent-style  'linux)
+  :hook (c-ts-mode . (lambda ()
+                       (setq-local indent-tabs-mode t   ; табы, как в ядре
+                                   tab-width 8
+                                   fill-column 80))))
+
+;; --- Автоформат при сохранении (apheleia) ---------------------------------
+;; Асинхронно форматирует буфер при сохранении, курсор остаётся на месте.
+;; Формат берётся по режиму: C → clang-format, Rust → rustfmt, elisp → отступы и т. д.
+;; Нужны: sudo pacman -S clang  (clang-format). Если в проекте есть .clang-format —
+;; используется он; иначе стиль ниже (табы по 8, фигурные скобки как в Linux).
+;; Выключить в буфере: M-x apheleia-mode; глобально: (apheleia-global-mode -1).
+(defvar my/clang-format-fallback-style
+  "{BasedOnStyle: LLVM, IndentWidth: 8, TabWidth: 8, UseTab: Always, ColumnLimit: 80, BreakBeforeBraces: Linux, AllowShortIfStatementsOnASingleLine: false, AllowShortLoopsOnASingleLine: false, IndentCaseLabels: false}"
+  "Стиль clang-format, если в проекте нет .clang-format.")
+
+(defun my/clang-format-style-arg ()
+  "Аргумент -style: файл проекта, если есть, иначе запасной стиль."
+  (if (or (locate-dominating-file default-directory ".clang-format")
+          (locate-dominating-file default-directory "_clang-format"))
+      "-style=file"
+    (concat "-style=" my/clang-format-fallback-style)))
+
+(use-package apheleia
+  :config
+  (setf (alist-get 'clang-format apheleia-formatters)
+        '("clang-format"
+          "-assume-filename"
+          (or (apheleia-formatter-local-buffer-file-name)
+              filepath
+              (apheleia-formatters-mode-extension)
+              ".c")
+          (my/clang-format-style-arg)))
+  (apheleia-global-mode +1))
+
+;; --- Rust --------------------------------------------------------------------
+;; Нужны (Arch): sudo pacman -S rustup && rustup default stable
+;;               rustup component add rust-analyzer rustfmt clippy
+;; rust-ts-mode — встроенный режим на tree-sitter (подсветка, отступы). Нужна
+;;                 грамматика: M-x treesit-install-language-grammar RET rust
+;;                 (нужны gcc и интернет) или пакет tree-sitter-rust;
+;; eglot      — LSP (rust-analyzer): подсказки, переход (M-.), диагностика, inlay hints;
+;; apheleia   — форматирование (rustfmt) при сохранении, см. раздел «Автоформат» выше;
+;; cargo      — команды cargo на C-c C-c: C-b build, C-r run, C-t test, C-k check, C-l clippy.
+(use-package rust-ts-mode
+  :ensure nil                           ; встроен в Emacs
+  :mode "\\.rs\\'"
+  :custom
+  (rust-ts-mode-indent-offset 4)
+  :init
+  (my/add-cargo-bin-to-path)
+  :hook ((rust-ts-mode . eglot-ensure)
+         (rust-ts-mode . (lambda ()
+                           (setq-local indent-tabs-mode nil   ; глобально у вас tab-ы
+                                       fill-column 100)))))
+
+(use-package cargo
+  :hook (rust-ts-mode . cargo-minor-mode))
+
+(with-eval-after-load 'eglot
+  ;; скорость: не ждать подключения к серверу, не вести журнал событий (он сильно
+  ;; раздувается), не показывать прогресс, закрывать сервер вместе с последним буфером
+  (setq eglot-sync-connect       nil
+        eglot-autoshutdown       t
+        eglot-report-progress    nil
+        eglot-events-buffer-size 0                    ; Emacs 29
+        eglot-events-buffer-config '(:size 0 :format full)) ; Emacs 30+
+  (setq eldoc-idle-delay 0.3)
+  ;; проверка при сохранении через clippy вместо обычного cargo check
+  (setq-default eglot-workspace-configuration
+                '(:rust-analyzer (:check (:command "clippy"))))
+  (define-key eglot-mode-map (kbd "C-c l r") #'eglot-rename)
+  (define-key eglot-mode-map (kbd "C-c l a") #'eglot-code-actions)
+  (define-key eglot-mode-map (kbd "C-c l f") #'eglot-format)
+  (define-key eglot-mode-map (kbd "C-c l d") #'flymake-show-buffer-diagnostics))
+
+;; --- TRAMP: удалённые файлы и org-babel на других машинах ------------------------
+;; Файлы:      C-x C-f /ssh:user@host:/путь/файл   (sudo: /sudo::/etc/hosts,
+;;             через хост с sudo: /ssh:host|sudo:host:/etc/hosts)
+;; Org-babel:  заголовок :dir выполняет блок на удалённой машине (шаблон <ssh):
+;;               #+begin_src sh :dir /ssh:user@host:~/ :results output
+;;               uname -a
+;;               #+end_src
+;;             Работает для sh, python и других языков, которые запускают процесс;
+;;             :dir можно задать и на весь файл: #+PROPERTY: header-args :dir /ssh:host:~/
+;; Пароли: лучше ключи ssh + ssh-agent; иначе ~/.authinfo.gpg (auth-source).
+(use-package tramp
+  :ensure nil
+  :custom
+  (tramp-default-method          "ssh")               ; быстрее, чем scp по умолчанию
+  (tramp-verbose                 1)                   ; меньше шума в *Messages*
+  (tramp-connection-timeout      15)
+  ;; одно ssh-соединение переиспользуется (ControlMaster): новые команды без пароля
+  (tramp-use-connection-share    nil)                 ; соединением управляет сам ssh
+  (tramp-ssh-controlmaster-options
+   "-o ControlMaster=auto -o ControlPath=tramp.%%C -o ControlPersist=10m")
+  (remote-file-name-inhibit-cache 60)                 ; кешировать листинги на 60 с
+  (enable-remote-dir-locals      t)                   ; .dir-locals.el на удалённых машинах
+  (tramp-auto-save-directory     (locate-user-emacs-file "tramp-autosave/"))
+  :config
+  ;; vc на удалённых каталогах очень медленный — отключаем
+  (setq vc-ignore-dir-regexp
+        (format "\\(%s\\)\\|\\(%s\\)" vc-ignore-dir-regexp tramp-file-name-regexp)))
+
+;; --- подсказки по клавишам --------------------------------------------------
+;; which-key встроен в Emacs 30: после префикса (C-c, C-x ...) показывает, что дальше
+(use-package which-key
+  :ensure nil
+  :custom
+  (which-key-idle-delay        0.6)
+  (which-key-sort-order        #'which-key-key-order-alpha)
+  (which-key-max-description-length 40)
+  :init (which-key-mode 1))
+
+;; --- проверка орфографии: jinx (русский + английский) -----------------------
+;; Подчёркивает ошибки только в тексте, комментариях и строках; код в org-блоках
+;; пропускает. M-$ — исправить слово, C-M-$ — выбрать языки.
+;; Нужны (Arch): sudo pacman -S enchant hunspell-ru hunspell-en_us pkgconf gcc
+;; (модуль jinx соберётся при первом запуске).
+(use-package jinx
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (("M-$"   . jinx-correct)
+         ("C-M-$" . jinx-languages))
+  :custom
+  (jinx-languages "ru_RU en_US"))
+
+;; --- вкладки: tab-bar-mode ----------------------------------------------------
+;; Встроенные вкладки (набор окон на вкладку). Основные клавиши (префикс C-x t):
+;;   C-x t 2 — новая вкладка, C-x t 0 — закрыть, C-x t o — следующая,
+;;   C-x t r — переименовать, C-x t p / C-x t C-p — проект в новой вкладке,
+;;   C-x t u — вернуть закрытую. Панель видна, только когда вкладок больше одной.
+(use-package tab-bar
+  :ensure nil
+  :custom
+  (tab-bar-show                1)
+  (tab-bar-close-button-show   nil)
+  (tab-bar-new-button-show     nil)
+  (tab-bar-tab-hints           t)                     ; номера на вкладках
+  (tab-bar-new-tab-choice      "*scratch*")
+  (tab-bar-select-tab-modifiers '(meta))              ; M-1 … M-9 — перейти на вкладку
+  :init
+  (tab-bar-mode 1)
+  (tab-bar-history-mode 1))                           ; история окон: C-c <left>/<right>
+
+(defun my/tab-bar-faces (&rest _)
+  "Цвета вкладок в палитре tokyo-night."
+  (dolist (spec '((tab-bar          :background "#16161e" :foreground "#565f89")
+                  (tab-bar-tab      :background "#1a1b26" :foreground "#7aa2f7" :weight bold
+                                    :box nil)
+                  (tab-bar-tab-inactive :background "#16161e" :foreground "#565f89"
+                                    :box nil)))
+    (when (facep (car spec))
+      (apply #'set-face-attribute (car spec) nil (cdr spec)))))
+
+(my/tab-bar-faces)
+(add-hook 'enable-theme-functions #'my/tab-bar-faces)   ; смена темы перезаписывает лица
+
+;; --- KDL (конфиг niri и др.) -------------------------------------------------
+(use-package kdl-mode
+  :mode "\\.kdl\\'")
+
+;; --- строка состояния: doom-modeline --------------------------------------------
+;; Иконки (nerd-icons), имя файла, git, LSP, ошибки, число слов в org-заметках.
+;; Справа дополнительно показывается заголовок (#+title) заметки: имя файла у roam —
+;; это временная метка, по нему трудно понять, что открыто.
+(use-package doom-modeline
+  :custom
+  (doom-modeline-height                      28)
+  (doom-modeline-bar-width                   4)
+  (doom-modeline-icon                        t)
+  (doom-modeline-buffer-file-name-style      'truncate-upto-project)
+  (doom-modeline-minor-modes                 nil)
+  (doom-modeline-buffer-encoding             nil)   ; не показывать UTF-8 и т. п.
+  (doom-modeline-enable-word-count           t)
+  (doom-modeline-continuous-word-count-modes '(org-mode markdown-mode text-mode))
+  (doom-modeline-vcs-max-length              24)
+  :init (doom-modeline-mode 1))
+
+(defvar-local morg--title-cache nil "(ТИК . ЗАГОЛОВОК) — чтобы не искать #+title при каждой отрисовке.")
+
+(defun morg--note-title ()
+  "Заголовок заметки (#+title) для org-буфера; пересчитывается только при изменении текста."
+  (let ((tick (buffer-chars-modified-tick)))
+    (unless (eq (car morg--title-cache) tick)
+      (setq morg--title-cache
+            (cons tick
+                  (save-excursion
+                    (save-restriction
+                      (widen)
+                      (goto-char (point-min))
+                      (when (re-search-forward "^#\\+title:[ \t]*\\(.*\\)$"
+                                               (min (point-max) 2000) t)
+                        (match-string-no-properties 1)))))))
+    (cdr morg--title-cache)))
+
+(defun morg--modeline-note ()
+  (when (derived-mode-p 'org-mode)
+    (when-let* ((title (morg--note-title))
+                ((not (string-empty-p title))))
+      (propertize (concat " ✎ " (truncate-string-to-width title 32 nil nil "…") " ")
+                  'face '(:foreground "#7dcfff")))))
+
+(add-to-list 'global-mode-string '(:eval (morg--modeline-note)) t)
+
+;; --- статистика запуска и учёт времени -----------------------------------------
+(defun my/emacs-stats ()
+  "Показать время запуска и сколько пакетов/библиотек загружено."
+  (interactive)
+  (message "Emacs: запуск %s · пакетов активно: %d · библиотек загружено: %d · аптайм %s"
+           (emacs-init-time) (length package-activated-list) (length features)
+           (emacs-uptime)))
+
+;; В режиме демона emacs-startup-hook срабатывает при запуске демона, когда окна ещё нет,
+;; и сообщение пропадает. Поэтому в демоне показываем статистику один раз, при открытии
+;; первого фрейма через emacsclient (с небольшой задержкой, чтобы эхо-область успела
+;; появиться). Вручную в любой момент: M-x my/emacs-stats.
+(defun my/emacs-stats-once ()
+  (remove-hook 'server-after-make-frame-hook #'my/emacs-stats-once)
+  (run-with-timer 0.5 nil #'my/emacs-stats))
+
+(if (daemonp)
+    (add-hook 'server-after-make-frame-hook #'my/emacs-stats-once)
+  (add-hook 'emacs-startup-hook #'my/emacs-stats))
+
+;; ActivityWatch — локальный аналог WakaTime: время по проектам, файлам и языкам,
+;; простой (AFK) отдельно; все данные остаются на машине (http://localhost:5600).
+;; Arch (AUR): yay -S activitywatch-bin, затем запустить aw-server и aw-watcher-afk
+;; (aw-qt поднимает всё сразу). На Wayland watcher окон и AFK может не работать:
+;; активность редактирования Emacs всё равно считается плагином ниже.
+(use-package activity-watch-mode
+  :custom
+  (activity-watch-api-host "127.0.0.1")
+  (activity-watch-api-port 5600)
+  :config
+  (global-activity-watch-mode))
 
 (provide 'plugins)
