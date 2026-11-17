@@ -50,7 +50,17 @@
   :init
   (global-corfu-mode)
   (corfu-popupinfo-mode)
-  (corfu-history-mode))
+  (corfu-history-mode)
+  :config
+  ;; Подсказки всегда моноширинным Iosevka: иначе в org (mixed-pitch) всплывающее окно
+  ;; наследует пропорциональный шрифт, и иконки с колонками «плывут».
+  ;; Тема при смене перезаписывает лица, поэтому применяем и после enable-theme.
+  (defun my/corfu-fonts (&rest _)
+    (dolist (face '(corfu-default corfu-current corfu-popupinfo))
+      (when (facep face)
+        (set-face-attribute face nil :family "Iosevka Nerd Font"))))
+  (my/corfu-fonts)
+  (add-hook 'enable-theme-functions #'my/corfu-fonts))
 
 (use-package cape
   :init
@@ -162,10 +172,39 @@
          ("M-<down>" . drag-stuff-down))
   :config (drag-stuff-global-mode))
 
-(use-package nerd-icons)
+;; Пиксельные иконки: все значки nerd-icons (подсказки, vertico, dired, строка состояния)
+;; рисуются шрифтом Cozette. Поставьте его с патчем Nerd Font, иначе значков в нём мало:
+;;   yay -S nerd-fonts-cozette-ttf ; fc-cache -fv ; (проверка: fc-list | grep -i cozette)
+;; Если в Cozette нет нужного значка, Emacs сам возьмёт его из Symbols Nerd Font.
+;; Вернуть обычные иконки: (setq my/icon-font-candidates nil) или удалить шрифт.
+(defvar my/icon-font-candidates
+  '("CozetteVector Nerd Font" "Cozette Nerd Font" "CozetteVector" "Cozette")
+  "Семейства шрифта для иконок, по порядку; берётся первое установленное.")
+
+(use-package nerd-icons
+  :config
+  (defun my/apply-icon-font (&rest _)
+    (when (display-graphic-p)
+      (when-let* ((fam (seq-find (lambda (f) (find-font (font-spec :family f)))
+                                 my/icon-font-candidates)))
+        (setq nerd-icons-font-family fam))))
+  ;; в daemon шрифты видны только после создания первого кадра
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook #'my/apply-icon-font)
+    (my/apply-icon-font)))
 (use-package nerd-icons-corfu
   :after corfu
-  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+  :init
+  ;; иконка в подсказках слишком близко к тексту: добавляем ещё один пробел после неё.
+  ;; Нужен шире отступ — увеличьте число в make-string (или поставьте 2).
+  (defvar my/corfu-icon-gap 1 "Сколько лишних пробелов между иконкой и текстом в подсказках.")
+  (defun my/corfu-icon-formatter (metadata)
+    "Обёртка над nerd-icons-corfu-formatter: иконка + дополнительный отступ."
+    (when-let* ((fmt (nerd-icons-corfu-formatter metadata)))
+      (lambda (cand)
+        (when-let* ((icon (funcall fmt cand)))
+          (concat icon (make-string my/corfu-icon-gap ?\s))))))
+  (add-to-list 'corfu-margin-formatters #'my/corfu-icon-formatter))
 
 (use-package nerd-icons-completion
   :after vertico
@@ -294,7 +333,9 @@
 ;; Один раз: M-x treesit-install-language-grammar RET c   (и rust). Нужны gcc и сеть.
 (with-eval-after-load 'treesit
   (dolist (src '((c    "https://github.com/tree-sitter/tree-sitter-c")
-                 (rust "https://github.com/tree-sitter/tree-sitter-rust")))
+                 (rust "https://github.com/tree-sitter/tree-sitter-rust")
+                 (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+                 (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
     (add-to-list 'treesit-language-source-alist src)))
 
 ;; --- C: c-ts-mode, отступ 8 (табы, стиль Linux kernel) ---------------------

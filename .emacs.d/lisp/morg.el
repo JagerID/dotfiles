@@ -30,6 +30,7 @@
       (python    . t)
       (plantuml  . t)
       (sql       . t)
+      (js        . t)                   ; нужен node
       (C         . t)
       (d2        . t)
       (dot       . t)))
@@ -412,6 +413,52 @@
     :config
     (org-babel-do-load-languages 'org-babel-load-languages my/org-babel-languages))
 
+  ;; --- TypeScript в org-babel ------------------------------------------------------
+  ;; JavaScript выполняет встроенный ob-js (через node). Пакет ob-typescript не берём:
+  ;; он компилирует код через tsc с ключом --outFile, который в TypeScript 6 объявлен
+  ;; устаревшим (ошибка TS5101). Вместо этого свой исполнитель: код сохраняется во
+  ;; временный файл .ts и запускается напрямую.
+  ;;   - если в PATH есть tsx (npm install -g tsx) — запускаем им (понимает весь TypeScript);
+  ;;   - иначе node (Node 23.6+ сам вырезает типы; enum и namespace не поддерживаются).
+  ;; Установка: sudo pacman -S nodejs npm ; npm install -g tsx
+  ;; После установки — M-x my/refresh-shell-env, чтобы Emacs увидел новый PATH.
+  (defvar morg-typescript-command nil
+    "Команда запуска .ts-файла; nil — выбрать автоматически (tsx, иначе node).")
+
+  (defun morg--typescript-command ()
+    (or morg-typescript-command
+        (if (executable-find "tsx") "tsx" "node --no-warnings")))
+
+  (with-eval-after-load 'org
+    (require 'ob-js)
+    (defvar org-babel-default-header-args:typescript '((:results . "output")))
+    (defvar org-babel-default-header-args:ts '((:results . "output")))
+    (add-to-list 'org-babel-tangle-lang-exts '("typescript" . "ts"))
+    (add-to-list 'org-babel-tangle-lang-exts '("ts" . "ts"))
+
+    (defun org-babel-execute:typescript (body params)
+      "Выполнить src-блок typescript: результат — вывод программы (console.log)."
+      (let* ((vars (org-babel--get-vars params))              ; :var x=имя → const x = …;
+             (prologue
+              (mapconcat
+               (lambda (v)
+                 (format "const %s = %s;" (car v)
+                         (if (fboundp 'org-babel-js-var-to-js)
+                             (org-babel-js-var-to-js (cdr v))
+                           (format "%S" (cdr v)))))
+               vars "\n"))
+             (full (if vars (concat prologue "\n" body) body))
+             (file (org-babel-temp-file "ts-" ".ts")))
+        (with-temp-file file (insert full))
+        (org-babel-eval (format "%s %s" (morg--typescript-command)
+                                (org-babel-process-file-name file))
+                        "")))
+
+    (defalias 'org-babel-execute:ts #'org-babel-execute:typescript)
+    ;; #+begin_src javascript — то же, что js
+    (unless (fboundp 'org-babel-execute:javascript)
+      (defalias 'org-babel-execute:javascript #'org-babel-execute:js)))
+
   ;; --- быстрые блоки: <src TAB, <c TAB и т.д. (org-tempo) -----------------
   ;; ключ = то, что пишется после "<". Сначала дополняем alist, потом грузим
   ;; org-tempo, чтобы он сразу создал шаблоны.
@@ -422,6 +469,8 @@
                    ("el"  . "src emacs-lisp")
                    ("py"  . "src python")
                    ("sql" . "src sql")
+                   ("js"  . "src js")
+                   ("ts"  . "src typescript")
                    ("n"   . "note")
                    ("t"   . "tip")
                    ("w"   . "warning")
@@ -1021,38 +1070,93 @@
                                (min (point-max) (1+ (cdr r))))))))))
 
   (defun morg--caption-above-p (pos)
-    "Не-nil, если над строкой в POS (через строки-описания) есть #+caption:."
+    "Не-nil, если над строкой в POS (через строки-описания) есть #+caption: или #+name:."
     (save-excursion
       (goto-char pos)
-      (let (found)
+      (let (found (case-fold-search t))
         (while (and (not (bobp))
                     (progn (forward-line -1) (looking-at-p morg--affil-re)))
-          (when (looking-at-p "[ \t]*#\\+caption:") (setq found t)))
+          (when (looking-at-p "[ \t]*#\\+\\(?:caption\\|name\\):") (setq found t)))
         found)))
 
   (defun morg--hide-line (bol eol)
     "Убрать строку BOL…EOL вместе с переводом строки (display \"\")."
     (put-text-property bol (min (point-max) (1+ eol)) 'display ""))
 
+  ;; --- #+name: у src-блока ------------------------------------------------------------
+  ;; Имя блока (#+name: fetch) нужно, чтобы ссылаться на него из других блоков
+  ;; (:var x=fetch, <<fetch>>, #+call:). Вне блока оно не выводится отдельной строкой:
+  ;;   - есть #+caption: — имя показывается в подписи:  ▍ shell  ‹fetch›  Текст подписи
+  ;;   - подписи нет    — само имя становится подписью: ▍ shell  fetch
+  ;; Под курсором (внутри блока) показываются настоящие строки.
+  (defvar morg-name-color "#bb9af7" "Цвет имени блока (#+name:) в подписи.")
+
+  (defun morg--affil-group (pos)
+    "Для группы строк-описаний, в которой лежит строка POS: (ИМЯ CAPTION-P ЯЗЫК).
+ЯЗЫК — язык src-блока, который идёт сразу за группой, иначе nil."
+    (save-match-data
+      (save-excursion
+        (let ((case-fold-search t) name cap)
+          (goto-char pos)
+          (beginning-of-line)
+          ;; подняться к началу группы
+          (while (and (not (bobp))
+                      (save-excursion (forward-line -1) (looking-at-p morg--affil-re)))
+            (forward-line -1))
+          ;; пройти группу вниз
+          (while (looking-at-p morg--affil-re)
+            (cond ((looking-at "[ \t]*#\\+name:[ \t]*\\(.*?\\)[ \t]*$")
+                   (setq name (match-string-no-properties 1)))
+                  ((looking-at-p "[ \t]*#\\+caption:") (setq cap t)))
+            (forward-line 1))
+          (list (and name (not (string-empty-p name)) name)
+                cap
+                (when (looking-at "[ \t]*#\\+begin_src[ \t]+\\([^ \t\n]+\\)")
+                  (match-string-no-properties 1)))))))
+
   (defun morg--style-caption ()
-    "font-lock: #+caption:. Группа 1 — «#+caption: » с пробелами; показать «▍ язык  »."
-    (let ((bol (match-beginning 0)) (eol (match-end 0))
+    "font-lock: #+caption:. Группа 1 — «#+caption: » с пробелами; показать «▍ язык  ‹имя›  »."
+    (let ((bol (match-beginning 0))
           (pb (match-beginning 1)) (pe (match-end 1)))
       (when (and morg-hide-src-delimiters (not (morg--block-active-p bol)))
-        (let ((lang (save-match-data
-                      (save-excursion
-                        (goto-char eol)
-                        (forward-line 1)
-                        (while (looking-at-p morg--affil-re) (forward-line 1))
-                        (when (looking-at "[ \t]*#\\+begin_src[ \t]+\\([^ \t\n]+\\)")
-                          (match-string-no-properties 1))))))
+        (let* ((grp  (morg--affil-group bol))
+               (name (nth 0 grp))
+               (lang (nth 2 grp)))
           (put-text-property
            pb pe 'display
            (concat (propertize "▍ " 'face `(:foreground ,morg-caption-color :weight bold))
                    (when lang
                      (propertize (concat lang "  ")
                                  'face `(:foreground ,morg-caption-lang-color
+                                         :weight normal :slant normal)))
+                   (when (and name lang)
+                     (propertize (concat "‹" name "›  ")
+                                 'face `(:foreground ,morg-name-color
                                          :weight normal :slant normal))))))))
+    nil)
+
+  (defun morg--style-name ()
+    "font-lock: #+name:. Группа 1 — «#+name: ». Только для имён src-блоков."
+    (let ((bol (match-beginning 0)) (eol (match-end 0))
+          (pb (match-beginning 1)) (pe (match-end 1)))
+      (when (and morg-hide-src-delimiters (not (morg--block-active-p bol)))
+        (let* ((grp  (morg--affil-group bol))
+               (cap  (nth 1 grp))
+               (lang (nth 2 grp)))
+          (when lang                      ; имя таблицы и т. п. не трогаем
+            (if cap
+                (morg--hide-line bol eol) ; имя уйдёт в подпись
+              ;; подписи нет — имя играет её роль
+              (put-text-property
+               pb pe 'display
+               (concat (propertize "▍ " 'face `(:foreground ,morg-caption-color :weight bold))
+                       (propertize (concat lang "  ")
+                                   'face `(:foreground ,morg-caption-lang-color
+                                           :weight normal :slant normal))))
+              (add-face-text-property bol (min (point-max) (1+ eol))
+                                      (morg--caption-line-face) t)
+              (add-face-text-property pe eol
+                                      `(:foreground ,morg-name-color :weight bold) t))))))
     nil)
 
   (defun morg--style-src-begin ()
@@ -1093,6 +1197,8 @@
   (defvar morg--block-keywords
     '(("^[ \t]*\\(#\\+caption:[ \t]*\\).*$"
        (0 (morg--style-caption)))
+      ("^[ \t]*\\(#\\+[nN][aA][mM][eE]:[ \t]*\\).*$"
+       (0 (morg--style-name)))
       ("^[ \t]*#\\+begin_src[ \t]+[^ \t\n]+\\([^\n]*\\)$"
        (0 (morg--style-src-begin)))
       ("^[ \t]*#\\+end_src\\_>.*$"
@@ -1218,8 +1324,260 @@
   (with-eval-after-load 'org
     (dolist (pair '(("rust" . rust-ts)
                     ("c"    . c-ts)
-                    ("C"    . c-ts)))
+                    ("C"    . c-ts)
+                    ("js"         . js-ts)
+                    ("javascript" . js-ts)
+                    ("ts"         . typescript-ts)
+                    ("typescript" . typescript-ts)
+                    ;; zsh/bash/shell подсвечиваются режимом sh-mode (отдельного zsh-mode нет)
+                    ("zsh"   . sh)
+                    ("bash"  . sh)
+                    ("shell" . sh)))
       (setf (alist-get (car pair) org-src-lang-modes nil nil #'equal) (cdr pair))))
+
+  ;; --- результат JSON подсвечивается как JSON ----------------------------------------
+  ;; Обычный :results output вставляется строками «: …» без подсветки. Если вывод блока —
+  ;; корректный JSON, он вставляется как #+begin_src json … #+end_src, и Org подсвечивает
+  ;; его режимом json. Определение «это JSON» — по настоящему разбору (json-parse-string),
+  ;; а не по первому символу. Не применяется, если в :results уже указан формат
+  ;; (verbatim, raw, table, code, silent …) — так можно отключить для одного блока:
+  ;;   #+begin_src zsh :results output verbatim replace
+  (defvar morg-results-auto-json t "Подсвечивать результат-JSON как src-блок json.")
+  (defvar morg-results-json-max 300000 "Не разбирать вывод длиннее стольких символов.")
+
+  (defun morg--json-string-p (s)
+    (and (stringp s)
+         (< (length s) morg-results-json-max)
+         (string-match-p "\\`[ \t\n]*[{[]" s)
+         (condition-case nil
+             (progn (json-parse-string s) t)
+           (error nil))))
+
+  (defun morg--js-object-string-p (s lang)
+    "Похоже ли S на вывод console.log объекта/массива из блока js/ts (не JSON)."
+    (and (stringp s)
+         (member lang '("js" "javascript" "ts" "typescript"))
+         (< (length s) morg-results-json-max)
+         (string-match-p "\\`[ \t\n]*[{[]" s)
+         (string-match-p "[}\\]][ \t\n]*\\'" s)))
+
+  (defun morg--results-json-advice (args)
+    "Фильтр аргументов org-babel-insert-result: JSON → «code» с языком json,
+вывод console.log из js/ts (объект с ключами без кавычек) → «code» с языком js."
+    (let* ((result (nth 0 args))
+           (params (nth 1 args))
+           (lang   (nth 4 args))
+           (new-lang
+            (when (and morg-results-auto-json
+                       (not (seq-intersection
+                             params '("silent" "none" "table" "vector" "list" "raw" "file"
+                                      "link" "graphics" "html" "latex" "org" "drawer"
+                                      "code" "pp" "verbatim" "scalar"))))
+              (cond ((morg--json-string-p result) "json")
+                    ((morg--js-object-string-p result lang) "js")))))
+      (if new-lang
+          (let ((a (append args (make-list (max 0 (- 5 (length args))) nil))))
+            (setf (nth 1 a) (cons "code" params))
+            (setf (nth 4 a) new-lang)
+            a)
+        args)))
+
+  (with-eval-after-load 'ob-core
+    (advice-add 'org-babel-insert-result :filter-args #'morg--results-json-advice))
+
+  ;; --- подсказки (corfu) для org-babel ---------------------------------------------
+  ;; Работает через capf — тот же механизм, что у подсказок по PostgreSQL. Подсказывает:
+  ;;   #+<TAB>                  — ключевые слова (#+name:, #+caption:, #+call: …)
+  ;;   #+begin_src <TAB>        — языки блоков
+  ;;   #+begin_src zsh :<TAB>   — все заголовочные аргументы (:results, :exports, :dir …)
+  ;;   … :results <TAB>         — значения аргумента (output, replace, silent …)
+  ;;   … :var x=<TAB>           — имена блоков и таблиц из этого файла
+  ;;   <<<TAB>                  — имена блоков для noweb внутри src-блока
+  ;;   #+call: <TAB>            — имена блоков
+  ;; Справа от варианта серым написано, что он делает.
+  (defconst morg--babel-header-args
+    '((":results" "что делать с результатом"
+       (("output"   . "то, что программа вывела (stdout)")
+        ("value"    . "значение последнего выражения (по умолчанию)")
+        ("replace"  . "заменить прежний результат (по умолчанию)")
+        ("append"   . "дописать после прежнего результата")
+        ("prepend"  . "вставить перед прежним результатом")
+        ("silent"   . "не вставлять в буфер, показать в эхо-области")
+        ("none"     . "ничего не вставлять")
+        ("table"    . "как таблица Org")
+        ("vector"   . "то же, что table")
+        ("list"     . "как список Org")
+        ("scalar"   . "одно значение как есть")
+        ("verbatim" . "дословно (строки «: …»)")
+        ("raw"      . "вставить как есть, без оформления")
+        ("code"     . "завернуть в src-блок")
+        ("org"      . "вставить как разметку Org")
+        ("html"     . "в блок export html")
+        ("latex"    . "в блок export latex")
+        ("pp"       . "красиво распечатать (pretty print)")
+        ("drawer"   . "обернуть в drawer :RESULTS:")
+        ("file"     . "результат — файл (см. :file)")
+        ("link"     . "ссылка на файл")
+        ("graphics" . "результат — картинка")))
+      (":exports" "что попадёт в экспорт"
+       (("code" . "только код") ("results" . "только результат")
+        ("both" . "код и результат") ("none" . "ничего")))
+      (":eval" "когда разрешён запуск блока"
+       (("never" . "не запускать") ("no" . "не запускать") ("query" . "спрашивать")
+        ("never-export" . "не запускать при экспорте") ("no-export" . "не запускать при экспорте")
+        ("query-export" . "спрашивать при экспорте")))
+      (":var" "передать переменную: x=имя-блока, x=5" nil)
+      (":session" "общая сессия интерпретатора для блоков" nil)
+      (":dir" "каталог запуска (в т. ч. TRAMP: /ssh:host:/путь/)" nil)
+      (":cache" "кешировать результат, пока код не менялся" (("yes") ("no")))
+      (":noweb" "подстановка <<имя>> другого блока"
+       (("yes" . "подставлять всегда") ("no") ("tangle" . "только при tangle")
+        ("no-export" . "кроме экспорта") ("strip-export") ("eval" . "только при запуске")))
+      (":tangle" "выгрузить код в файл" (("yes" . "в файл с именем заметки") ("no")))
+      (":file" "файл для результата (картинки, графики)" nil)
+      (":file-ext" "расширение файла результата" nil)
+      (":output-dir" "каталог для файла результата" nil)
+      (":file-desc" "подпись ссылки на файл" nil)
+      (":mkdirp" "создавать каталоги при tangle" (("yes") ("no")))
+      (":hlines" "сохранять горизонтальные линии таблиц" (("yes") ("no")))
+      (":colnames" "первая строка таблицы — заголовки" (("yes") ("no") ("nil")))
+      (":rownames" "первый столбец таблицы — имена строк" (("yes") ("no")))
+      (":wrap" "обернуть результат в блок" (("src") ("example") ("quote") ("export")))
+      (":prologue" "текст, добавляемый перед кодом" nil)
+      (":epilogue" "текст, добавляемый после кода" nil)
+      (":post" "обработать результат другим блоком" nil)
+      (":shebang" "строка #! для tangle" nil)
+      (":cmdline" "аргументы командной строки" nil)
+      (":stdin" "что подать на стандартный ввод" nil)
+      (":comments" "комментарии-ссылки при tangle"
+       (("no") ("link") ("yes") ("org") ("both") ("noweb")))
+      (":padline" "пустая строка перед блоком при tangle" (("yes") ("no")))
+      (":sep" "разделитель полей (CSV)" nil)
+      (":engine" "СУБД для sql" (("postgresql") ("mysql") ("sqlite")))
+      (":database" "имя базы данных" nil)
+      (":dbhost" "хост СУБД" nil)
+      (":dbport" "порт СУБД" nil)
+      (":dbuser" "пользователь СУБД" nil)
+      (":flags" "ключи программы (d2, plantuml …)" nil))
+    "Заголовочные аргументы org-babel: (ИМЯ ОПИСАНИЕ ((ЗНАЧЕНИЕ . ОПИСАНИЕ) …)).")
+
+  (defconst morg--babel-keywords
+    '(("#+name:"      . "имя блока/таблицы для ссылок")
+      ("#+caption:"   . "подпись")
+      ("#+header:"    . "заголовочные аргументы отдельной строкой")
+      ("#+call:"      . "вызвать именованный блок")
+      ("#+begin_src"  . "блок кода")
+      ("#+property:"  . "свойство для всего файла")
+      ("#+startup:"   . "параметры отображения файла")
+      ("#+filetags:"  . "теги всего файла")
+      ("#+attr_html:" . "атрибуты для HTML-экспорта"))
+    "Ключевые слова для подсказки после «#+».")
+
+  (defun morg--babel-names ()
+    "Алист (ИМЯ . описание) для всех #+name: в буфере."
+    (let (res (case-fold-search t))
+      (save-excursion
+        (save-restriction
+          (widen)
+          (goto-char (point-min))
+          (while (re-search-forward "^[ \t]*#\\+name:[ \t]*\\([^ \t\n]+\\)" nil t)
+            (push (cons (match-string-no-properties 1)
+                        (format "именованный блок, строка %d" (line-number-at-pos)))
+                  res))))
+      (nreverse res)))
+
+  (defun morg--babel-languages ()
+    (mapcar (lambda (l) (cons l nil))
+            (delete-dups
+             (append (mapcar (lambda (x) (symbol-name (car x)))
+                             (bound-and-true-p my/org-babel-languages))
+                     '("zsh" "bash" "sh" "ts" "typescript" "js" "javascript" "rust"
+                       "python" "sql" "emacs-lisp" "C" "yaml" "json" "toml" "text")))))
+
+  (defconst morg--babel-lang-extensions
+    '(("zsh" . "sh") ("bash" . "sh") ("sh" . "sh") ("shell" . "sh")
+      ("ts" . "ts") ("typescript" . "ts") ("js" . "js") ("javascript" . "js")
+      ("rust" . "rs") ("python" . "py") ("sql" . "sql") ("emacs-lisp" . "el")
+      ("C" . "c") ("c" . "c") ("yaml" . "yaml") ("json" . "json") ("toml" . "toml")
+      ("text" . "txt") ("plantuml" . "puml") ("d2" . "d2") ("dot" . "dot"))
+    "Язык блока -> расширение файла (по нему подбирается иконка).")
+
+  (defun morg--babel-lang-icon (lang)
+    "Иконка nerd-icons для языка src-блока, иначе пустая строка."
+    (if (fboundp 'nerd-icons-icon-for-extension)
+        (concat (nerd-icons-icon-for-extension
+                 (or (cdr (assoc lang morg--babel-lang-extensions)) lang))
+                " ")
+      ""))
+
+  (defun morg--babel-result (start end alist &optional space prefix-fn)
+    "Результат для capf: ALIST из (ВАРИАНТ . ОПИСАНИЕ); SPACE — добавить пробел после выбора;
+PREFIX-FN — функция ВАРИАНТ -> строка, которая показывается слева (иконка)."
+    (append
+     (list start end
+           (lambda (str pred action)
+             (if (eq action 'metadata)
+                 '(metadata (display-sort-function . identity))
+               (complete-with-action action (mapcar #'car alist) str pred)))
+           :annotation-function
+           (lambda (c) (let ((d (cdr (assoc c alist)))) (when d (concat "  " d))))
+           :exclusive 'no)
+     (when prefix-fn
+       (list :affixation-function
+             (lambda (cands)
+               (mapcar (lambda (c) (list c (funcall prefix-fn c) "")) cands))))
+     (when space
+       (list :exit-function
+             (lambda (_ status) (when (eq status 'finished) (insert " ")))))))
+
+  (defun morg--babel-capf ()
+    "capf для строк #+begin_src / #+header: / #+call: и ключевых слов #+…."
+    (when (derived-mode-p 'org-mode)
+      (let* ((pt (point))
+             (bol (line-beginning-position))
+             (case-fold-search t))
+        (cond
+         ;; <<имя>> внутри src-блока
+         ((and (looking-back "<<\\([^<>\n ]*\\)" bol)
+               (org-in-src-block-p))
+          (morg--babel-result (match-beginning 1) pt (morg--babel-names)))
+         ;; #+call: имя
+         ((looking-back "^[ \t]*#\\+call:[ \t]*\\([^ \t(\n]*\\)" bol)
+          (morg--babel-result (match-beginning 1) pt (morg--babel-names)))
+         ;; #+begin_src язык
+         ((looking-back "^[ \t]*#\\+begin_src[ \t]+\\([^ \t\n]*\\)" bol)
+          (morg--babel-result (match-beginning 1) pt (morg--babel-languages) t
+                              #'morg--babel-lang-icon))
+         ;; #+ключевое-слово
+         ((and (looking-back "^[ \t]*\\(#\\+[[:alpha:]_]*\\)" bol)
+               (not (org-in-src-block-p)))
+          (morg--babel-result (match-beginning 1) pt morg--babel-keywords t))
+         ;; заголовочные аргументы в #+begin_src язык … / #+header: …
+         ((save-excursion
+            (goto-char bol)
+            (looking-at-p "[ \t]*#\\+\\(?:begin_src[ \t]+[^ \t\n]+\\|headers?:\\)[ \t]"))
+          (let* ((start (save-excursion (skip-chars-backward "^ \t") (max (point) bol)))
+                 (tok (buffer-substring-no-properties start pt))
+                 (before (buffer-substring-no-properties bol start))
+                 (key (when (string-match
+                             "\\(?:\\`\\|[ \t]\\)\\(:[[:alnum:]_-]+\\)\\(?:[ \t]+[^: \t][^ \t]*\\)*[ \t]+\\'"
+                             before)
+                        (match-string 1 before))))
+            (cond
+             ((string-prefix-p ":" tok)           ; имя аргумента
+              (morg--babel-result
+               start pt
+               (mapcar (lambda (a) (cons (car a) (nth 1 a))) morg--babel-header-args)
+               t))
+             ((and (equal key ":var") (string-match "=" tok))   ; x=<имя блока>
+              (morg--babel-result (+ start (match-end 0)) pt (morg--babel-names)))
+             (key                                 ; значение аргумента
+              (let ((vals (nth 2 (assoc key morg--babel-header-args))))
+                (when vals (morg--babel-result start pt vals)))))))))))
+
+  (defun morg--setup-babel-capf ()
+    (add-hook 'completion-at-point-functions #'morg--babel-capf -90 t))
+  (add-hook 'org-mode-hook #'morg--setup-babel-capf)
 
   ;; --- mixed-pitch: текст пропорциональным шрифтом, код и таблицы — моноширинным ---
   (defun morg--set-variable-pitch (&rest _)
@@ -1281,7 +1639,7 @@
     (org-modern-table               nil)     ; линии таблиц рисуем сами (morg--table-prettify)
     ;; caption/title/date/author оформляем сами (morg--style-caption, org-hidden-keywords),
     ;; остальные ключевые слова org-modern рисует как раньше
-    (org-modern-keyword             '(("caption") ("title") ("date") ("author") (t . t)))
+    (org-modern-keyword             '(("caption") ("name") ("title") ("date") ("author") (t . t)))
     (org-modern-tag                 nil)     ; теги рисуем сами, как #хэштеги (см. выше)
     (org-modern-hide-stars          nil)     ; ведущие звёздочки прячет morg--hide-leading-stars
     (org-modern-todo-faces
