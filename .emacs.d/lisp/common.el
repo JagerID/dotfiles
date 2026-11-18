@@ -1,6 +1,13 @@
 ;;; common.el --- generated from config.org -*- lexical-binding: t -*-
 
-(defun make-missing-dirs ()
+;; Кодировка: демон Emacs, запущенный из systemd/сессии без локали UTF-8, читает вывод
+  ;; внешних программ (psql, shell) «сырыми байтами»; кириллица в нём ломает разбор JSON.
+  (set-language-environment "UTF-8")
+  (prefer-coding-system 'utf-8)
+  (setq locale-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+
+  (defun make-missing-dirs ()
     (when buffer-file-name
       (let ((dir (file-name-directory buffer-file-name)))
         (when (and dir (not (file-exists-p dir)))

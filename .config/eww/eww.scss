@@ -3,6 +3,63 @@
 	font-family: "Monocraft";
 }
 
+/* Notifications. Glass/blur comes from niri (layer-rule gtk-layer-shell). */
+.notifs {
+	padding: 4px 0;
+}
+
+.notif {
+	padding: 8px 12px 8px 0;
+	color: #d8dee9;
+
+	&:not(:first-child) {
+		border-top: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.notif-bar {
+		min-width: 3px;
+		margin: 2px 0;
+		border-radius: 2px;
+		background-color: rgba(255, 255, 255, 0.6);
+	}
+
+	.notif-app {
+		font-size: 0.8rem;
+		color: rgba(216, 222, 233, 0.6);
+	}
+
+	.notif-summary {
+		font-size: 1rem;
+	}
+
+	.notif-body {
+		font-size: 0.85rem;
+		color: rgba(216, 222, 233, 0.85);
+	}
+
+	.notif-progress {
+		margin-top: 6px;
+
+		trough {
+			min-height: 3px;
+			border-radius: 2px;
+			background-color: rgba(255, 255, 255, 0.12);
+		}
+
+		progress {
+			min-height: 3px;
+			border-radius: 2px;
+			background-color: rgba(255, 255, 255, 0.6);
+			transition: all 200ms linear;
+		}
+	}
+
+	&.critical .notif-bar,
+	&.critical .notif-progress progress {
+		background-color: #bf616a;
+	}
+}
+
 .island {
 	padding: 0 8px;
 }

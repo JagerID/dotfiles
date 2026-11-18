@@ -1,5 +1,31 @@
 #!/bin/bash
 
+focused_output () {
+	niri msg --json focused-output 2>/dev/null | jq -r '.model // empty'
+}
+
+# Окно уведомлений показываем на мониторе с фокусом (eww принимает model, а не имя коннектора)
+open_notifs () {
+	local out
+	out=$(focused_output)
+	[ -z "$out" ] && out=0
+	eww close notifications 2>/dev/null
+	eww open notifications --id "notifications" --arg mon="$out"
+}
+
+# Следим за сменой активного монитора и переносим окно уведомлений
+watch_focus () {
+	local cur new
+	cur=$(focused_output)
+	while sleep 0.3; do
+		new=$(focused_output)
+		if [ -n "$new" ] && [ "$new" != "$cur" ]; then
+			cur=$new
+			open_notifs
+		fi
+	done
+}
+
 load_eww () {
 	echo "Запуск eww виджетов"
 	eww close-all 2>/dev/null
@@ -39,10 +65,14 @@ load_eww () {
 		    --arg content="(box :orientation \"horizontal\" :space-evenly false :spacing 10 \
 			(time))"
 
+		# уведомления только на первом мониторе
+
 		eww open bg-centered \
 		    --id "bg-centered-$mon" \
 		    --arg mon="$mon"
 	done
+
+	open_notifs
 }
 
 if ! pgrep -x "eww" > /dev/null; then
@@ -52,6 +82,7 @@ fi
 load_eww
 
 if [ "$1" = "--daemon" ]; then
+    watch_focus &
     echo "Запущен режим демона. Ожидание событий изменения мониторов..."
     niri msg --json event-stream | grep --line-buffered -i "output" | while read -r line; do
         load_eww

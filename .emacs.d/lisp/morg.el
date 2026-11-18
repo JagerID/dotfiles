@@ -252,6 +252,28 @@
             (goto-char beg)
             (org-babel-hide-result-toggle t))))))
 
+  (defun morg--show-images (buf beg end)
+    "Показать картинки-ссылки между маркерами BEG и END в буфере BUF."
+    (when (and (buffer-live-p buf) (display-graphic-p))
+      (with-current-buffer buf
+        (condition-case err
+            (save-excursion
+              (cond ((fboundp 'org-display-inline-images)
+                     (org-display-inline-images t t (marker-position beg) (marker-position end)))
+                    ((fboundp 'org-link-preview-region)
+                     (org-link-preview-region t t (marker-position beg) (marker-position end)))))
+          (error (message "Не удалось показать картинку: %s" (error-message-string err)))))
+      (set-marker beg nil) (set-marker end nil)))
+
+  (defun morg-babel-show-images ()
+    "После выполнения блока сразу показать картинки в его результате (d2, dot, plantuml,
+python/matplotlib с :file …). Срабатывает через короткую паузу: файл уже записан,
+результат вставлен."
+    (when-let* ((beg (org-babel-where-is-src-block-result))
+                (end (save-excursion (goto-char beg) (org-babel-result-end))))
+      (let ((b (copy-marker beg)) (e (copy-marker end)) (buf (current-buffer)))
+        (run-with-timer 0.2 nil #'morg--show-images buf b e))))
+
   (defun morg-babel-hide-success-output ()
     "Закрыть окно stderr после успешного запуска (например d2: «success: ...»).
 Если в выводе есть что-то про ошибку, окно остаётся."
@@ -347,7 +369,7 @@
            ("C-b"   . my/org-bold)
            ("<C-i>" . my/org-italic)
            ("C-c h" . morg-set-heading-preset))
-    :hook ((org-babel-after-execute . org-link-preview-refresh)
+    :hook ((org-babel-after-execute . morg-babel-show-images)
            (org-babel-after-execute . morg-babel-ansi-colors)
            (org-babel-after-execute . morg-babel-fold-long-result)
            (org-mode                . morg-visual-setup))
@@ -1114,9 +1136,48 @@
                 (when (looking-at "[ \t]*#\\+begin_src[ \t]+\\([^ \t\n]+\\)")
                   (match-string-no-properties 1)))))))
 
+  (defvar morg-vars-max-width 70 "Максимальная ширина показа переменных :var в подписи.")
+  (defvar morg-vars-color "#e0af68" "Цвет строки с переменными :var под подписью блока.")
+
+  (defun morg--vars-marker ()
+    "Иконка «tune» перед переменными; если глиф не отображается — «ƒ»."
+    (let ((icon (and (display-graphic-p) (fboundp 'nerd-icons-mdicon)
+                     (ignore-errors (nerd-icons-mdicon "nf-md-tune")))))
+      (if (and (stringp icon) (> (length icon) 0) (char-displayable-p (aref icon 0)))
+          ;; шрифт иконки (face от nerd-icons) сохраняем, цвет — наш
+          (propertize icon 'face (list `(:foreground ,morg-vars-color)
+                                       (get-text-property 0 'face icon)))
+        (propertize "ƒ" 'face `(:foreground ,morg-vars-color)))))
+
+  (defun morg--block-vars-string (begin-bol)
+    "Строка «  <иконка> x=fetch  ·  n=5» из :var заголовка src-блока, чья строка #+begin_src начинается в
+BEGIN-BOL; nil, если переменных нет."
+    (save-excursion
+      (goto-char begin-bol)
+      (when (looking-at "[ \t]*#\\+begin_src[ \t]+[^ \t\n]+\\(.*\\)$")
+        (let (vars in)
+          (dolist (tok (split-string (match-string-no-properties 1)))
+            (cond ((string-prefix-p ":" tok) (setq in (equal tok ":var")))
+                  (in (push tok vars))))
+          (when vars
+            (concat
+             "  " (morg--vars-marker) " "
+             (propertize
+              (truncate-string-to-width
+               (string-join (nreverse vars) "  ·  ") morg-vars-max-width nil nil "…")
+              'face `(:foreground ,morg-vars-color :weight normal :slant normal))))))))
+
+  (defun morg--caption-block-begin (pos)
+    "Начало строки #+begin_src, идущей за подписью в строке POS (через строки #+name:), иначе nil."
+    (save-excursion
+      (goto-char pos)
+      (forward-line 1)
+      (while (looking-at-p "[ \t]*#\\+[nN][aA][mM][eE]:") (forward-line 1))
+      (when (looking-at-p "[ \t]*#\\+begin_src\\_>") (point))))
+
   (defun morg--style-caption ()
     "font-lock: #+caption:. Группа 1 — «#+caption: » с пробелами; показать «▍ язык  ‹имя›  »."
-    (let ((bol (match-beginning 0))
+    (let ((bol (match-beginning 0)) (eol (match-end 0))
           (pb (match-beginning 1)) (pe (match-end 1)))
       (when (and morg-hide-src-delimiters (not (morg--block-active-p bol)))
         (let* ((grp  (morg--affil-group bol))
@@ -1132,7 +1193,15 @@
                    (when (and name lang)
                      (propertize (concat "‹" name "›  ")
                                  'face `(:foreground ,morg-name-color
-                                         :weight normal :slant normal))))))))
+                                         :weight normal :slant normal)))))
+        ;; переменные :var блока — после подписи (свёрнутый блок: см. morg--style-src-begin)
+        (let ((b (morg--caption-block-begin bol)))
+          (when (and b (< eol (point-max))
+                     (not (and (fboundp 'org-fold-folded-p)
+                               (org-fold-folded-p (save-excursion (goto-char b)
+                                                                  (line-end-position))))))
+            (let ((v (morg--block-vars-string b)))
+              (when v (put-text-property eol (1+ eol) 'display (concat "\n" v "\n")))))))))
     nil)
 
   (defun morg--style-name ()
@@ -1165,7 +1234,24 @@
           (pb (match-beginning 1)) (pe (match-end 1)))
       (when (and morg-hide-src-delimiters (not (morg--block-active-p bol)))
         (if (morg--caption-above-p bol)
-            (morg--hide-line bol eol)                 ; язык уже в подписи
+            (if (and (fboundp 'org-fold-folded-p) (org-fold-folded-p eol))
+                ;; блок свёрнут: прячем и перевод строки подписи, чтобы стрелка свёртки
+                ;; (org-ellipsis) оказалась на строке подписи, сразу после текста
+                (let ((pos bol) (v (morg--block-vars-string bol)))
+                  (if v
+                      ;; есть :var — строка begin_src превращается в строку переменных,
+                      ;; стрелка свёртки встаёт в её конце
+                      (put-text-property bol eol 'display v)
+                    (put-text-property bol eol 'display "")
+                    (save-excursion
+                      (goto-char bol)
+                      (while (and (> pos (point-min))
+                                  (progn (forward-line -1)
+                                         (looking-at-p "[ \t]*#\\+[nN][aA][mM][eE]:")))
+                        (setq pos (point))))
+                    (when (> pos (point-min))
+                      (put-text-property (1- pos) pos 'display ""))))
+              (morg--hide-line bol eol))               ; язык уже в подписи
           (when (< pb pe) (put-text-property pb pe 'invisible t)))))
     nil)
 
@@ -1217,6 +1303,25 @@
     (setq morg--active-block nil)
     (add-hook 'post-command-hook #'morg--update-active-block nil t))
   (add-hook 'org-mode-hook #'morg--setup-block-hiding 90)   ; 90 = после org-modern-mode
+
+  ;; --- S-TAB сворачивает и блоки кода --------------------------------------------------
+  ;; S-TAB (org-global-cycle) ходит по кругу: обзор → оглавление → показать всё.
+  ;; Хук `org-cycle-hook' получает новое состояние. «обзор» и «оглавление» заодно сворачивают
+  ;; все блоки (и src, и example…), поэтому после раскрытия заголовка клавишей TAB блоки
+  ;; остаются свёрнутыми; «показать всё» раскрывает их обратно.
+  (defun morg--cycle-blocks (state)
+    "Свернуть блоки при STATE overview/contents, раскрыть при all."
+    (when (derived-mode-p 'org-mode)
+      (pcase state
+        ((or 'overview 'contents)
+         (cond ((fboundp 'org-fold-hide-block-all) (org-fold-hide-block-all))
+               ((fboundp 'org-hide-block-all) (org-hide-block-all))))
+        ('all
+         (cond ((fboundp 'org-fold-show-all) (org-fold-show-all '(blocks)))
+               ((fboundp 'org-show-block-all) (org-show-block-all)))))
+      ;; подпись блока зависит от того, свёрнут ли он, — перерисовать
+      (font-lock-flush)))
+  (add-hook 'org-cycle-hook #'morg--cycle-blocks)
 
   ;; --- таблицы: подсветка текущей строки и столбца ---------------------------------
   ;; Пока курсор в таблице, строка и столбец с курсором слегка подкрашены
@@ -1333,7 +1438,97 @@
                     ("zsh"   . sh)
                     ("bash"  . sh)
                     ("shell" . sh)))
-      (setf (alist-get (car pair) org-src-lang-modes nil nil #'equal) (cdr pair))))
+      (setf (alist-get (car pair) org-src-lang-modes nil nil #'equal) (cdr pair)))
+    ;; json: режима json-mode в Emacs нет, и блок #+begin_src json не подсвечивался.
+    ;; Берём json-ts-mode (если установлена грамматика json), иначе встроенный js-json-mode.
+    (setf (alist-get "json" org-src-lang-modes nil nil #'equal)
+          (if (and (fboundp 'treesit-language-available-p)
+                   (treesit-language-available-p 'json))
+              'json-ts
+            'js-json)))
+
+  ;; --- свёртка объектов и массивов JSON прямо в блоке ----------------------------------
+  ;; В src-блоке json (в том числе в результате, :wrap src json) TAB на строке, которая
+  ;; заканчивается на «{» или «[», сворачивает всё до парной скобки в «{ … }»; ещё раз TAB —
+  ;; раскрывает. C-c n j — свернуть/раскрыть все вложенные объекты блока сразу.
+  ;; Свёртка — оверлеи (временные пометки поверх текста): файл не меняется.
+  (defun morg--json-open-pos ()
+    "Позиция «{»/«[» в конце текущей строки или nil."
+    (save-excursion
+      (end-of-line)
+      (skip-chars-backward " \t")
+      (when (memq (char-before) '(?{ ?\[))
+        (1- (point)))))
+
+  (defun morg--json-match (open limit)
+    "Позиция скобки, парной OPEN (строки в кавычках пропускаются), не дальше LIMIT."
+    (save-excursion
+      (goto-char (1+ open))
+      (let ((depth 1) found)
+        (while (and (not found) (< (point) limit)
+                    (re-search-forward "[]\"[{}]" limit t))
+          (let ((c (char-before)))
+            (cond ((eq c ?\")
+                   (while (and (< (point) limit) (not (eq (char-after) ?\")))
+                     (forward-char (if (eq (char-after) ?\\) 2 1)))
+                   (forward-char 1))
+                  ((memq c '(?{ ?\[)) (setq depth (1+ depth)))
+                  (t (setq depth (1- depth))
+                     (when (zerop depth) (setq found (1- (point))))))))
+        found)))
+
+  (defun morg--json-fold-at (open limit)
+    "Свернуть (или раскрыть, если уже свёрнуто) контейнер с открывающей скобкой в OPEN."
+    (let ((ov (cl-find-if (lambda (o) (and (overlay-get o 'morg-jfold)
+                                           (= (overlay-start o) (1+ open))))
+                          (overlays-at (1+ open)))))
+      (if ov
+          (progn (delete-overlay ov) 'unfolded)
+        (when-let ((close (morg--json-match open limit)))
+          (when (> close (1+ open))
+            (let ((o (make-overlay (1+ open) close nil t nil)))
+              (overlay-put o 'morg-jfold t)
+              (overlay-put o 'evaporate t)
+              (overlay-put o 'display (propertize " … " 'face 'shadow))
+              (overlay-put o 'isearch-open-invisible #'delete-overlay)
+              'folded))))))
+
+  (defun morg--json-block ()
+    "(НАЧАЛО . КОНЕЦ) содержимого json-блока под точкой или nil."
+    (when (and (derived-mode-p 'org-mode) (org-in-src-block-p))
+      (let ((el (org-element-at-point)))
+        (when (and (eq (org-element-type el) 'src-block)
+                   (equal (downcase (or (org-element-property :language el) "")) "json"))
+          (cons (org-element-property :post-affiliated el)
+                (org-element-property :end el))))))
+
+  (defun morg-json-fold-toggle ()
+    "TAB в json-блоке на строке с «{»/«[» в конце: свернуть/раскрыть. Иначе nil (обычный TAB)."
+    (when-let ((blk (morg--json-block))
+               (open (morg--json-open-pos)))
+      (morg--json-fold-at open (cdr blk))
+      t))
+
+  (defun morg-json-fold-all ()
+    "Свернуть все вложенные объекты json-блока под точкой; если уже что-то свёрнуто — раскрыть всё."
+    (interactive)
+    (let ((blk (or (morg--json-block) (user-error "Поставьте курсор в src-блок json")))
+          (any nil))
+      (dolist (o (overlays-in (car blk) (cdr blk)))
+        (when (overlay-get o 'morg-jfold) (setq any t) (delete-overlay o)))
+      (unless any
+        (save-excursion
+          (goto-char (car blk))
+          (forward-line 2)                        ; верхний контейнер оставляем открытым
+          (while (< (point) (cdr blk))
+            (when-let ((open (morg--json-open-pos)))
+              (morg--json-fold-at open (cdr blk)))
+            (forward-line 1))))
+      (message (if any "JSON раскрыт" "Вложенные объекты свёрнуты (TAB на строке — раскрыть)"))))
+
+  (with-eval-after-load 'org
+    (add-hook 'org-tab-first-hook #'morg-json-fold-toggle)
+    (define-key org-mode-map (kbd "C-c n j") #'morg-json-fold-all))
 
   ;; --- результат JSON подсвечивается как JSON ----------------------------------------
   ;; Обычный :results output вставляется строками «: …» без подсветки. Если вывод блока —
@@ -1351,7 +1546,17 @@
          (string-match-p "\\`[ \t\n]*[{[]" s)
          (condition-case nil
              (progn (json-parse-string s) t)
-           (error nil))))
+           (error
+            ;; вывод внешней программы мог прийти «сырыми байтами» (не UTF-8-строкой):
+            ;; перекодируем туда-обратно, а если и так не вышло — медленный парсер json.el
+            (condition-case nil
+                (progn (json-parse-string
+                        (decode-coding-string (encode-coding-string s 'utf-8) 'utf-8))
+                       t)
+              (error
+               (condition-case nil
+                   (progn (require 'json) (json-read-from-string s) t)
+                 (error nil))))))))
 
   (defun morg--js-object-string-p (s lang)
     "Похоже ли S на вывод console.log объекта/массива из блока js/ts (не JSON)."
@@ -1372,9 +1577,22 @@
                        (not (seq-intersection
                              params '("silent" "none" "table" "vector" "list" "raw" "file"
                                       "link" "graphics" "html" "latex" "org" "drawer"
-                                      "code" "pp" "verbatim" "scalar"))))
+                                      "code" "pp" "verbatim"))))
               (cond ((morg--json-string-p result) "json")
                     ((morg--js-object-string-p result lang) "js")))))
+      ;; диагностика: вывод похож на JSON, но не преобразован — сказать почему (в *Messages*)
+      (when (and (not new-lang) (stringp result)
+                 (string-match-p "\\`[ \t\n]*[{[]" result))
+        (message "morg-json: пропущено; :results=%S lang=%S длина=%d; %s"
+                 params lang (length result)
+                 (cond ((not morg-results-auto-json) "morg-results-auto-json = nil")
+                       ((seq-intersection params '("silent" "none" "table" "vector" "list" "raw" "file"
+                                                   "link" "graphics" "html" "latex" "org" "drawer"
+                                                   "code" "pp" "verbatim"))
+                        "в :results есть слово, отключающее преобразование")
+                       (t (condition-case err
+                              (progn (json-parse-string result) "JSON корректен?!")
+                            (error (format "ошибка разбора: %S" err)))))))
       (if new-lang
           (let ((a (append args (make-list (max 0 (- 5 (length args))) nil))))
             (setf (nth 1 a) (cons "code" params))
@@ -1384,6 +1602,145 @@
 
   (with-eval-after-load 'ob-core
     (advice-add 'org-babel-insert-result :filter-args #'morg--results-json-advice))
+
+  ;; Выполнение блока всегда в UTF-8: временные файлы (запрос psql, скрипт shell) пишутся и
+  ;; читаются как UTF-8, поэтому Emacs не спрашивает «Select coding system», а вывод
+  ;; программ с кириллицей не превращается в «сырые байты» — даже если демон запущен
+  ;; без UTF-8-локали.
+  (define-advice org-babel-execute-src-block (:around (fn &rest args) morg-utf8)
+    (let ((coding-system-for-read  'utf-8)
+          (coding-system-for-write 'utf-8))
+      (apply fn args)))
+
+  ;; --- фоновый запуск блоков и время выполнения --------------------------------------
+  ;; Фоновый запуск (пакет ob-async): блок с заголовком :async выполняется в отдельном
+  ;; процессе Emacs, пока вы продолжаете работать; на месте результата сначала стоит
+  ;; #+RESULTS[хеш]:, потом приходит вывод. Пример:
+  ;;   #+begin_src zsh :async :results output replace
+  ;; Ограничения: блоки с :session не поддерживаются; запросы пароля (TRAMP /sudo::)
+  ;; в фоне не работают; typescript в фоне не запускается (запуск .ts определён в этом
+  ;; конфиге, а фоновый процесс его не видит) — ts-блоки быстрые, оставьте их обычными.
+  (use-package ob-async
+    :after org
+    :custom
+    (ob-async-no-async-languages-alist '("ipython" "typescript" "ts")))
+
+  ;; Время выполнения показывается в эхо-области: «⏱ zsh: 1.42 с».
+  (defvar morg-babel-show-time t "Показывать время выполнения src-блока.")
+  (defvar morg-babel-time-min 0.3 "Не показывать, если быстрее (секунды); 0 — показывать всегда.")
+  (defvar morg--babel-running nil "Очередь фоновых блоков: (МОМЕНТ-СТАРТА . ЯЗЫК).")
+  (defvar morg--babel-sync nil "Не-nil, пока обычный (не фоновый) блок выполняется.")
+
+  (defun morg--babel-report (secs label)
+    (when (and morg-babel-show-time (>= secs morg-babel-time-min))
+      (message "⏱ %s: %s" label
+               (if (< secs 1)
+                   (format "%d мс" (round (* secs 1000)))
+                 (format "%.2f с" secs)))))
+
+  (defun morg--babel-timing-advice (orig &rest args)
+    "Вокруг org-babel-execute-src-block: засечь время обычного блока или поставить в очередь фоновый."
+    (let* ((info   (or (nth 1 args) (ignore-errors (org-babel-get-src-block-info))))
+           (lang   (or (nth 0 info) "блок"))
+           (params (nth 2 info))
+           (async  (and (assq :async params)
+                        (not (equal (cdr (assq :async params)) "no"))
+                        (not (member lang (bound-and-true-p ob-async-no-async-languages-alist)))
+                        (null (cdr (assq :session params)))))
+           (start  (float-time)))
+      (if async
+          (progn (setq morg--babel-running
+                       (append morg--babel-running (list (cons start lang))))
+                 (apply orig args))
+        (prog1 (let ((morg--babel-sync t)) (apply orig args))
+          (morg--babel-report (- (float-time) start) lang)))))
+
+  (defun morg--babel-async-done ()
+    "org-babel-after-execute-hook: фоновый блок завершился — показать, сколько он шёл."
+    (unless morg--babel-sync
+      (when-let* ((entry (pop morg--babel-running)))
+        (morg--babel-report (- (float-time) (car entry)) (concat (cdr entry) " (фон)")))))
+
+  (with-eval-after-load 'org
+    ;; depth -100: самая внешняя обёртка, чтобы видеть и фоновые запуски (их ob-async
+    ;; перехватывает и до исходной функции не доходит)
+    (advice-add 'org-babel-execute-src-block :around #'morg--babel-timing-advice
+                '((depth . -100)))
+    (add-hook 'org-babel-after-execute-hook #'morg--babel-async-done))
+
+  ;; --- переход к блоку по имени (#+name:) ------------------------------------------
+  ;; C-c n b — список всех именованных блоков и таблиц заметки (язык и подпись справа),
+  ;; выбор переносит курсор к блоку (вернуться — C-u C-SPC). Курсор на «x=имя» в строке
+  ;; #+begin_src … :var x=имя …, #+header: или #+call: и C-c C-o — прыжок к блоку-источнику.
+  (defun morg--named-blocks ()
+    "Список (ИМЯ ПОЗИЦИЯ ОПИСАНИЕ) для всех #+name: в буфере, в порядке появления."
+    (let (res (case-fold-search t))
+      (save-excursion
+        (save-restriction
+          (widen)
+          (goto-char (point-min))
+          (while (re-search-forward "^[ \t]*#\\+name:[ \t]*\\([^ \t\n]+\\)" nil t)
+            (let ((name (match-string-no-properties 1))
+                  (pos (line-beginning-position))
+                  caption kind)
+              (forward-line 1)
+              (while (looking-at-p morg--affil-re)
+                (when (looking-at "[ \t]*#\\+caption:[ \t]*\\(.*\\)$")
+                  (setq caption (match-string-no-properties 1)))
+                (forward-line 1))
+              (setq kind (cond ((looking-at "[ \t]*#\\+begin_src[ \t]+\\([^ \t\n]+\\)")
+                                (match-string-no-properties 1))
+                               ((looking-at-p "[ \t]*|") "таблица")
+                               (t "")))
+              (push (list name pos (string-trim
+                                    (concat kind (when (and caption (not (string-empty-p caption)))
+                                                   (concat " · " caption)))))
+                    res)))))
+      (nreverse res)))
+
+  (defun morg--goto-named (pos)
+    (push-mark)
+    (widen)
+    (goto-char pos)
+    (when (fboundp 'org-fold-show-context) (org-fold-show-context 'link-search))
+    (recenter 3))
+
+  (defun morg-goto-named-block ()
+    "Перейти к именованному блоку/таблице (#+name:) этой заметки."
+    (interactive)
+    (let ((blocks (morg--named-blocks)))
+      (unless blocks (user-error "В этой заметке нет #+name:"))
+      (let* ((table
+              (lambda (str pred action)
+                (if (eq action 'metadata)
+                    `(metadata
+                      (display-sort-function . identity)
+                      (annotation-function
+                       . ,(lambda (c)
+                            (let ((d (nth 2 (assoc c blocks))))
+                              (and d (not (string-empty-p d)) (concat "  " d))))))
+                  (complete-with-action action (mapcar #'car blocks) str pred))))
+             (choice (completing-read "Блок: " table nil t)))
+        (morg--goto-named (nth 1 (assoc choice blocks))))))
+
+  (defun morg--follow-var-reference ()
+    "org-open-at-point-functions: курсор на «x=имя» в заголовке блока — перейти к блоку «имя»."
+    (when (save-excursion
+            (beginning-of-line)
+            (looking-at-p "[ \t]*#\\+\\(?:begin_src\\|headers?:\\|call:\\)"))
+      (let* ((beg (save-excursion (skip-chars-backward "^ \t\n") (point)))
+             (end (save-excursion (skip-chars-forward "^ \t\n") (point)))
+             (tok (buffer-substring-no-properties beg end))
+             (name (cond ((string-match "=\\([^ \t\n(\\[]+\\)" tok) (match-string 1 tok))
+                         ((string-match "\\`\\([^ \t\n(\\[=]+\\)" tok) (match-string 1 tok))))
+             (hit (and name (assoc name (morg--named-blocks)))))
+        (when hit
+          (morg--goto-named (nth 1 hit))
+          t))))
+
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "C-c n b") #'morg-goto-named-block)
+    (add-hook 'org-open-at-point-functions #'morg--follow-var-reference))
 
   ;; --- подсказки (corfu) для org-babel ---------------------------------------------
   ;; Работает через capf — тот же механизм, что у подсказок по PostgreSQL. Подсказывает:
@@ -1428,6 +1785,7 @@
         ("query-export" . "спрашивать при экспорте")))
       (":var" "передать переменную: x=имя-блока, x=5" nil)
       (":session" "общая сессия интерпретатора для блоков" nil)
+      (":async" "выполнять в фоне, не блокируя Emacs" (("yes")))
       (":dir" "каталог запуска (в т. ч. TRAMP: /ssh:host:/путь/)" nil)
       (":cache" "кешировать результат, пока код не менялся" (("yes") ("no")))
       (":noweb" "подстановка <<имя>> другого блока"
@@ -1510,6 +1868,46 @@
                 " ")
       ""))
 
+  ;; иконки для заголовочных аргументов и ключевых слов (nerd-icons, набор mdicon)
+  (defconst morg--babel-icons
+    '((":dir" . "nf-md-folder") (":output-dir" . "nf-md-folder_outline")
+      (":file" . "nf-md-file") (":file-ext" . "nf-md-file") (":file-desc" . "nf-md-file")
+      (":tangle" . "nf-md-file_export") (":mkdirp" . "nf-md-folder_plus")
+      (":async" . "nf-md-lightning_bolt") (":eval" . "nf-md-play")
+      (":results" . "nf-md-clipboard_text") (":exports" . "nf-md-export")
+      (":var" . "nf-md-code_braces") (":session" . "nf-md-console")
+      (":cache" . "nf-md-cached") (":noweb" . "nf-md-puzzle")
+      (":hlines" . "nf-md-table") (":colnames" . "nf-md-table") (":rownames" . "nf-md-table")
+      (":sep" . "nf-md-table_column") (":wrap" . "nf-md-wrap")
+      (":prologue" . "nf-md-console_line") (":epilogue" . "nf-md-console_line")
+      (":shebang" . "nf-md-console_line") (":cmdline" . "nf-md-console_line")
+      (":stdin" . "nf-md-keyboard") (":post" . "nf-md-function")
+      (":comments" . "nf-md-comment") (":padline" . "nf-md-format_line_spacing")
+      (":engine" . "nf-md-database") (":database" . "nf-md-database")
+      (":dbhost" . "nf-md-server") (":dbport" . "nf-md-server") (":dbuser" . "nf-md-account")
+      (":flags" . "nf-md-flag")
+      ("#+name:" . "nf-md-label") ("#+caption:" . "nf-md-format_title")
+      ("#+header:" . "nf-md-cog") ("#+call:" . "nf-md-play")
+      ("#+begin_src" . "nf-md-code_tags") ("#+property:" . "nf-md-tag")
+      ("#+startup:" . "nf-md-rocket_launch") ("#+filetags:" . "nf-md-tag_multiple")
+      ("#+attr_html:" . "nf-md-language_html5"))
+    "Имя варианта подсказки -> имя иконки nerd-icons (mdicon).")
+
+  (defun morg--babel-icon-str (name)
+    "Иконка по имени NAME плюс пробел; пустая строка, если иконки нет или nerd-icons не загружен."
+    (or (and name (fboundp 'nerd-icons-mdicon)
+             (let ((i (ignore-errors (nerd-icons-mdicon name))))
+               (and (stringp i) (concat i " "))))
+        ""))
+
+  (defun morg--babel-icon (cand)
+    "Иконка для аргумента или ключевого слова CAND."
+    (morg--babel-icon-str (or (cdr (assoc cand morg--babel-icons)) "nf-md-cog_outline")))
+
+  (defun morg--babel-name-icon (_cand)
+    "Иконка для имён блоков из #+name:."
+    (morg--babel-icon-str "nf-md-label_outline"))
+
   (defun morg--babel-result (start end alist &optional space prefix-fn)
     "Результат для capf: ALIST из (ВАРИАНТ . ОПИСАНИЕ); SPACE — добавить пробел после выбора;
 PREFIX-FN — функция ВАРИАНТ -> строка, которая показывается слева (иконка)."
@@ -1524,8 +1922,12 @@ PREFIX-FN — функция ВАРИАНТ -> строка, которая по
            :exclusive 'no)
      (when prefix-fn
        (list :affixation-function
-             (lambda (cands)
-               (mapcar (lambda (c) (list c (funcall prefix-fn c) "")) cands))))
+             (lambda (cands)           ; при affixation аннотацию нужно вернуть суффиксом
+               (mapcar (lambda (c)
+                         (list c (funcall prefix-fn c)
+                               (let ((d (cdr (assoc c alist))))
+                                 (if d (propertize (concat "  " d) 'face 'completions-annotations) ""))))
+                       cands))))
      (when space
        (list :exit-function
              (lambda (_ status) (when (eq status 'finished) (insert " ")))))))
@@ -1540,10 +1942,12 @@ PREFIX-FN — функция ВАРИАНТ -> строка, которая по
          ;; <<имя>> внутри src-блока
          ((and (looking-back "<<\\([^<>\n ]*\\)" bol)
                (org-in-src-block-p))
-          (morg--babel-result (match-beginning 1) pt (morg--babel-names)))
+          (morg--babel-result (match-beginning 1) pt (morg--babel-names)
+                              nil #'morg--babel-name-icon))
          ;; #+call: имя
          ((looking-back "^[ \t]*#\\+call:[ \t]*\\([^ \t(\n]*\\)" bol)
-          (morg--babel-result (match-beginning 1) pt (morg--babel-names)))
+          (morg--babel-result (match-beginning 1) pt (morg--babel-names)
+                              nil #'morg--babel-name-icon))
          ;; #+begin_src язык
          ((looking-back "^[ \t]*#\\+begin_src[ \t]+\\([^ \t\n]*\\)" bol)
           (morg--babel-result (match-beginning 1) pt (morg--babel-languages) t
@@ -1551,7 +1955,8 @@ PREFIX-FN — функция ВАРИАНТ -> строка, которая по
          ;; #+ключевое-слово
          ((and (looking-back "^[ \t]*\\(#\\+[[:alpha:]_]*\\)" bol)
                (not (org-in-src-block-p)))
-          (morg--babel-result (match-beginning 1) pt morg--babel-keywords t))
+          (morg--babel-result (match-beginning 1) pt morg--babel-keywords t
+                              #'morg--babel-icon))
          ;; заголовочные аргументы в #+begin_src язык … / #+header: …
          ((save-excursion
             (goto-char bol)
@@ -1568,9 +1973,10 @@ PREFIX-FN — функция ВАРИАНТ -> строка, которая по
               (morg--babel-result
                start pt
                (mapcar (lambda (a) (cons (car a) (nth 1 a))) morg--babel-header-args)
-               t))
+               t #'morg--babel-icon))
              ((and (equal key ":var") (string-match "=" tok))   ; x=<имя блока>
-              (morg--babel-result (+ start (match-end 0)) pt (morg--babel-names)))
+              (morg--babel-result (+ start (match-end 0)) pt (morg--babel-names)
+                                   nil #'morg--babel-name-icon))
              (key                                 ; значение аргумента
               (let ((vals (nth 2 (assoc key morg--babel-header-args))))
                 (when vals (morg--babel-result start pt vals)))))))))))
@@ -1578,35 +1984,6 @@ PREFIX-FN — функция ВАРИАНТ -> строка, которая по
   (defun morg--setup-babel-capf ()
     (add-hook 'completion-at-point-functions #'morg--babel-capf -90 t))
   (add-hook 'org-mode-hook #'morg--setup-babel-capf)
-
-  ;; --- mixed-pitch: текст пропорциональным шрифтом, код и таблицы — моноширинным ---
-  (defun morg--set-variable-pitch (&rest _)
-    "Выбрать пропорциональный шрифт с кириллицей из установленных."
-    (when (display-graphic-p)
-      (let ((fam (seq-find (lambda (f) (find-font (font-spec :family f)))
-                           '("Inter" "Noto Sans" "Cantarell" "DejaVu Sans"))))
-        (when fam
-          (set-face-attribute 'variable-pitch nil :family fam :height 1.0)))))
-
-  (if (daemonp)
-      (add-hook 'server-after-make-frame-hook #'morg--set-variable-pitch)
-    (add-hook 'emacs-startup-hook #'morg--set-variable-pitch))
-
-  (use-package mixed-pitch
-    :hook (org-mode . mixed-pitch-mode)
-    :custom
-    (mixed-pitch-set-height nil)          ; размер оставляем как у основного шрифта
-    :config
-    ;; эти лица остаются моноширинными (иначе поедут таблицы и выравнивание)
-    (dolist (f '(org-table-header org-table-row org-checkbox org-modern-symbol
-                 org-modern-label org-modern-horizontal-rule org-tag))
-      (add-to-list 'mixed-pitch-fixed-pitch-faces f)))
-
-  ;; кружочки заголовков, bullets списков и чекбоксы рисует org-modern лицом
-  ;; org-modern-symbol; жёстко задаём ему моноширинный шрифт, чтобы mixed-pitch
-  ;; не подменял его пропорциональным
-  (with-eval-after-load 'org-modern
-    (set-face-attribute 'org-modern-symbol nil :family "Iosevka Nerd Font"))
 
   ;; --- org-tidy: прячет блоки :PROPERTIES: (в том числе :ID: у заметок roam) -------
   (use-package org-tidy

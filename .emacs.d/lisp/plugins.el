@@ -52,8 +52,7 @@
   (corfu-popupinfo-mode)
   (corfu-history-mode)
   :config
-  ;; Подсказки всегда моноширинным Iosevka: иначе в org (mixed-pitch) всплывающее окно
-  ;; наследует пропорциональный шрифт, и иконки с колонками «плывут».
+  ;; Подсказки всегда моноширинным Iosevka (шрифт текста и подсказок — один).
   ;; Тема при смене перезаписывает лица, поэтому применяем и после enable-theme.
   (defun my/corfu-fonts (&rest _)
     (dolist (face '(corfu-default corfu-current corfu-popupinfo))
@@ -335,7 +334,8 @@
   (dolist (src '((c    "https://github.com/tree-sitter/tree-sitter-c")
                  (rust "https://github.com/tree-sitter/tree-sitter-rust")
                  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-                 (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+                 (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+                 (json "https://github.com/tree-sitter/tree-sitter-json")))
     (add-to-list 'treesit-language-source-alist src)))
 
 ;; --- C: c-ts-mode, отступ 8 (табы, стиль Linux kernel) ---------------------
@@ -530,6 +530,19 @@
   (doom-modeline-vcs-max-length              24)
   :init (doom-modeline-mode 1))
 
+;; Иконки строки состояния рисуются шире своей ячейки и налезают на следующий текст
+;; (путь к файлу оказывается под иконкой). Добавляем после каждой иконки пробелы.
+(defvar my/modeline-icon-gap 1 "Сколько пробелов добавлять после иконки в строке состояния.")
+
+(defun my/modeline-icon-pad (icon)
+  "Фильтр результата doom-modeline-icon: иконка + дополнительный отступ."
+  (if (and (stringp icon) (not (string-empty-p icon)) (> my/modeline-icon-gap 0))
+      (concat icon (make-string my/modeline-icon-gap ?\s))
+    icon))
+
+(with-eval-after-load 'doom-modeline
+  (advice-add 'doom-modeline-icon :filter-return #'my/modeline-icon-pad))
+
 (defvar-local morg--title-cache nil "(ТИК . ЗАГОЛОВОК) — чтобы не искать #+title при каждой отрисовке.")
 
 (defun morg--note-title ()
@@ -587,5 +600,209 @@
   (activity-watch-api-port 5600)
   :config
   (global-activity-watch-mode))
+
+;; --- sideline: ошибки и действия прямо справа от строки ---------------------------
+;; Ошибки и предупреждения компилятора (flymake) и доступные исправления/действия LSP
+;; (eglot) показываются справа от строки, на которой стоит курсор. Включается сам,
+;; когда в буфере работает flymake или eglot (Rust, C). Документация по hover
+;; (eldoc) по-прежнему выводится в эхо-области; плавающее окно для неё — eldoc-box.
+(use-package sideline
+  :hook ((flymake-mode        . sideline-mode)
+         (eglot-managed-mode  . sideline-mode))
+  :custom
+  (sideline-delay                 0.2)
+  (sideline-display-backend-name  nil)
+  (sideline-truncate              t)
+  (sideline-backends-right        '(sideline-flymake sideline-eglot)))
+
+(use-package sideline-flymake :after sideline)
+(use-package sideline-eglot   :after (sideline eglot))
+
+;; --- стартовый экран ---------------------------------------------------------------
+;; Недавно изменённые заметки roam, недавние файлы, внизу — время запуска и число
+;; пакетов. Работает и в обычном запуске, и в emacsclient (daemon).
+(defvar my/dashboard-roam-dir "~/syn/org/roam/")
+
+(defun my/dashboard--title (file)
+  "#+title: заметки FILE (читаются первые 2000 байт) или имя файла."
+  (with-temp-buffer
+    (insert-file-contents file nil 0 2000)
+    (goto-char (point-min))
+    (if (re-search-forward "^#\\+title:[ \t]*\\(.+\\)$" nil t)
+        (match-string 1)
+      (file-name-base file))))
+
+(defvar my/dashboard--roam-files nil "Файлы заметок на экране; n1 = первый.")
+(defvar my/dashboard--recent-files nil "Недавние файлы на экране; r1 = первый.")
+
+(defun my/dashboard--insert-item (prefix idx file label)
+  "Строка вида «n1  LABEL»; клик или клавиши PREFIX+IDX открывают FILE."
+  (insert "    ")
+  (insert (propertize (format "%s%d " prefix idx) 'face 'font-lock-comment-face))
+  (widget-create 'push-button
+                 :action (lambda (&rest _) (find-file file))
+                 :mouse-face 'highlight
+                 :button-prefix "" :button-suffix ""
+                 :format "%[%t%]"
+                 label)
+  (insert "\n"))
+
+(defun my/dashboard-insert-roam (list-size)
+  "Секция: LIST-SIZE недавно изменённых заметок roam (n1, n2, …)."
+  (dashboard-insert-heading "Недавние заметки (n1…):")
+  (insert "\n")
+  (setq my/dashboard--roam-files nil)
+  (let ((dir (expand-file-name my/dashboard-roam-dir)))
+    (if (not (file-directory-p dir))
+        (insert "    (каталог заметок не найден)")
+      (let* ((stamped (mapcar (lambda (f)
+                                (cons (file-attribute-modification-time (file-attributes f)) f))
+                              (directory-files-recursively dir "\\.org\\'")))
+             (sorted (seq-take (sort stamped (lambda (a b) (time-less-p (car b) (car a))))
+                               (min list-size 9)))
+             (i 0))
+        (dolist (entry sorted)
+          (let ((f (cdr entry)))
+            (setq i (1+ i))
+            (push f my/dashboard--roam-files)
+            (my/dashboard--insert-item "n" i f (my/dashboard--title f))))
+        (setq my/dashboard--roam-files (nreverse my/dashboard--roam-files))))))
+
+(use-package recentf
+  :ensure nil
+  :custom (recentf-max-saved-items 100)
+  :config (recentf-mode 1))
+
+(defun my/dashboard-insert-recent (list-size)
+  "Секция: LIST-SIZE недавних файлов (r1, r2, …)."
+  (dashboard-insert-heading "Недавние файлы (r1…):")
+  (insert "\n")
+  (setq my/dashboard--recent-files nil)
+  (let ((files (seq-take (seq-filter (lambda (f)
+                                       (and (not (file-remote-p f)) (file-exists-p f)))
+                                     (bound-and-true-p recentf-list))
+                         (min list-size 9)))
+        (i 0))
+    (if (null files)
+        (insert "    (пока пусто)")
+      (dolist (f files)
+        (setq i (1+ i))
+        (push f my/dashboard--recent-files)
+        (my/dashboard--insert-item "r" i f (abbreviate-file-name f)))
+      (setq my/dashboard--recent-files (nreverse my/dashboard--recent-files)))))
+
+(defun my/dashboard-open (kind idx)
+  "Открыть элемент IDX (с 1) списка KIND: `roam' или `recent'."
+  (let ((f (nth (1- idx) (if (eq kind 'roam)
+                             my/dashboard--roam-files
+                           my/dashboard--recent-files))))
+    (if f (find-file f) (message "Нет элемента с номером %d" idx))))
+
+(use-package dashboard
+  :demand t
+  :custom
+  (dashboard-center-content        t)
+  (dashboard-startup-banner        'logo)
+  (dashboard-banner-logo-title     "Emacs")
+  (dashboard-set-heading-icons     nil)     ; без иконок: не зависим от шрифтов
+  (dashboard-set-file-icons        nil)
+  (dashboard-set-footer            t)
+  :config
+  (add-to-list 'dashboard-item-generators '(roam . my/dashboard-insert-roam))
+  (add-to-list 'dashboard-item-generators '(my-recent . my/dashboard-insert-recent))
+  (setq dashboard-items '((roam . 8) (my-recent . 5)))
+  ;; n и r — префиксные клавиши: n1…n9 (заметки), r1…r9 (файлы)
+  (define-key dashboard-mode-map "n" nil)
+  (define-key dashboard-mode-map "r" nil)
+  (dotimes (k 9)
+    (let ((i (1+ k)))
+      (define-key dashboard-mode-map (kbd (format "n%d" i))
+                  (lambda () (interactive) (my/dashboard-open 'roam i)))
+      (define-key dashboard-mode-map (kbd (format "r%d" i))
+                  (lambda () (interactive) (my/dashboard-open 'recent i)))))
+  ;; подвал: время запуска и число пакетов (считается после старта)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq dashboard-footer-messages
+                    (list (format "⏱ запуск %s · пакетов: %d"
+                                  (emacs-init-time "%.2f с")
+                                  (length package-activated-list))))))
+  (dashboard-setup-startup-hook)
+  ;; для emacsclient: «домашний» буфер нового кадра — этот экран
+  (when (daemonp)
+    (setq initial-buffer-choice
+          (lambda () (get-buffer-create dashboard-buffer-name)))))
+
+;; --- Markdown: просмотрщик ----------------------------------------------------------
+;; .md-файлы открываются в режиме просмотра (markdown-view-mode): буфер только для чтения,
+;; разметка спрятана (## , **, `…`, ссылки показываются текстом), заголовки крупнее,
+;; блоки кода подсвечены языком и лежат на «карточке», картинки показываются, текст по
+;; центру в колонке (olivetti). Клавиши в просмотре:
+;;   e — перейти к правке (markdown-mode), в правке C-c v — обратно в просмотр
+;;   TAB / S-TAB — свернуть/развернуть заголовок / все заголовки
+;;   n / p — следующий / предыдущий заголовок;  q — закрыть буфер
+(use-package olivetti
+  :custom (olivetti-body-width 100))
+
+(defun my/md--tint (fg amount)
+  "Цвет FG, подмешанный в фон default на долю AMOUNT (0…1)."
+  (let ((bg (or (face-background 'default nil 'default) "#1a1b26")))
+    (apply #'color-rgb-to-hex
+           (append (cl-mapcar (lambda (a b) (+ (* a amount) (* b (- 1 amount))))
+                              (color-name-to-rgb fg) (color-name-to-rgb bg))
+                   '(2)))))
+
+(defun my/md-apply-faces (&rest _)
+  "Оформление markdown под текущую тему (вызывается и после смены темы)."
+  (when (facep 'markdown-code-face)
+    (let ((card (my/md--tint "#7dcfff" 0.06)))
+      (dolist (f '(markdown-code-face markdown-pre-face))
+        (set-face-attribute f nil :background card :extend t))
+      (set-face-attribute 'markdown-inline-code-face nil :background card)
+      (set-face-attribute 'markdown-blockquote-face nil :slant 'italic :foreground "#9aa5ce")
+      (set-face-attribute 'markdown-header-face-1 nil :weight 'bold :foreground "#7aa2f7")
+      (set-face-attribute 'markdown-header-face-2 nil :weight 'bold :foreground "#bb9af7")
+      (set-face-attribute 'markdown-header-face-3 nil :weight 'bold :foreground "#7dcfff")
+      (set-face-attribute 'markdown-header-delimiter-face nil :foreground "#565f89"))))
+
+(defun my/markdown-toggle-view ()
+  "Переключить просмотр (только чтение) и правку текущего markdown-буфера."
+  (interactive)
+  (if (derived-mode-p 'markdown-view-mode)
+      (markdown-mode)
+    (markdown-view-mode)))
+
+(use-package markdown-mode
+  :mode ("\\.\\(md\\|markdown\\)\\'" . markdown-view-mode)
+  :custom
+  (markdown-hide-markup               t)
+  (markdown-hide-urls                 t)
+  (markdown-fontify-code-blocks-natively t)
+  (markdown-header-scaling            t)
+  (markdown-header-scaling-values     '(1.5 1.3 1.15 1.05 1.0 1.0))
+  (markdown-list-item-bullets         '("●" "○" "◆" "◇"))
+  (markdown-max-image-size            '(900 . 700))
+  (markdown-display-remote-images     nil)
+  (markdown-enable-highlighting-syntax t)
+  :bind (:map markdown-view-mode-map
+         ("e"     . my/markdown-toggle-view)
+         ("q"     . quit-window)
+         ("TAB"   . markdown-cycle)
+         ("<backtab>" . markdown-shifttab)
+         ("n"     . markdown-outline-next)
+         ("p"     . markdown-outline-previous)
+         :map markdown-mode-map
+         ("C-c v" . my/markdown-toggle-view))
+  :hook (markdown-view-mode . (lambda ()
+                                (visual-line-mode 1)
+                                (olivetti-mode 1)
+                                (setq-local line-spacing 0.25)
+                                (markdown-display-inline-images)))
+  :config
+  ;; для внешнего предпросмотра/экспорта (C-c C-c l): нужен pandoc
+  (when (executable-find "pandoc")
+    (setq markdown-command "pandoc -f gfm -t html5 --standalone"))
+  (my/md-apply-faces)
+  (add-hook 'enable-theme-functions #'my/md-apply-faces))
 
 (provide 'plugins)
