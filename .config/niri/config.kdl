@@ -9,6 +9,9 @@ spawn-sh-at-startup	"veilad"
 spawn-sh-at-startup	"~/.config/niri/scripts/eww.sh --daemon"
 spawn-sh-at-startup	"~/.config/niri/scripts/wallpaper.sh"
 
+spawn-at-startup	"aw-server"
+spawn-at-startup	"aw-watcher-afk"
+
 binds {
 	// ============ Niri Actions ============
 	Mod+Q			{ close-window; }

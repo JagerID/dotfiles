@@ -85,3 +85,6 @@ eval "$(zoxide init zsh)"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 export EDITOR="nvim"
+
+# bun completions
+[ -s "/home/quasar/.bun/_bun" ] && source "/home/quasar/.bun/_bun"
