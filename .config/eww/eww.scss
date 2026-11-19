@@ -5,22 +5,19 @@
 
 /* Notifications. Glass/blur comes from niri (layer-rule gtk-layer-shell). */
 .notifs {
-	padding: 4px 0;
+	padding: 4px 6px 4px 0;
+	border-radius: 12px;
+	background-color: rgba(22, 24, 30, 0.82);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
 }
 
 .notif {
-	padding: 8px 12px 8px 0;
+	padding: 8px 12px;
 	color: #d8dee9;
 
 	&:not(:first-child) {
 		border-top: 1px solid rgba(255, 255, 255, 0.15);
-	}
-
-	.notif-bar {
-		min-width: 3px;
-		margin: 2px 0;
-		border-radius: 2px;
-		background-color: rgba(255, 255, 255, 0.6);
 	}
 
 	.notif-app {
@@ -35,6 +32,24 @@
 	.notif-body {
 		font-size: 0.85rem;
 		color: rgba(216, 222, 233, 0.85);
+	}
+
+	/* Scroll only on the body; scrollbar is transparent until hovered */
+	.notif-scroll {
+		scrollbar,
+		scrollbar trough {
+			min-width: 3px;
+			background: transparent;
+		}
+		slider {
+			min-width: 3px;
+			border-radius: 2px;
+			background-color: transparent;
+			transition: background-color 150ms;
+		}
+		&:hover slider {
+			background-color: rgba(255, 255, 255, 0.4);
+		}
 	}
 
 	.notif-progress {
@@ -54,7 +69,6 @@
 		}
 	}
 
-	&.critical .notif-bar,
 	&.critical .notif-progress progress {
 		background-color: #bf616a;
 	}

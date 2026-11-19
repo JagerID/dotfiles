@@ -11,6 +11,7 @@ spawn-sh-at-startup	"~/.config/niri/scripts/wallpaper.sh"
 
 spawn-at-startup	"aw-server"
 spawn-at-startup	"aw-watcher-afk"
+spawn-at-startup	"/home/jager/.local/bin/sni-watcher"
 
 binds {
 	// ============ Niri Actions ============
@@ -38,7 +39,7 @@ binds {
 	Mod+Backspace	{ spawn "emacsclient" "-c" "-a" ""; }
 
 	Mod+Shift+Q	{ spawn "firefox-developer-edition"; }
-	Mod+Shift+M	{ spawn-sh "QT_QPA_PLATFORM=xcb vkworkspace"; }
+	Mod+Shift+M	{ spawn "/home/jager/.local/bin/vkworkspace"; }
 
 	Shift+Alt+L	{ spawn "veila" "lock"; }
 

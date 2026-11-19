@@ -39,16 +39,24 @@
 
 (defwidget notif-card [n]
 	(eventbox :onclick "makoctl dismiss -n ${n.id}"
+		  :onhover "$HOME/.config/eww/scripts/notif-hover.sh enter ${n.id}"
+		  :onhoverlost "$HOME/.config/eww/scripts/notif-hover.sh leave ${n.id}"
 		(box :class "notif ${n.urgency}" :orientation "h" :space-evenly false :spacing 10
-			(box :class "notif-bar")
 			(box :orientation "v" :space-evenly false :spacing 2 :hexpand true
 				(label :class "notif-app" :halign "start" :limit-width 40
 					:text {n.app_name ?: ""})
 				(label :class "notif-summary" :halign "start" :limit-width 36
 					:text {n.summary ?: ""})
+				;; обычный вид: обрезанный текст
 				(label :class "notif-body" :halign "start" :wrap true :limit-width 44
-					:visible {(n.body ?: "") != ""}
+					:visible {!(n.hovered && n.truncated) && (n.body ?: "") != ""}
 					:text {n.body ?: ""})
+				;; при наведении (если текст не влез): полный текст, высота ограничена, дальше скролл
+				(scroll :class "notif-scroll" :hscroll false :vscroll true
+					:height {n.body_h}
+					:visible {n.hovered && n.truncated}
+					(label :class "notif-body" :halign "start" :valign "start" :xalign 0
+						:text {n.body_full ?: ""}))
 				(progress :class "notif-progress" :orientation "h"
 					:value {n.pct})))))
 
