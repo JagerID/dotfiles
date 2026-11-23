@@ -1099,6 +1099,342 @@
     (my/md-apply-faces)
     (add-hook 'enable-theme-functions #'my/md-apply-faces))
 
+  ;; --- SVG: svg-mode ------------------------------------------------------------------
+  ;; Отдельного пакета svg-mode нет, поэтому режим собран здесь: SVG — это XML, так что режим
+  ;; наследует встроенный nxml-mode (подсветка, закрытие тегов, проверка разметки) и добавляет:
+  ;;   - живой предпросмотр справа: обновляется через полсекунды после правки; если XML
+  ;;     сломан, остаётся последняя удачная картинка, а в шапке окна — текст ошибки;
+  ;;   - цвета вида #7dcfff подсвечиваются своим цветом (rainbow-mode);
+  ;;   - C-c C-p — показать/убрать предпросмотр, C-c C-b — сменить фон предпросмотра
+  ;;     (белый → серый → тёмный; на тёмном фоне чёрные иконки не видно),
+  ;;   - C-c C-c — посмотреть файл как картинку (image-mode), там же C-c C-c вернёт в текст.
+  ;; Нужна поддержка SVG в Emacs (librsvg): проверка — (image-type-available-p 'svg).
+  (use-package rainbow-mode
+    :commands rainbow-mode)
+
+  (defvar svg-mode-big-size 300000
+    "Файл больше стольких символов считается большим: без автопредпросмотра и подсветки цветов.")
+
+  (defvar svg-mode-backgrounds '("#ffffff" "#c0c0c0" "#1a1b26")
+    "Фоны предпросмотра, по кругу (C-c C-b).")
+  (defvar svg-mode-wrap-attrs "auto"
+    "Атрибуты внешнего <svg> для фрагмента без своего корня (C-c C-a).
+\"auto\" — viewBox вычисляется по координатам x/y/x1/y1/cx/cy/r/width/height в коде;
+пути (path d=…) при вычислении не учитываются — для них задайте viewBox вручную.")
+  (defvar-local svg-mode-auto-wrap t
+    "Не-nil: если в буфере нет корневого <svg>, предпросмотр оборачивает код в него.
+Файл не меняется — оборачивается только то, что видно справа. Переключение: C-c C-w.")
+  (defvar-local svg-mode--bg-index 0)
+  (defvar-local svg-mode--preview nil "Буфер предпросмотра этого svg-буфера.")
+  (defvar-local svg-mode--timer nil)
+
+  (defun svg-mode--auto-attrs (text)
+    "Атрибуты viewBox/width/height по рамке, в которую попадают координаты из TEXT."
+    (let (xs ys lastx lasty)
+      (with-temp-buffer
+        (insert text)
+        (goto-char (point-min))
+        (while (re-search-forward
+                "[ \t\n]\\(x1\\|x2\\|cx\\|x\\|y1\\|y2\\|cy\\|y\\|width\\|height\\|r\\)=[\"']\\(-?[0-9]*\\.?[0-9]+\\)"
+                nil t)
+          (let ((k (match-string 1)) (v (string-to-number (match-string 2))))
+            (pcase k
+              ((or "x" "x1" "x2" "cx") (setq lastx v) (push v xs))
+              ((or "y" "y1" "y2" "cy") (setq lasty v) (push v ys))
+              ("width"  (when lastx (push (+ lastx v) xs)))
+              ("height" (when lasty (push (+ lasty v) ys)))
+              ("r" (when (and lastx lasty)
+                     (push (- lastx v) xs) (push (+ lastx v) xs)
+                     (push (- lasty v) ys) (push (+ lasty v) ys)))))))
+      (if (or (null xs) (null ys))
+          "viewBox=\"0 0 100 100\" width=\"100\" height=\"100\""
+        (let* ((pad 2)
+               (x0 (- (apply #'min xs) pad)) (y0 (- (apply #'min ys) pad))
+               (w (max 1 (+ (- (apply #'max xs) (apply #'min xs)) (* 2 pad))))
+               (h (max 1 (+ (- (apply #'max ys) (apply #'min ys)) (* 2 pad)))))
+          (format "viewBox=\"%s %s %s %s\" width=\"%s\" height=\"%s\""
+                  x0 y0 w h w h)))))
+
+  (defun svg-mode--payload (text)
+    "TEXT для отрисовки. Убирает \\\" (скопировано из JSON-строки); если включено
+автообрамление и корня <svg> нет — оборачивает."
+    (let ((text (replace-regexp-in-string "\\\\\"" "\"" text t t)))
+      (if (and svg-mode-auto-wrap
+               (not (string-match-p "<svg[[:space:]>/]" text)))
+          (concat "<svg xmlns=\"http://www.w3.org/2000/svg\" "
+                  "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
+                  (if (equal svg-mode-wrap-attrs "auto")
+                      (svg-mode--auto-attrs text)
+                    svg-mode-wrap-attrs)
+                  ">\n" text "\n</svg>")
+        text)))
+
+  (defun svg-mode-unescape ()
+    "Заменить в буфере \\\" на \" (текст, скопированный из JSON-строки)."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (let ((n 0))
+        (while (search-forward "\\\"" nil t) (replace-match "\"" t t) (setq n (1+ n)))
+        (message "Исправлено вхождений: %d" n))))
+
+  ;; Масштаб и сдвиг предпросмотра. zoom = 1.0 — «вписать в окно»; сдвиг ox/oy — какая часть
+  ;; увеличенной картинки видна (показывается срез картинки размером с окно).
+  (defvar-local svg-mode--zoom 1.0)
+  (defvar-local svg-mode--ox 0)
+  (defvar-local svg-mode--oy 0)
+  (defvar-local svg-mode--fit 1.0 "Масштаб «вписать в окно» с прошлой отрисовки.")
+
+  (defvar-local svg-mode--error nil "Текст ошибки разбора SVG или nil.")
+
+  (defun svg-mode--update (buf)
+    "Перерисовать предпросмотр для svg-буфера BUF."
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (let ((pb svg-mode--preview))
+          (when (and (buffer-live-p pb) (get-buffer-window pb))
+            (let* ((win  (get-buffer-window pb))
+                   (ww   (max 50 (- (window-body-width win t) 4)))
+                   (wh   (max 50 (- (window-body-height win t) 4)))
+                   (data (svg-mode--payload
+                          (buffer-substring-no-properties (point-min) (point-max))))
+                   (bg   (nth svg-mode--bg-index svg-mode-backgrounds)))
+              (condition-case err
+                  (let* ((img0 (create-image data 'svg t :background bg))
+                         (size (image-size img0 t)) ; здесь разбор падает, если SVG некорректен
+                         (fit  (min (/ (float ww) (max 1 (car size)))
+                                    (/ (float wh) (max 1 (cdr size)))))
+                         (scale (* fit svg-mode--zoom))
+                         (iw (round (* (car size) scale)))
+                         (ih (round (* (cdr size) scale)))
+                         (img (create-image data 'svg t :background bg :scale scale)))
+                    (setq svg-mode--fit fit
+                          svg-mode--error nil)
+                    ;; сдвиг не должен выводить за край картинки
+                    (setq svg-mode--ox (max 0 (min svg-mode--ox (max 0 (- iw ww))))
+                          svg-mode--oy (max 0 (min svg-mode--oy (max 0 (- ih wh)))))
+                    (with-current-buffer pb
+                      (let ((inhibit-read-only t))
+                        (erase-buffer)
+                        (if (or (> iw ww) (> ih wh))
+                            (insert-image img nil nil
+                                          (list (buffer-local-value 'svg-mode--ox buf)
+                                                (buffer-local-value 'svg-mode--oy buf)
+                                                (min iw ww) (min ih wh)))
+                          (insert-image img)))
+                      (set-window-hscroll win 0)
+                      (force-mode-line-update)))
+                (error
+                 (setq svg-mode--error (error-message-string err))
+                 (with-current-buffer pb (force-mode-line-update))))))))))
+
+  (defun svg-mode--pan (buf dx dy)
+    "Сдвинуть видимую часть предпросмотра BUF на DX, DY пикселей."
+    (with-current-buffer buf
+      (setq svg-mode--ox (+ svg-mode--ox dx)
+            svg-mode--oy (+ svg-mode--oy dy))
+      (svg-mode--update buf)))
+
+  (defun svg-mode--zoom-by (buf factor)
+    "Умножить масштаб BUF на FACTOR, сохраняя в центре окна ту же точку картинки."
+    (with-current-buffer buf
+      (when-let ((win (and (buffer-live-p svg-mode--preview)
+                           (get-buffer-window svg-mode--preview))))
+        (let* ((ww (window-body-width win t)) (wh (window-body-height win t))
+               (old (* svg-mode--fit svg-mode--zoom))
+               (cx (/ (+ svg-mode--ox (/ ww 2.0)) old))
+               (cy (/ (+ svg-mode--oy (/ wh 2.0)) old))
+               (z (max 0.1 (min 50.0 (* svg-mode--zoom factor))))
+               (new (* svg-mode--fit z)))
+          (setq svg-mode--zoom z
+                svg-mode--ox (round (- (* cx new) (/ ww 2.0)))
+                svg-mode--oy (round (- (* cy new) (/ wh 2.0)))))
+        (svg-mode--update buf))))
+
+  (defun svg-mode--zoom-reset (buf)
+    (with-current-buffer buf
+      (setq svg-mode--zoom 1.0 svg-mode--ox 0 svg-mode--oy 0)
+      (svg-mode--update buf)))
+
+  (defun svg-mode-zoom-in ()    (interactive) (svg-mode--zoom-by (current-buffer) 1.25))
+  (defun svg-mode-zoom-out ()   (interactive) (svg-mode--zoom-by (current-buffer) 0.8))
+  (defun svg-mode-zoom-reset () (interactive) (svg-mode--zoom-reset (current-buffer)))
+
+  ;; --- режим буфера предпросмотра: клавиши и мышь -------------------------------------
+  (defvar-local svg-preview--source nil "svg-буфер, которому принадлежит этот предпросмотр.")
+
+  (defmacro svg-preview--cmd (name doc &rest body)
+    "Команда NAME в буфере предпросмотра; в BODY доступна переменная src."
+    (declare (indent 2))
+    `(defun ,name (&optional _e)
+       ,doc (interactive)
+       (when (buffer-live-p svg-preview--source)
+         (let ((src svg-preview--source)) ,@body))))
+
+  (svg-preview--cmd svg-preview-zoom-in  "Приблизить." (svg-mode--zoom-by src 1.25))
+  (svg-preview--cmd svg-preview-zoom-out "Отдалить."   (svg-mode--zoom-by src 0.8))
+  (svg-preview--cmd svg-preview-fit      "Вписать в окно." (svg-mode--zoom-reset src))
+  (svg-preview--cmd svg-preview-left     "Сдвиг влево."  (svg-mode--pan src -60 0))
+  (svg-preview--cmd svg-preview-right    "Сдвиг вправо." (svg-mode--pan src 60 0))
+  (svg-preview--cmd svg-preview-up       "Сдвиг вверх."  (svg-mode--pan src 0 -60))
+  (svg-preview--cmd svg-preview-down     "Сдвиг вниз."   (svg-mode--pan src 0 60))
+  (svg-preview--cmd svg-preview-bg "Сменить фон."
+    (with-current-buffer src (svg-mode-cycle-background)))
+  (svg-preview--cmd svg-preview-refresh "Перерисовать." (svg-mode--update src))
+
+  (defun svg-preview-drag (event)
+    "Перетаскивание картинки мышью (зажать левую кнопку и двигать)."
+    (interactive "e")
+    (when (buffer-live-p svg-preview--source)
+      (let ((src svg-preview--source)
+            (last (posn-x-y (event-start event))) ev)
+        (track-mouse
+          (while (progn (setq ev (read-event)) (mouse-movement-p ev))
+            (let ((cur (posn-x-y (event-start ev))))
+              (when (and cur last (consp cur) (consp last))
+                (svg-mode--pan src (- (car last) (car cur)) (- (cdr last) (cdr cur)))
+                (setq last cur))))))))
+
+  (defun svg-preview--header ()
+    "Шапка окна предпросмотра: масштаб (или ошибка разбора SVG)."
+    (let ((src svg-preview--source))
+      (if (not (buffer-live-p src))
+          ""
+        (let ((err (buffer-local-value 'svg-mode--error src))
+              (z   (buffer-local-value 'svg-mode--zoom src)))
+          (if err
+              (propertize (format " ошибка SVG: %s" err) 'face 'error)
+            (format " %d%%   + − 0 — масштаб, колесо и перетаскивание — сдвиг" (round (* 100 z))))))))
+
+  (defvar-keymap svg-preview-mode-map
+    :parent special-mode-map
+    "+" #'svg-preview-zoom-in   "=" #'svg-preview-zoom-in
+    "-" #'svg-preview-zoom-out  "0" #'svg-preview-fit
+    "<left>" #'svg-preview-left   "h" #'svg-preview-left
+    "<right>" #'svg-preview-right "l" #'svg-preview-right
+    "<up>" #'svg-preview-up       "k" #'svg-preview-up
+    "<down>" #'svg-preview-down   "j" #'svg-preview-down
+    "b" #'svg-preview-bg  "g" #'svg-preview-refresh
+    "<wheel-up>" #'svg-preview-up     "<wheel-down>" #'svg-preview-down
+    "<wheel-left>" #'svg-preview-left "<wheel-right>" #'svg-preview-right
+    "C-<wheel-up>" #'svg-preview-zoom-in "C-<wheel-down>" #'svg-preview-zoom-out
+    "<down-mouse-1>" #'svg-preview-drag)
+
+  (define-derived-mode svg-preview-mode special-mode "SVG-просмотр"
+    "Предпросмотр SVG: приближение, отдаление и сдвиг."
+    (setq cursor-type nil
+          header-line-format '(:eval (svg-preview--header))))
+
+  (defun svg-mode--schedule (&rest _)
+    "После правки: перерисовать предпросмотр через 0.5 с простоя."
+    (when (timerp svg-mode--timer) (cancel-timer svg-mode--timer))
+    (when (buffer-live-p svg-mode--preview)
+      (setq svg-mode--timer
+            (run-with-idle-timer (if (< (buffer-size) svg-mode-big-size) 0.5 2.0)
+                                 nil #'svg-mode--update (current-buffer)))))
+
+  (defun svg-mode-preview ()
+    "Показать предпросмотр справа или убрать его, если он уже виден."
+    (interactive)
+    (unless (image-type-available-p 'svg)
+      (user-error "Эта сборка Emacs не умеет показывать SVG (нет librsvg)"))
+    (let ((pb (if (buffer-live-p svg-mode--preview)
+                  svg-mode--preview
+                (setq svg-mode--preview
+                      (let ((src (current-buffer)))
+                        (with-current-buffer (generate-new-buffer
+                                              (format "*svg: %s*" (buffer-name)))
+                          (svg-preview-mode)
+                          (setq svg-preview--source src)
+                          (current-buffer)))))))
+      (if-let ((win (get-buffer-window pb)))
+          (delete-window win)
+        (display-buffer-in-side-window
+         pb '((side . right) (slot . 0) (window-width . 0.4)
+              (window-parameters . ((no-delete-other-windows . t)))))
+        (svg-mode--update (current-buffer)))))
+
+  (defun svg-mode-cycle-background ()
+    "Сменить фон предпросмотра."
+    (interactive)
+    (setq svg-mode--bg-index (mod (1+ svg-mode--bg-index) (length svg-mode-backgrounds)))
+    (svg-mode--update (current-buffer)))
+
+  (defun svg-mode--update-name ()
+    (setq mode-name (if svg-mode-auto-wrap "SVG+обёртка" "SVG"))
+    (force-mode-line-update))
+
+  (defun svg-mode-toggle-wrap ()
+    "Включить/выключить автообрамление фрагмента внешним <svg> в предпросмотре."
+    (interactive)
+    (setq svg-mode-auto-wrap (not svg-mode-auto-wrap))
+    (svg-mode--update-name)
+    (svg-mode--update (current-buffer))
+    (message "Автообрамление <svg>: %s" (if svg-mode-auto-wrap "включено" "выключено")))
+
+  (defun svg-mode-set-wrap-attrs (attrs)
+    "Задать атрибуты внешнего <svg> для автообрамления, например viewBox и размер."
+    (interactive (list (read-string "Атрибуты <svg>: " svg-mode-wrap-attrs)))
+    (setq svg-mode-wrap-attrs attrs)
+    (svg-mode--update (current-buffer)))
+
+  (defun svg-mode-view-image ()
+    "Показать файл как картинку (image-mode); C-c C-c там возвращает текст."
+    (interactive)
+    (image-mode))
+
+  (defun svg-mode--auto-open (buf)
+    "Открыть предпросмотр для BUF, когда буфер уже показан в окне (вызывается таймером)."
+    (when (and (buffer-live-p buf) (get-buffer-window buf)
+               (display-graphic-p) (image-type-available-p 'svg))
+      (with-current-buffer buf
+        (when (and (derived-mode-p 'svg-mode)
+                   (not (buffer-live-p svg-mode--preview))
+                   (< (buffer-size) svg-mode-big-size))
+          (with-demoted-errors "svg-mode: предпросмотр: %S"
+            (svg-mode-preview))))))
+
+  (define-derived-mode svg-mode nxml-mode "SVG"
+    "XML-режим для SVG с живым предпросмотром."
+    ;; nxml по умолчанию проверяет SVG по схеме RELAX NG: на реальных файлах это очень
+    ;; медленно и подвешивает Emacs. Проверку выключаем (flymake/предпросмотр и так покажут ошибку).
+    (setq-local rng-nxml-auto-validate-flag nil)
+    (add-hook 'after-change-functions #'svg-mode--schedule nil t)
+    (svg-mode--update-name)
+    (add-hook 'kill-buffer-hook
+              (lambda ()
+                (when (buffer-live-p svg-mode--preview)
+                  (when-let ((w (get-buffer-window svg-mode--preview))) (delete-window w))
+                  (kill-buffer svg-mode--preview)))
+              nil t)
+    ;; предпросмотр — не сейчас, а когда буфер уже показан в окне (иначе размер окна неизвестен,
+    ;; а в демоне кадра может ещё не быть)
+    (run-with-idle-timer 0.3 nil #'svg-mode--auto-open (current-buffer)))
+
+  (add-hook 'svg-mode-hook
+            (lambda ()
+              ;; хуки родителя nxml-mode выполняются раньше этого — отключаем проверку после них
+              (when (and (boundp 'rng-validate-mode) rng-validate-mode)
+                (rng-validate-mode -1))
+              (when (< (buffer-size) svg-mode-big-size)
+                (rainbow-mode 1))))
+
+  (define-key svg-mode-map (kbd "C-c C-p") #'svg-mode-preview)
+  (define-key svg-mode-map (kbd "C-c C-b") #'svg-mode-cycle-background)
+  (define-key svg-mode-map (kbd "C-c C-c") #'svg-mode-view-image)
+  (define-key svg-mode-map (kbd "C-c C-w") #'svg-mode-toggle-wrap)
+  (define-key svg-mode-map (kbd "C-c C-a") #'svg-mode-set-wrap-attrs)
+  (define-key svg-mode-map (kbd "C-c C-u") #'svg-mode-unescape)
+  (define-key svg-mode-map (kbd "C-c C-+") #'svg-mode-zoom-in)
+  (define-key svg-mode-map (kbd "C-c C-=") #'svg-mode-zoom-in)
+  (define-key svg-mode-map (kbd "C-c C--") #'svg-mode-zoom-out)
+  (define-key svg-mode-map (kbd "C-c C-0") #'svg-mode-zoom-reset)
+
+  (add-to-list 'auto-mode-alist '("\\.svgz?\\'" . svg-mode))
+  ;; #+begin_src svg в org подсвечивается этим же режимом
+  (with-eval-after-load 'org
+    (setf (alist-get "svg" org-src-lang-modes nil nil #'equal) 'svg))
+
   (provide 'plugins)
 #+end_src
 

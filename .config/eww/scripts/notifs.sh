@@ -46,7 +46,7 @@ res=$(jq -c --argjson old "$old" --argjson now "$now" --argjson t "$TIMEOUT" \
 		expired: [$cur[] | select($el[.key] >= $t) | .id],
 		out: ($cur | map(select($el[.key] < $t)) | reverse | .[:5] | map(
 			. + {
-				pct: ([0, 100 - (100 * $el[.key] / $t)] | max | floor),
+				pct: (([0, 100 - (100 * $el[.key] / $t)] | max) * 10 | round / 10),
 				hovered: (.id == $hov),
 				truncated: ((.body // "" | length) > $lim),
 				body_full: ((.body // "") | wrap_text($cpl)),
