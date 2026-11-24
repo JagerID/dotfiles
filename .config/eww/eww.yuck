@@ -1,5 +1,10 @@
 (defpoll time :interval "1s" "date '+%I:%M %p'")
 
+;; Уведомления: mako принимает их по D-Bus (попапы у него скрыты), eww рисует.
+;; Новые сверху, не больше 5. Скрипт считает pct (остаток до таймаута) для прогресс-бара.
+(defpoll notifs :interval "80ms" :initial "[]"
+	"$HOME/.config/eww/scripts/notifs.sh")
+
 (defpoll battery :interval "15s" "cat /sys/class/power_supply/BAT1/capacity || echo 'null'")
 (defpoll charge :interval "15s" "cat /sys/class/power_supply/BAT1/status echo 'null'")
 (defpoll date :interval "10m" "date '+%d %B %Y' | tr '[:lower:]' '[:upper:]'")
@@ -31,6 +36,42 @@
 	(box :class "date" :orientation "v" :space-evenly false :spacing 10
 		(label :class "day" :text day)
 		(label :class "subdate" :text date)))
+
+(defwidget notif-card [n]
+	(eventbox :onclick "makoctl dismiss -n ${n.id}"
+		  :onhover "$HOME/.config/eww/scripts/notif-hover.sh enter ${n.id}"
+		  :onhoverlost "$HOME/.config/eww/scripts/notif-hover.sh leave ${n.id}"
+		(box :class "notif ${n.urgency}" :orientation "h" :space-evenly false :spacing 10
+			(box :orientation "v" :space-evenly false :spacing 2 :hexpand true
+				(label :class "notif-app" :halign "start" :limit-width 40
+					:text {n.app_name ?: ""})
+				(label :class "notif-summary" :halign "start" :limit-width 36
+					:text {n.summary ?: ""})
+				;; обычный вид: обрезанный текст
+				(label :class "notif-body" :halign "start" :wrap true :limit-width 44
+					:visible {!(n.hovered && n.truncated) && (n.body ?: "") != ""}
+					:text {n.body ?: ""})
+				;; при наведении (если текст не влез): полный текст, высота ограничена, дальше скролл
+				(scroll :class "notif-scroll" :hscroll false :vscroll true
+					:height {n.body_h}
+					:visible {n.hovered && n.truncated}
+					(label :class "notif-body" :halign "start" :valign "start" :xalign 0
+						:text {n.body_full ?: ""}))
+				(progress :class "notif-progress" :orientation "h"
+					:value {n.pct})))))
+
+(defwindow notifications [mon]
+	:monitor mon
+	:geometry (geometry :x "5"
+			    :y "45"
+			    :width "360"
+			    :anchor "top right")
+	:stacking "overlay"
+	:exclusive false
+	(box :class "notifs" :orientation "v" :space-evenly false
+	     :visible {notifs != "[]" && notifs != ""}
+		(for n in notifs
+			(notif-card :n n))))
 
 (defwindow island [x y w h anch mon content]
 	:monitor mon
